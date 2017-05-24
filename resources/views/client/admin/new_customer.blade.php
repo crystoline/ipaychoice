@@ -23,31 +23,31 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">@lang('Customer Name')<span class='text-danger'>*</span></label>
                       <div class="col-sm-6">
-                        <input type="text" class="form-control" name="name" placeholder="Name of the Customer" required>
+                        <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Name of the Customer" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Primary Email<span class='text-danger'>*</span></label>
                       <div class="col-sm-6">
-                        <input type="email" placeholder="Customer Primary Email" name="primary_email" class="form-control" required>
+                        <input type="email" placeholder="Customer Primary Email" value="{{old('primary_email')}}" name="primary_email" class="form-control" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Secondary Email</label>
                       <div class="col-sm-6">
-                        <input type="email" placeholder="Customer Secondary Email" name="secondary_email" class="form-control">
+                        <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Primary Phone Number<span class='text-danger'>*</span></label>
                       <div class="col-sm-6">
-                        <input type="text" placeholder="Customer Primary Phone Number" name="primary_phone" class="form-control" required>
+                        <input type="text" placeholder="Customer Primary Phone Number" value="{{old('primary_phone')}}" name="primary_phone" class="form-control" required>
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Secondary Phone Number</label>
                       <div class="col-sm-6">
-                        <input type="text" placeholder="Customer Secondary Phone Number" name="secondary_phone_number" class="form-control">
+                        <input type="text" placeholder="Customer Secondary Phone Number" value="{{old('secondary_phone_number')}}" name="secondary_phone_number" class="form-control">
                       </div>
                     </div>
                     <div class="form-group">
@@ -56,7 +56,7 @@
                         <select class="form-control" name="town" required>
                           <option value="">Select Town</option>
                           @foreach ($towns as $t)
-                            <option value="{{$t->id}}">{{$t->name}}</option>
+                            <option value="{{$t->id}}" {{ (old("town") == $t->id ? "selected":"") }} >{{$t->name}}</option>
                         @endforeach
                         </select>
                       </div>

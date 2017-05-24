@@ -6,11 +6,10 @@
               <div class="widget widget-fullwidth widget-small">
                 <div class="widget-head">
                 @if (Session::has('status'))
-                                                <div class="alert alert-success">
+                     <div class="alert alert-success">
                                                     <p>{{ Session::get('status') }}</p>
                                                 </div>
                                             @endif
-                  <div class="tools"><span class="icon s7-upload"></span><span class="icon s7-edit"></span><span class="icon s7-close"></span></div>
                   <div class="title"><b>Customers</b></div>
                   <a href="{{ URL::to('admin/new_customer')}}">Add New Customer</a>
                 </div>

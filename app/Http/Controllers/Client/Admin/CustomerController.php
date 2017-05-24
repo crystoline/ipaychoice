@@ -39,7 +39,7 @@ class CustomerController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'primary_email' => 'required|unique:mysql_client.customers|email|max:255',
-            'secondary_email' => 'sometimes|nullable|unique:mysql_client.emails,email|email|max:255',
+            'secondary_email' => 'sometimes|nullable|email|max:255',
             'primary_phone' => 'required|max:15|unique:mysql_client.customers',
             'secondary_phone_number' => 'sometimes|nullable|max:15',
             'town' => 'required|string|max:20|exists:mysql_client.towns,id',
@@ -61,6 +61,6 @@ class CustomerController extends Controller
             'telephone' => $request->secondary_phone_number
         ]);
 
-        return redirect()->action('Client\Admin\CustomerController@index')->with('status', 'Profile updated!');
+        return redirect()->action('Client\Admin\CustomerController@index')->with('status', 'Customer created successfully!');
     }
 }
