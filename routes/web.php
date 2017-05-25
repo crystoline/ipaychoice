@@ -106,6 +106,17 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
             Route::get('/customers', ['as'=> 'client.admin.customers', 'uses' => 'CustomerController@index']);
             Route::get('/new_customer', ['as'=> 'client.admin.new_customer', 'uses' => 'CustomerController@create']);
             Route::post('/new_customer', ['as'=> 'client.admin.store_customer', 'uses' => 'CustomerController@store']);
+            Route::post('/ajax_customer', ['as'=> 'client.admin.ajax_customer', 'uses' => 'CustomerController@customer_ajax']);
+
+            Route::get('/invoices', ['as'=> 'client.admin.invoices', 'uses' => 'InvoiceController@index']);
+            Route::get('/invoices/{id}', ['as'=> 'client.admin.show_invoices', 'uses' => 'InvoiceController@show']);
+            Route::get('/new_invoice', ['as'=> 'client.admin.new_invoice', 'uses' => 'InvoiceController@create']);
+            Route::post('/new_invoice', ['as'=> 'client.admin.store_invoice', 'uses' => 'InvoiceController@store']); 
+
+            Route::get('/services', ['as'=> 'client.admin.services', 'uses' => 'ServiceController@index']);
+            Route::get('/new_service', ['as'=> 'client.admin.new_service', 'uses' => 'ServiceController@create']);
+            Route::post('/new_service', ['as'=> 'client.admin.store_service', 'uses' => 'ServiceController@store']);
+            Route::get('/get_service', ['as'=> 'client.admin.get_service', 'uses' => 'ServiceController@getService']);
         });
     });
 });

@@ -10,4 +10,8 @@ class InvoiceItem extends Model
 
     protected $fillable = ['amount', 'quantity', 'service_id', 'invoice_id'];
     //
+
+    public function invoice() {
+        return $this->belongsTo('App\Models\Clients\Invoice');
+    }
 }

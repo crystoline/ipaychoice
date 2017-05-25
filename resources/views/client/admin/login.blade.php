@@ -51,7 +51,7 @@
                                 <div class="form-group login-submit">
                                     <button data-dismiss="modal" type="submit" class="btn btn-primary btn-lg">Log me in</button>
                                 </div>
-                                <div class="form-group footer row">
+                              <!--   <div class="form-group footer row">
                                    {{-- <div class="col-xs-6"><a href="#">Forgot Password?</a></div>--}}
                                     <div class="col-xs-6 remember">
                                         <label for="remember">Remember Me</label>
@@ -60,7 +60,7 @@
                                             <label for="remember"></label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </form>
                     </div>

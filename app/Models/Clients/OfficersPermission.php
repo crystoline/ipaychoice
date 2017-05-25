@@ -9,4 +9,5 @@ class OfficersPermission extends Model
     protected $connection = 'mysql_client';
     //
     protected $fillable = ['officer_id','town_id'];
+
 }

@@ -15,7 +15,7 @@ class CreateCustomersTable extends Migration
     {
         Schema::connection('mysql_client')->create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',100);
+            $table->string('name',100)->unique();
             $table->string('primary_email',100)->unique();
             $table->string('primary_phone',15)->unique();
             $table->integer('town_id',false, true)->unsigned();

@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/select2/css/select2.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/theme-switcher/theme-switcher.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/datetimepicker/css/bootstrap-datetimepicker.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/jquery.niftymodals/css/component.css')}}"/>
     <link type="text/css" href="{{ asset('client_assets/admin/css/style.css')}}" rel="stylesheet">
     @yield('stylesheets')
     <link type="text/css" href="{{ asset('client_assets/admin/css/themes/theme-google.css')}}" rel="stylesheet">
@@ -37,7 +39,7 @@
             @yield('content')
         </div>
     </div>
-<!--  -->
+    <!--  -->
 </div>
 <script src="{{ asset('client_assets/admin/lib/jquery/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('client_assets/admin/lib/jquery.nanoscroller/javascripts/jquery.nanoscroller.min.js')}}" type="text/javascript"></script>
@@ -64,26 +66,26 @@
 <script src="{{ asset('client_assets/admin/lib/countup/countUp.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('client_assets/admin/lib/chartjs/Chart.min.j')}}s" type="text/javascript"></script>
 
-
- <script src="{{ asset('client_assets/admin/lib/datatables/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/dataTables.buttons.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.html5.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.flash.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.print.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.colVis.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.bootstrap.js')}}" type="text/javascript"></script>
-    <script src="{{ asset('client_assets/admin/lib/select2/js/select2.min.js')}}" type="text/javascript"></script>
-    <script type="text/javascript">
+<script src="{{ asset('client_assets/admin/lib/jquery.niftymodals/js/jquery.modalEffects.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datetimepicker/js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/js/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/dataTables.buttons.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.html5.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.flash.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.print.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.colVis.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/datatables/plugins/buttons/js/buttons.bootstrap.js')}}" type="text/javascript"></script>
+<script src="{{ asset('client_assets/admin/lib/select2/js/select2.min.js')}}" type="text/javascript"></script>
+<script type="text/javascript">
     $(document).ready(function(){
         //initialize the javascript
         App.init();
         App.dashboard();
-
     });
 </script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
         App.livePreview();
     });
