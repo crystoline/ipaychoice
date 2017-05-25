@@ -22,7 +22,7 @@ class InvoiceController extends Controller
     }
 
     public function show($id) {
-        $invoice = Invoice::with('customer','invoice_items')->find($id)->toArray();
+        $invoice = Invoice::with('customer.town.state','invoice_items.service')->find($id)->toArray();
         return view('client.admin.show_invoice',['invoice' => $invoice]);
     }
 

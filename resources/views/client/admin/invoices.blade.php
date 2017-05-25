@@ -17,9 +17,9 @@
                         <br><br><p>You've not added any invoice yet.</p>
                     @else
                 </div>
-                <table id="services" class="table table-striped table-hover table-fw-widget">
+                <table id="invoices" class="table table-striped table-hover table-fw-widget">
                     <thead>
-                    <tr>
+                    <tr class="success">
                         <th>@lang('Customer')</th>
                         <th>@lang('Total Amount')</th>
                         <th>@lang('Cash Officer')</th>
@@ -34,9 +34,9 @@
                         <tr>
                             <td>{{$invoice->customer->name}}</td>
                             <td>₦{{round($invoice->amount,2)}}</td>
-                            <td>{{$invoice->officer->fullname}}</td>
-                            <td>{{$invoice->customer->town->state->name}} / {{$invoice->customer->town->name}}</td>
-                            <td>{{$invoice->status}}</td>
+                            <td>{{$invoice->officer->first_name.' '. $invoice->officer->last_name}}</td>
+                            <td>{{$invoice->customer->town->name}}</td>
+                            <td>{{($invoice->status == 0)? "Not Paid":"Paid"}}</td>
                             <td>{{$invoice->created_at}}</td>
                             <td>
                                 <a href="{{ URL::to('admin/invoices/'.$invoice->id)}}"><i class="icon s7-next-2"></i></a>

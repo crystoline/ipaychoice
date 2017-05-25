@@ -1,11 +1,11 @@
 @extends('client.admin.layouts.master')
 
 @section('content')
-@php
-    foreach ($invoice as $k=>$j) {
-        dd($k.$j);
-}
-@endphp
+    @php
+        $date = $invoice['created_at'];
+        $date = explode(' ',$date);
+        $date = $date[0];
+    @endphp
     <style type="text/css">
         .invoice-title h2, .invoice-title h1 {
             display: inline-block;
@@ -31,11 +31,6 @@
     </style>
     <div class="row">
         <div class="col-sm-12">
-            @php
-                foreach ($invoice as $k=>$j) {
-
-            }
-            @endphp
             <div class="widget widget-fullwidth widget-small">
                 <div class="row">
                     <div class="col-xs-12">
@@ -48,26 +43,22 @@
                                 <div class="col-xs-6">
                                     <table class="table table-responsive table-condensed">
                                         <tr><td><strong>Billed to:</strong></td></tr>
-                                        <tr><td id="cust_cont"></td></tr>
-                                        <tr><td><strong>document.getElementById("cust_email").value</strong></td></tr>
-                                        <tr><td><strong>document.getElementById("cust_phone").value</strong></td></tr>
+                                        <tr><td>{{$invoice['customer']['name']}}</td></tr>
+                                        <tr><td>{{$invoice['customer']['primary_email']}}</td></tr>
+                                        <tr><td>{{$invoice['customer']['primary_phone']}}</td></tr>
+                                        <tr><td>{{$invoice['customer']['town']['name']}} ,
+                                                {{$invoice['customer']['town']['state']['name']}}.
+                                            </td></tr>
                                     </table>
                                 </div>
-                                <div class="col-xs-6 text-right">
+                                <div class="col-xs-2 text-right"></div>
+                                <div class="col-xs-4 text-right">
                                     <table class="table table-responsive table-condensed">
-                                        <tr><td> <strong>Invoice No:</strong></td><td class="text-left"><script>document.getElementById("customer").value</script></td></tr>
-                                        <tr><td><strong>Invoice Date</strong></td><td class="text-left">{{date('d-m-Y')}}</td></tr>
-                                        <tr><td><strong>Amount Due</strong></td><td class="text-left"><script>getTotal()</script></td></tr>
+                                        <tr><td> <strong>Invoice No:</strong></td><td class="text-left">{{$invoice['invoice_no']}}</td></tr>
+                                        <tr><td><strong>Invoice Date</strong></td><td class="text-left">{{$date}}</td></tr>
+                                        <tr><td><strong>Amount Due</strong></td><td class="text-left">₦{{round($invoice['amount'],2)}}</td></tr>
                                     </table>
-
-
-
-                                    <br>
-
-
-                                    <br>
-
-                                    <br><br>
+                                    <br>    <br>   <br><br>
                                 </div>
                             </div>
                         </div>
@@ -88,46 +79,32 @@
                                             <td><strong>Item(s)</strong></td>
                                             <td class="text-right"><strong>Price</strong></td>
                                             <td class="text-right"><strong>Quantity</strong></td>
-                                            <td class="text-right"><strong>Totals</strong></td>
+                                            <td class="text-right"><strong>Total</strong></td>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <!-- foreach (₦order->lineItems as ₦line) or some such thing here -->
-                                        <tr>
-                                            <td>Monkey Tail</td>
-                                            <td class="text-right">₦10.99</td>
-                                            <td class="text-right">1</td>
-                                            <td class="text-right">₦10.99</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Alomo Bitters</td>
-                                            <td class="text-right">₦20.00</td>
-                                            <td class="text-right">3</td>
-                                            <td class="text-right">₦60.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Skunk</td>
-                                            <td class="text-right">₦600.00</td>
-                                            <td class="text-right">1</td>
-                                            <td class="text-right">₦600.00</td>
-                                        </tr>
+                                        @foreach($invoice['invoice_items'] as $i)
+                                            <tr>
+                                                <td>{{$i['service']['name']}}</td>
+                                                <td class="text-right">₦{{round($i['amount'],2)}}</td>
+                                                <td class="text-right">{{$i['quantity']}}</td>
+                                                <td class="text-right">₦{{round(($i['amount'] * $i['quantity']),2)}}</td>
+                                            </tr>
+                                        @endforeach
                                         <tr>
                                             <td class="thick-line"></td>
                                             <td class="thick-line"></td>
                                             <td class="thick-line text-right"><strong>Subtotal</strong></td>
-                                            <td class="thick-line text-right">₦670.99</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="no-line"></td>
-                                            <td class="no-line"></td>
-                                            <td class="no-line text-right"><strong>Total</strong></td>
-                                            <td class="no-line text-right">₦685.99</td>
+                                            <td class="thick-line text-right">₦{{round($invoice['amount'],2)}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </div>Note: jhwhfwuiehfwuifhiw<br><br>
+                                </div>{{$invoice['note']}}<br><br>
                             </div>
                         </div>
                     </div>
-                </div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

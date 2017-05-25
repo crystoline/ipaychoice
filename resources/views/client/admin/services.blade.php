@@ -19,23 +19,21 @@
                 </div>
                 <table id="services" class="table table-striped table-hover table-fw-widget">
                     <thead>
-                    <tr>
+                    <tr class="success">
                         <th>@lang('Service')</th>
                         <th>@lang('Price')</th>
-                        <th>@lang('Date Created')</th>
-                        <th>@lang('Date Modified')</th>
+                        <th>@lang('Description')</th>
                         <th>@lang('Action')</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($services as $service)
                         <tr>
-                            <td>{{$service->name}}</td>
+                            <td style="text-transform: capitalize">{{$service->name}}</td>
                             <td>{{$service->price}}</td>
-                            <td>{{$service->created_at}}</td>
-                            <td>{{$service->updated_at}}</td>
+                            <td style="text-transform: capitalize">{{$service->description}}</td>
                             <td>
-                                <a href=""><i class="fa fa-edit"></i></a>
+                                <a href="{{ URL::to('admin/services/'.$service->id)}}" title="Edit"><i class="icon s7-expand2"></i></a>
                             </td>
                         </tr>
                     @endforeach

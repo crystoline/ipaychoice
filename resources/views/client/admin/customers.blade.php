@@ -19,7 +19,7 @@
                 </div>
                 <table id="customers" class="table table-striped table-hover table-fw-widget">
                     <thead>
-                    <tr class="danger">
+                    <tr class="success">
                         <th>@lang('Name')</th>
                         <th>@lang('Email')</th>
                         <th>@lang('Phone Number')</th>
@@ -34,7 +34,9 @@
                             <td>{{ $c->primary_email}}</td>
                             <td>{{ $c->primary_phone}}</td>
                             <td>{{ $c->town->name}}</td>
-                            <td></td>
+                            <td>
+                                <a href="{{ URL::to('admin/customers/'.$c->id)}}" title="Edit"><i class="icon s7-expand2"></i></a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -16,7 +16,7 @@ class Customer extends Model
     ];
 
     public function telephone() {
-    	return $this->morphMany('App\Models\Clients\Telephone','user');
+    	return $this->morphOne('App\Models\Clients\Telephone','user');
     }
     public function email()
     {

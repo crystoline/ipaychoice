@@ -10,9 +10,7 @@
             <li class="dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="dropdown-toggle">
             {{Session::get('client_admin_officer')->first_name.' '.Session::get('client_admin_officer')->last_name}}<span class="angle-down s7-angle-down"></span></a>
                 <ul role="menu" class="dropdown-menu">
-                    <li><a href="#"> <span class="icon s7-user"></span>My profile</a></li>
-                    <li><a href="#"> <span class="icon s7-config"></span>Settings</a></li>
-                    <li><a href="#"> <span class="icon s7-help1"></span>Help</a></li>
+                    {{--<li><a href="#"> <span class="icon s7-user"></span>My profile</a></li>--}}
                     <li><a href="{{action('Client\Admin\AuthenticateController@logout')}}"> <span class="icon s7-power"></span>Sign Out</a></li>
                 </ul>
             </li>

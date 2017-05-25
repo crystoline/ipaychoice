@@ -14,4 +14,8 @@ class InvoiceItem extends Model
     public function invoice() {
         return $this->belongsTo('App\Models\Clients\Invoice');
     }
+
+    public function service() {
+        return $this->belongsTo('App\Models\Clients\Service');
+    }
 }

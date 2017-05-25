@@ -1,163 +1,119 @@
 @extends('client.admin.layouts.master')
 <!--+general-chart("classes", "title", "height", "id", "counter value", "counter desc", tools enabled (use true or false))-->
+@section('stylesheets')
 
+@endsection
+@php
+    $x =40;
+@endphp
 @section('content')
-<div class="row">
-    <div class="col-md-4">
-        <div class="widget widget-pie">
-            <div class="widget-head"><span class="title">Top Sales</span></div>
-            <div class="row chart-container">
-                <div class="col-md-6">
-                    <div id="widget-top-1" class="chart"></div>
-                </div>
-                <div class="col-md-6">
-                    <div class="legend"></div>
-                </div>
-            </div>
-            <div class="row chart-info">
-                <div class="col-xs-4"><span class="title">New Clients</span><span data-toggle="counter" data-end="180" class="number">0</span></div>
-                <div class="col-xs-4"><span class="title">Total Sales</span><span data-toggle="counter" data-end="500" data-prefix="$" class="number">$0</span></div>
-                <div class="col-xs-4"><span class="title">Refunds</span><span data-toggle="counter" data-end="90" class="number">0</span></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="widget widget-pie">
-            <div class="widget-head"><span class="title">Monthly Visits</span></div>
-            <div class="row chart-container">
-                <div class="col-md-6">
-                    <div id="widget-top-2" class="chart"></div>
-                </div>
-                <div class="col-md-6">
-                    <div class="legend"></div>
-                </div>
-            </div>
-            <div class="row chart-info">
-                <div class="col-xs-4"><span class="title">New Visitors</span><span data-toggle="counter" data-end="25" data-suffix="%" class="number">0%</span></div>
-                <div class="col-xs-4"><span class="title">Conversions</span><span data-toggle="counter" data-end="350" class="number">0</span></div>
-                <div class="col-xs-4"><span class="title">Bounce Rate</span><span data-toggle="counter" data-end="40" data-suffix="%" class="number">0%</span></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="widget widget-pie widget-pie-stats">
-            <div class="widget-head"><span class="title">Advertisement</span></div>
-            <div class="row chart-container">
-                <div class="col-md-6">
-                    <div id="widget-top-3" class="chart"></div>
-                </div>
-                <div class="col-md-6">
-                    <div class="legend">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td class="legendColorBox">
-                                    <div>
-                                        <div style="width:10px;height:10px;overflow:hidden" class="clr-alt3"></div>
-                                    </div>
-                                </td>
-                                <td class="legendLabel">Google Ads</td>
-                                <td class="legendData">$752</td>
-                            </tr>
-                            <tr>
-                                <td class="legendColorBox">
-                                    <div>
-                                        <div style="width:10px;height:10px;overflow:hidden" class="clr-alt4"></div>
-                                    </div>
-                                </td>
-                                <td class="legendLabel">Facebook</td>
-                                <td class="legendData">$300</td>
-                            </tr>
-                            </tbody>
-                        </table>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="widget widget-pie">
+                <div class="widget-head"><span class="title">Invoices</span></div>
+                <div class="row chart-container">
+                    <div class="col-md-6">
+                        <div id="inv_chart" class="chart"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="legend"></div>
                     </div>
                 </div>
-            </div>
-            <div class="row chart-info">
-                <div class="col-xs-6">
-                    <div id="spk1" class="sparkline"></div><span class="title">Profit</span><span data-toggle="counter" data-end="70" data-suffix="%" class="number">0%</span>
-                </div>
-                <div class="col-xs-6">
-                    <div id="spk2" class="sparkline"></div><span class="title">Return</span><span data-toggle="counter" data-end="30" data-suffix="%" class="number">0%</span>
+                <div class="row chart-info">
+                    <div class="col-xs-4"><span class="title">Total Paid Invoices</span><span data-toggle="counter" data-end="180" class="number">0</span></div>
+                    <div class="col-xs-4"><span class="title">Total Unpaid Invoices</span><span data-toggle="counter" data-end="500" data-prefix="$" class="number">$0</span></div>
+                    <div class="col-xs-4"><span class="title">Total Invoices Created</span><span data-toggle="counter" data-end="90" class="number">0</span></div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="widget widget-fullwidth widget-small">
-                    <div class="widget-head">
-                        <div class="tools"><span class="value">25.3K</span></div><span class="title">Current Earnings</span>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="widget widget-tile">
+                            <div class="data-info">
+                                <div data-toggle="counter" data-end="18.6" data-decimals="1" data-suffix="%" class="value">0%</div>
+                                <div class="desc">Amount Due</div>
+                            </div>
+                            <div class="icon"><span class="s7-cloud-download"></span></div>
+                        </div>
                     </div>
-                    <div class="chart-container">
-                        <div id="linechart-mini1" style="height: 92px;"></div>
+                    <div class="col-md-6">
+                        <div class="widget widget-tile">
+                            <div class="data-info">
+                                <div data-toggle="counter" data-end="33" data-suffix="%" class="value">0%</div>
+                                <div class="desc">Amount Received</div>
+                            </div>
+                            <div class="icon"><span class="s7-timer"></span></div>
+                        </div>
                     </div>
                 </div>
-                <div class="widget widget-fullwidth widget-small">
-                    <div class="widget-head">
-                        <div class="tools"><span class="value">18%</span></div><span class="title">Support Tickets</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="widget widget-tile">
+                            <div class="data-info">
+                                <div data-toggle="counter" data-end="156" class="value">0</div>
+                                <div class="desc">Total Customers</div>
+                            </div>
+                            <div class="icon"><span class="s7-graph1"></span></div>
+                        </div>
                     </div>
-                    <div class="chart-container">
-                        <div id="barchart-mini1" style="height: 92px;"></div>
+                    <div class="col-md-6">
+                        <div class="widget widget-tile">
+                            <div class="data-info">
+                                <div data-toggle="counter" data-decimals="1" data-end="7.5" data-suffix="K" class="value">0</div>
+                                <div class="desc">Total Services</div>
+                            </div>
+                            <div class="icon"><span class="s7-like2"></span></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="widget widget-radar">
-                    <div class="widget-head">
-                        <div class="tools"><span class="icon s7-upload"></span><span class="icon s7-edit"></span></div><span class="title">Page Views</span>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="radar-chart1" height="180px"></canvas>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget widget-tile widget-tile-wide">
+                            <div class="tile-info">
+                                <div class="icon"><span class="s7-like"></span></div>
+                                <div class="data-info">
+                                    <div class="title">Total Purchases</div>
+                                    <div class="desc">Monthly sales number</div>
+                                </div>
+                            </div>
+                            <div class="tile-value"><span data-toggle="counter" data-decimals="2" data-end="28458" data-prefix="$">$0</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="widget widget-fullwidth line-chart">
-            <div class="widget-head">
-                <div class="tools"><span class="icon s7-upload"></span><span class="icon s7-edit"></span><span class="icon s7-close"></span></div><span class="title">Filled Points</span>
-            </div>
-            <div class="chart-container">
-                <div class="counter">
-                    <div class="value">80%</div>
-                    <div class="desc">More Visits</div>
-                </div>
-                <div id="line-chart1" style="height: 260px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="widget widget-calendar">
-            <div class="cal-container">
-                <div class="cal-notes"><span class="day">Thursday</span><span class="date">September 24</span><span class="title">Notes<span class="icon s7-plus"></span></span>
-                    <ul>
-                        <li><span class="hour">14h</span><span class="event-name">Meeting with investors</span></li>
-                        <li><span class="hour">8h</span><span class="event-name">Dentist date</span></li>
-                    </ul>
-                </div>
-                <div class="cal-calendar">
-                    <div class="ui-datepicker"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12"></div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="widget widget-map">
-            <div class="widget-head"><span class="title">Global Stats</span></div>
-            <div class="map-container">
-                <div id="world-map" style="height: 227px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
+@endsection
+
+@section('javascript')
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //initialize the javascript
+            App.init();
+        App.dashboard();
+        });
+    </script>
+
+    <script src="{{ asset('client_assets/admin/lib/jquery-flot/jquery.flot.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('client_assets/admin/lib/jquery-flot/jquery.flot.pie.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('client_assets/admin/lib/jquery-flot/jquery.flot.resize.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('client_assets/admin/lib/countup/countUp.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('client_assets/admin/lib/chartjs/Chart.min.js')}}" type="text/javascript"></script>
+
+    @php
+    echo '<script type="text/javascript">
+        function b(){
+            var a=[
+                    {label:"Paid Invoices",data:0},
+                    {label:"Unpaid Invoices",data:'.$x.'}],
+                b=tinycolor("#7accbe").lighten(5).toString(),
+                c="#ef6262",
+                d=App.color.alt1,
+                e=$("#inv_chart").parent().next().find(".legend");
+            $.plot("#inv_chart",a,{series:{pie:{show:!0,highlight:{opacity:.1}}},grid:{hoverable:!0},legend:{container:e},colors:[b,c,d]})
+        }
+        b()
+    </script>';
+    @endphp
 @endsection
