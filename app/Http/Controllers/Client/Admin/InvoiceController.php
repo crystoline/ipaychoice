@@ -28,6 +28,11 @@ class InvoiceController extends Controller
         return view('client.admin.show_invoice',['invoice' => $invoice]);
     }
 
+    public function customer_view($invoice_no) {
+        $invoice = Invoice::with('customer.town.state','invoice_items.service')->whereInvoiceNo($invoice_no)->first()->toArray();
+        return view('client.admin.customer_invoice',['invoice' => $invoice]);
+    }
+
     public function create()
     {
     	$officer = Session::get('client_admin_officer');
@@ -92,12 +97,12 @@ class InvoiceController extends Controller
             ]);
         }
 
-        $invoice_view = Invoice::with('customer.town.state','invoice_items.service')->find($invoice_id)->toArray();;
+        $invoice_view = Invoice::with('currency')->find($invoice_id)->toArray();
         $customer = Customer::find($request->customer);
 
-        Mail::send('client.emails.invoice', ['invoice' => $invoice_view], function ($m) use ($invoice_id) {
-            $m->from('ashprivy@gmail.com','BAP');
-            $m->to($customer->primary_email,$customer->name)->subject('Innovexi sent you an Invoice'.);
+        Mail::send('client.emails.invoice', ['invoice' => $invoice_view], function ($m) use ($customer) {
+            $m->from('aisha.alimi@upperlink.ng','Innovexi');
+            $m->to($customer->primary_email,$customer->name)->subject('Innovexi sent you an Invoice');
         });
 
         return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created and sent successfully!');

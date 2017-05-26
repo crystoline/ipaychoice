@@ -21,6 +21,7 @@
                     <thead>
                     <tr class="success">
                         <th>@lang('Customer')</th>
+                        <th>@lang('Invoice No.')</th>
                         <th>@lang('Total Amount')</th>
                         <th>@lang('Cash Officer')</th>
                         <th>@lang('Location')</th>
@@ -33,6 +34,7 @@
                     @foreach($invoices as $invoice)
                         <tr>
                             <td>{{$invoice->customer->name}}</td>
+                            <td>{{$invoice->invoice_no}}</td>
                             <td>₦{{round($invoice->amount,2)}}</td>
                             <td>{{$invoice->officer->first_name.' '. $invoice->officer->last_name}}</td>
                             <td>{{$invoice->customer->town->name}}</td>
@@ -56,6 +58,7 @@
     <script>
         $("#invoices").dataTable(
             {
+                "order": [[ 6, "desc" ]],
                 buttons:["copy","excel","pdf","print"],
                 lengthMenu:[[10,25,50,100,-1],[10,25,50,100,"All"]],
                 dom:"<'row am-datatable-header'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'frt>><'row am-datatable-body'<'col-sm-12'tr>><'row am-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
