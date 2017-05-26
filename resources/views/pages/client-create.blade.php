@@ -33,22 +33,22 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="form-group{{ $errors->has('subdomain') ? ' has-error' : '' }}">
-                                <label for="subdomain">@lang('Subdomain')</label>
+                            <div class="form-group{{ $errors->has('sub_domain') ? ' has-error' : '' }}">
+                                <label for="sub_domain">@lang('Subdomain')</label>
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <input name="subdomain" id="subdomain" class="form-control"
-                                               placeholder="@lang('Choose a subdomain')" {{old('subdomain')}}>
+                                        <input type="text" name="sub_domain" id="sub_domain" class="form-control"
+                                               placeholder="@lang('Choose a subdomain')" {{old('sub_domain')}}>
                                     </div>
                                     <div class="col-xs-6">
                                         @ {{ env('APP_DOMAIN') }}
                                     </div>
                                 </div>
 
-                                @if ($errors->has('subdomain'))
+                                @if ($errors->has('sub_domain'))
                                     <span class="help-block">
-                                    <strong>{{ $errors->first('subdomain') }}</strong>
-                                </span>
+                                        <strong>{{ $errors->first('sub_domain') }}</strong>
+                                    </span>
                                 @endif
                             </div>
                         </div>

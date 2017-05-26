@@ -18,6 +18,6 @@ class Configuration extends Model
     ];
 
     public function client(){
-        $this->belongsTo('App\Models\Client');
+        return $this->belongsTo('App\Models\Client');
     }
 }

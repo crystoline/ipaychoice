@@ -16,6 +16,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Contact Address</th>
+                        <th>Domain</th>
                         <th>Date Registered</th>
                         <th>Action</th>
                     </tr>
@@ -26,6 +27,16 @@
                         <td>{{ $i+1 }}</td>
                         <td><a href="{{route('user.client.dashboard', ['id' => $client->id])}}">{{ $client->name }}</a></td>
                         <td>{{ $client->address }}</td>
+
+                        <td>
+                            @php
+                                $subdomain = $client['configuration']['subdomain'].'.'.env('APP_DOMAIN');
+                                $domain = $client['configuration']['domain'];
+                            @endphp
+
+                            <a href="http://{{$subdomain}}">http://{{$subdomain}}</a> <br>
+                            <a href="http://$domain">http://{{$domain}}</a>
+                            </td>
                         <td>{{ $client->created_at }}</td>
                         <td><a href="{{action('ClientController@edit',['id'=>$client->id])}}" style="color: black"><span class="fa fa-edit"></span></a> </td>
                     </tr>

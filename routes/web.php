@@ -24,7 +24,7 @@ Route::group([ 'domain' => env('APP_DOMAIN')], function () {
         Route::get('/home', 'HomeController@index')->name('home');
 
         //Route::get('/client', 'ClientController@index');
-        Route::get('/client/create', 'ClientController@create');
+        Route::get('/client/create', ['as' => 'user.client.create','uses' =>'ClientController@create']);
         Route::post('/client', 'ClientController@store');
         Route::get('/client/edit/{client}', 'ClientController@edit');
         Route::put('/client/{client}', 'ClientController@update');
@@ -101,7 +101,7 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
     Route::get('/', function () {
         return '';
     });
-    Route::get('/{invoice_no}', ['uses'=>'Admin\InvoiceController@customer_view']);
+   // Route::get('/{invoice_no}', ['uses'=>'Admin\InvoiceController@customer_view']);
     //All Client Admin route goes here
     Route::group(['middleware'=>'AllowClientAdmin', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){
 

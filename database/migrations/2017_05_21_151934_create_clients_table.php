@@ -17,7 +17,7 @@ class CreateClientsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
-            $table->text('address');
+            $table->text('address')->nullable()->default(null);
             $table->text('options')->nullable()->default(null);
             $table->integer('user_id',false, true)->length(10);
             $table->timestamps();

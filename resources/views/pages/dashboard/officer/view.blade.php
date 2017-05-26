@@ -22,9 +22,7 @@
 
         </table>
         <h5>Permissions</h5>
-        @php
-            var_dump($officer->towns);
-        @endphp
+
         {{--@if(!empty($officer->states))
             @foreach($officer->states as $i =>$state)
 

@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $clients = Client::where(['user_id' => Auth::user()->id])->get();
+        $clients = Client::where(['user_id' => Auth::user()->id])->with(['configuration'])->get();
         return view('home')->with(['clients' => $clients]);
     }
     public function landing(){
