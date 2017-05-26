@@ -1,5 +1,5 @@
 
-<nav class="navbar  navbar-trans-dark navbar-fixed-top" style="background-color: #3b3b3b">
+<nav class="navbar  navbar-trans-dark navbar-fixed-top" style="background-color: rgba(29, 3, 30, 0.7)">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -23,7 +23,7 @@
                 <li><a href="{{url('')}}#" >Home</a></li><!-- / Home -->
                 @if (Auth::check())
                 <!-- Home -->
-                <li><a href="{{url('home')}}">My Clients</a> </li>
+                <li><a href="{{url('home')}}">Businesses</a> </li>
                 @else
                     <li><a href="{{url('')}}#features" >Feature</a></li><!-- / Home -->
                 @endif
@@ -56,6 +56,6 @@
         </div><!--/.navbar-collapse -->
     </div><!-- / .container -->
 </nav><!-- / .navbar -->
-<div style="margin-top: 70px">
+<div style="margin-top: 80px">
 
 </div>

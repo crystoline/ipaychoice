@@ -14,13 +14,29 @@
 </div>
 <br>
 
-    <form method="post" action="{{route('user.client.dashboard.states.delete', ['client' => $client->id])}}" data-ajax="true">
+    <form name="loc_form" method="post" action="{{route('user.client.dashboard.states.delete', ['client' => $client->id])}}" data-ajax="true">
         <input type="hidden" name="_method" value="delete">
         <a data-ajax="true" data-temp="true" data-dst="#form_content" href="{{route('user.client.dashboard.state.create', ['client'=>$client->id])}}"
            class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i
                     class="fa fa-plus"></i> @lang('Add States')</a>
 @if(!empty($states))
-        <button class="btn btn-danger"><i class="fa fa-times-circle"></i> Delete selected</button>
+        <button type="button" class="btn btn-danger" onclick="swal({
+                    type: 'warning',
+                    title: '@lang('Confirm')',
+                    text: '@lang('The selected state/cities will be deleted')',
+                    showCancelButton: true,
+                    confirmButtonColor:'#DD0000',
+                    confirmButtonText: '@lang('Yes, delete!')',
+                    cancelButtonText: '@lang('No, cancel !')',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                 },function(isConfirm){
+                    if (isConfirm) {
+                        $(loc_form).submit();
+                    }
+
+            })"
+        ><i class="fa fa-times-circle"></i> Delete selected</button>
     @foreach($states as $i =>$state)
     @if($i < 0)
         <hr>

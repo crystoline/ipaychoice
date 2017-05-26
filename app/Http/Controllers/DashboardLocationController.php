@@ -205,12 +205,15 @@ class DashboardLocationController extends Controller
     function destroy(Request $request, Client $client){
         $states = $request->input('state');
         $towns = $request->input('town');
-        Town::destroy($towns);
 
-        foreach($states as $state_id){
-            $state = State::find($state_id);
-            if($state and !$state->towns->toArray()){
-                State::destroy($state_id);
+        if($towns) Town::destroy($towns);
+
+        if($states) {
+            foreach ($states as $state_id) {
+                $state = State::find($state_id);
+                if ($state and !$state->towns->toArray()) {
+                    State::destroy($state_id);
+                }
             }
         }
         return $this->states($request, $client);
