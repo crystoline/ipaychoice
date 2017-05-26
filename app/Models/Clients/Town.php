@@ -13,4 +13,16 @@ class Town extends Model
     public function state(){
         return $this->belongsTo('App\Models\Clients\State');
     }
+
+    public function customers(){
+        return $this->hasMany('App\Models\Clients\Customer');
+    }
+
+   /* public function officers(){
+        return $this->hasMany('App\Models\Clients\Officer');
+    }*/
+    public function officers()
+    {
+        return $this->hasManyThrough('App\Models\Clients\Officer','App\Models\Clients\OfficersPermission', 'town_id', 'id');
+    }
 }

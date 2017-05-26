@@ -6,7 +6,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <a href="{{action('ClientController@create')}}" id="reg_client" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Register client</a>
+            <h3>My Businesses</h3>
+            <a href="{{action('ClientController@create')}}" id="reg_client" class="btn btn-primary btn-lg"><i class="fa fa-plus"></i> Register Business</a>
 
             <p></p>
             <table class="table table-striped table-hover dataTable">

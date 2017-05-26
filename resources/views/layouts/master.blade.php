@@ -29,6 +29,9 @@
     <!-- Definity CSS -->
     <link rel="stylesheet" href="{{asset('assets/styles/main.css')}}">
     <link rel="stylesheet" href="{{asset('assets/styles/responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('css/tokenize2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/sweetalert.css')}}">
+    {{--<link href="{{asset('css/mdb.min.css')}}" rel="stylesheet">--}}
 
     <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
 
@@ -109,11 +112,23 @@
 <script src="{{asset('assets/js/vendor/animated-heading.js')}}"></script>
 <script src="{{asset('assets/js/vendor/jquery.ajaxchimp.js')}}"></script>
 <script src="{{asset('js/navigate.js')}}"></script>
+<script src="{{asset('js/tokenize2.min.js')}}"></script>
+
+{{--<script type="text/javascript" src="{{asset('js/mdb.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('js/tether.min.js')}}"></script>--}}
 
 
 <!-- Definity JS -->
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+})
+</script>
 
 @yield('javascript')
 </body>

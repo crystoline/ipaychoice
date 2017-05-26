@@ -1,6 +1,6 @@
 <h3>@lang('Cash Officers')</h3>
 <div style="text-align: right">
-<a href="" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('Create Cash Officer')</a>
+<a data-ajax="true" href="{{route('user.client.dashboard.officer.create',['id' => $client->id])}}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('Create Cash Officer')</a>
 </div>
 <br>
 <table class="table table-strip table-hovered dataTable">
@@ -15,7 +15,7 @@
     <tbody>
         @foreach($officers as $officer)
         <tr>
-            <td>{{$officer->first_name}} {{$officer->last_name}}</td>
+            <td><a data-ajax="true" href="{{route('user.client.dashboard.officer', ['client' => $client->id, 'id'=>$officer->id])}}">{{$officer->first_name}} {{$officer->last_name}}</a></td>
             <td>{{$officer->email}}</td>
             <td>{{$officer->created_at}}</td>
             <td>

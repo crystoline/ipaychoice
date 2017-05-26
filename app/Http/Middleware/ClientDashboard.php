@@ -21,6 +21,7 @@ class ClientDashboard
         if(!$client or $client->user_id != $user->id){
             return redirect()->route('user.not_found.client');
         }
+        //dd($client);
 
         config(['database.connections.mysql_client.database' => $client->configuration->database]);
         return $next($request);

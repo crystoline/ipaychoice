@@ -3,7 +3,12 @@
 
 @section('content')
         <!-- ========== Hero Cover ========== -->
+<main>
 
+    <div class="container">
+    </div>
+
+</main>
 <div id="home" class="animated-hero" style="margin-top: -70px">
     <div class="bg-overlay">
 
@@ -26,10 +31,10 @@
         </div>
 
         <!-- Scroller -->
-        {{--<a href="#about" class="scroller">
+        <a href="#about" class="scroller">
             <span class="scroller-text">scroll down</span>
             <span class="linea-basic-magic-mouse"></span>
-        </a>--}}
+        </a>
 
     </div><!-- / .bg-overlay -->
 </div><!-- / .animated-hero -->

@@ -1,6 +1,6 @@
 <h3>Customers</h3>
 <div style="text-align: right">
-<a href="" class="btn btn-primary"><i class="fa fa-plus"></i> Create customer</a>
+<a data-ajax="true" href="{{route('user.client.dashboard.customer.create', ['client'=> $client->id])}}" class="btn btn-primary"><i class="fa fa-plus"></i> Create customer</a>
 </div>
 <br>
 <table class="table table-strip table-hovered dataTable">

@@ -19,6 +19,8 @@ class AllowClient{
         $domain = $server['HTTP_HOST'];
         //check by subdomain name
         if($pos = strpos($domain, env('APP_DOMAIN')) and $subdomain = substr($domain, 0, $pos -1)){
+
+
             $conf = Configuration::where(['subdomain'=>$subdomain])->get()->first();
 
         }else{
@@ -29,6 +31,11 @@ class AllowClient{
             //branch to FrontendRoute
             //$request->session()->flash('domain',$request->url());
             return redirect()->action('\App\Http\Controllers\Client\NotFoundController@wrongDomain')->with(['domain'=> $request->url()]);
+        }else{
+            $old  = session('client.configuration', false);
+            if( !$old or $conf->database != $old->database ){
+                session(['client.configuration' => $conf]);
+            }
         }
         config(['database.connections.mysql_client.database' =>$conf->database]);
 
