@@ -8,7 +8,44 @@
     <title>Grids Master Template</title>
 
     <style type="text/css">
-
+        .btn-rounded {
+            border-radius: 3px;
+        }
+        .btn {
+            border-radius: 0;
+        }
+        .btn-space, .btn-vspace {
+            margin-bottom: 5px;
+        }
+        .btn-hspace, .btn-space {
+            margin-right: 5px;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #4e91ff;
+            border-color: #4e91ff;
+        }
+        .btn {
+            display: inline-block;
+            margin-bottom: 0;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            border: 1px solid transparent;
+            padding: 8px 12px;
+            font-size: 13px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .btn, .dropdown-header, .dropdown-menu>li>a {
+            line-height: 1.42857143;
+            white-space: nowrap;
+        }
         /* Outlines the grids, remove when sending */
         table td { border: 1px solid #fafafa;;}
         table.footer td{ border: none }
@@ -45,6 +82,7 @@
 </head>
 <body style="font-family: Garamond,sans-serif;margin:0; padding:0; background-color:#F2F2F2;">
 <center>
+    <br><br><br>
     <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F2F2F2">
         <tr>
             <td align="center" valign="top">
@@ -59,7 +97,7 @@
                             <table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
                                 <tr>
                                     <td align="center" valign="top">
-                                        Logo
+                                        <h1>INNOVEXI GROUP</h1>
                                     </td>
                                 </tr>
                             </table>
@@ -71,9 +109,10 @@
                     </tr>
                 </table>
 
-
-                @yield('content')
-
+<div class=" text-center">
+                <br><br><h3>Innovexi Group sent you an invoice for {{$invoice['currency']['html'].round($invoice['amount'],2)}}</h3><br><br>
+                <a class=" text-center btn btn-space btn-primary btn-rounded" href="{{env('APP_DOMAIN')}}/{{$invoice['invoice_no']}}">View Your Invoice</a>
+                </div>
 
                 <table style="color:#fff" width="640" cellpadding="0" cellspacing="0" border="0" class="wrapper footer" bgcolor="#1c3061">
                     <tr>
@@ -85,7 +124,7 @@
                             <table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
                                 <tr>
                                     <td width="300" class="mobile" align="center" valign="top">
-                                        <span>Copyright © {!! date('Y') !!} First Bank PLC.</span>
+                                        <span>Copyright © {!! date('Y') !!} iPayChoice</span>
                                     </td>
                                 </tr>
                             </table>
