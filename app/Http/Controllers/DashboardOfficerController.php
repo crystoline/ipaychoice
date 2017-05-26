@@ -8,6 +8,7 @@ use App\Models\Clients\OfficersPermission;
 use App\Models\Clients\State;
 use App\Models\Clients\Town;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardOfficerController extends Controller
@@ -38,13 +39,13 @@ class DashboardOfficerController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-        //dd($request);
+        $password = rand(10000,99999);
         $officer = Officer::create([
             'first_name'    => $request->input('first_name'),
             'last_name'     => $request->input('last_name'),
             'last_name'         => $request->input('last_name'),
             'email'          => $request->input('email'),
-            'password'      => bcrypt('password')
+            'password'      => bcrypt($password)
         ]);
         foreach($request->input('town') as $town_id){
 
@@ -57,6 +58,10 @@ class DashboardOfficerController extends Controller
             ]);
         }
 
+        Mail::send('pages.dashboard.officer.created-mail', ['password' => $password, 'client' => $client, 'officer' =>$officer], function ($m) use ($officer) {
+            $m->from('support@upperlink.ng',env('APP_NAME'));
+            $m->to($officer->email,$officer->first_name)->subject('Account Created on '.env('APP_NAME'));
+        });
         return redirect()->route('user.client.dashboard.officer.store', ['id'=>$client->id])->withInput(['createded'=>true]);
     }
 }
