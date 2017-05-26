@@ -11,31 +11,29 @@
                             <p>{{ Session::get('status') }}</p>
                         </div>
                     @endif
-                    <div class="title"><b>@lang('All Customers')</b></div>
-                    <a href="{{ URL::to('admin/new_customer')}}">@lang('Add New Customer')</a>
-                    @if (count($customers) == 0)
-                        <br><br><p>@lang("You've not added any customers yet.")</p>
+                    <div class="title"><b>@lang('All Services')</b></div>
+                    <a href="{{ URL::to('admin/new_service')}}">@lang('Add New Service')</a>
+                    @if (count($services) == 0)
+                        <br><br><p>You've not added any services yet.</p>
                     @else
                 </div>
-                <table id="customers" class="table table-striped table-hover table-fw-widget">
+                <table id="services" class="table table-striped table-hover table-fw-widget">
                     <thead>
                     <tr class="success">
-                        <th>@lang('Name')</th>
-                        <th>@lang('Email')</th>
-                        <th>@lang('Phone Number')</th>
-                        <th>@lang('Town')</th>
-                        <th>@lang('Actions')</th>
+                        <th>@lang('Service')</th>
+                        <th>@lang('Price')</th>
+                        <th>@lang('Description')</th>
+                        <th>@lang('Action')</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($customers as $c)
+                    @foreach($services as $service)
                         <tr>
-                            <td>{{ $c->name}}</td>
-                            <td>{{ $c->primary_email}}</td>
-                            <td>{{ $c->primary_phone}}</td>
-                            <td>{{ $c->town->name}}</td>
+                            <td style="text-transform: capitalize">{{$service->name}}</td>
+                            <td>{{$service->price}}</td>
+                            <td style="text-transform: capitalize">{{$service->description}}</td>
                             <td>
-                                <a href="{{ URL::to('admin/customers/'.$c->id)}}" title="Edit"><i class="icon s7-expand2"></i></a>
+                                <a href="{{ URL::to('admin/services/'.$service->id)}}" title="Edit"><i class="icon s7-expand2"></i></a>
                             </td>
                         </tr>
                     @endforeach
@@ -48,7 +46,7 @@
 @endsection
 @section('javascript')
     <script>
-        $("#customers").dataTable(
+        $("#services").dataTable(
             {
                 buttons:["copy","excel","pdf","print"],
                 lengthMenu:[[10,25,50,100,-1],[10,25,50,100,"All"]],

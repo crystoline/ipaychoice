@@ -33,6 +33,6 @@ class OfficersPermissions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('telephones');
+        Schema::dropIfExists('officers_permissions');
     }
 }

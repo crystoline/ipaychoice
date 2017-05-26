@@ -9,6 +9,6 @@ class Service extends Model
     protected $connection = 'mysql_client';
 
     protected $fillable = [
-        'name', 'price'
+        'name', 'price','description'
     ];
 }

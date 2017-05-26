@@ -12,12 +12,18 @@ class Invoice extends Model
         'invoice_no',
         'amount',
         'status',
-        'customer_id'
+        'customer_id',
+        'note',
+        'officer_id',
+        'currency_id'
     ];
     public function customer(){
-        return $this->belongsTo('App\Models\Customer');
+        return $this->belongsTo('App\Models\Clients\Customer');
     }
     public function officer(){
-        return $this->belongsTo('App\Models\Officer');
+        return $this->belongsTo('App\Models\Clients\Officer');
+    }
+    public function invoice_items() {
+        return $this->hasMany('App\Models\Clients\InvoiceItem');
     }
 }

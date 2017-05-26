@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql_client')->create('customers', function (Blueprint $table) {
+        Schema::connection('mysql_client')->create('currencies', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code',10)->unique();
             $table->string('name',100)->unique();
-            $table->string('primary_email',100)->unique();
-            $table->string('primary_phone',15)->unique();
-            $table->integer('town_id',false, true)->unsigned();
-
-            $table->foreign('town_id')->references('id')->on('towns');
-
+            $table->string('html',10)->unique();
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('currencies');
     }
 }
