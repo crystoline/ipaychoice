@@ -3,7 +3,9 @@
 @section('content')
     @php
     $email = ($email == '')? $email : $email[0]['email'];
+    $email_type = ($email == '')? 'new' : 'exists';
     $phone = ($phone == '')? $phone : $phone[0]['telephone'];
+    $phone_type = ($phone == '')? 'new' : 'exists';
     @endphp
     <div class="row">
         <div class="col-md-12">
@@ -69,7 +71,8 @@
                                 </select>
                             </div>
                         </div>
-
+                        <input type="hidden" name="email_type" value="{{$email_type}}">
+                        <input type="hidden" name="phone_type" value="{{$phone_type}}">
                         <br><br>
                         <div class="spacer text-center">
                             <button type="submit" class="btn btn-space btn-primary">@lang('Submit')</button>

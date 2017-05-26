@@ -30,16 +30,18 @@
     </div>
     <br>
     <a href="admin/new_invoice">
-    <div class="row">
-        <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
 
-    <div class="panel panel-full-alt3">
-        <div class="panel-body text-center success"><br>
-            <h2> Hello, {{$data['officer']}}. Create an Invoice Now! </h2><br>
+                <div class="panel panel-full-alt3">
+                    <div class="panel-body text-center success"><br>
+                        <h2> Hello, {{$data['officer']}}. Create an Invoice Now! </h2><br>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div></a>
-        </div>
-    </div>
+    </a>
+
 @endsection
 
 @section('javascript')
@@ -61,25 +63,35 @@
         });
     </script>
 
-     @php
-     if ($data['total_paid'] > 0) {
+    @php
+        if ($data['total_paid'] > 0) {
+           echo '<script type="text/javascript">
+               function b(){
+                   var a=[
+                           {label:"Paid Invoices",data:'.$data['total_paid'].'},
+                           {label:"Unpaid Invoices",data:'.$data['total_pend'].'}],
+                       b=tinycolor("#7accbe").lighten(5).toString(),
+                       c="#ef6262",
+                       d=App.color.alt1,
+                       e=$("#inv_chart").parent().next().find(".legend");
+                   $.plot("#inv_chart",a,{series:{pie:{show:!0,highlight:{opacity:.1}}},grid:{hoverable:!0},legend:{container:e},colors:[b,c,d]})
+               }
+               b()
+           </script>';
+        } else{
         echo '<script type="text/javascript">
-            function b(){
-                var a=[
-                        {label:"Paid Invoices",data:'.$data['total_paid'].'},
-                        {label:"Unpaid Invoices",data:'.$data['total_pend'].'}],
-                    b=tinycolor("#7accbe").lighten(5).toString(),
-                    c="#ef6262",
-                    d=App.color.alt1,
-                    e=$("#inv_chart").parent().next().find(".legend");
-                $.plot("#inv_chart",a,{series:{pie:{show:!0,highlight:{opacity:.1}}},grid:{hoverable:!0},legend:{container:e},colors:[b,c,d]})
-            }
-            b()
-        </script>';
-     } else{
-     echo '<script type="text/javascript">
-     document.getElementById("#test").innerHTML = "You have not created any invoices yet!"
-     </script>';
-     }
+               function b(){
+                   var a=[
+                           {label:"Paid Invoices",data:0},
+                           {label:"Unpaid Invoices",data:1}],
+                       b=tinycolor("#7accbe").lighten(5).toString(),
+                       c="#ef6262",
+                       d=App.color.alt1,
+                       e=$("#inv_chart").parent().next().find(".legend");
+                   $.plot("#inv_chart",a,{series:{pie:{show:!0,highlight:{opacity:.1}}},grid:{hoverable:!0},legend:{container:e},colors:[b,c,d]})
+               }
+               b()
+           </script>';
+        }
     @endphp
 @endsection

@@ -138,6 +138,10 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
         });
     });
 
-    Route::get('/invoice/{invoice_no}', ['uses'=>'Admin\InvoiceController@customer_view']);
-});
 
+});
+Route::get('/invoice/{invoice_no}', ['uses'=>'Client\Admin\InvoiceController@customer_view']);
+Route::group(['prefix' => 'api'], function(){
+    Route::get('/invoice/{invoice_no}', ['uses'=>'ApiController@get_invoice']);
+    Route::put('/invoice/{invoice_no}/update', ['uses'=>'ApiController@update_invoice']);
+});
