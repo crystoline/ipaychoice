@@ -12,6 +12,8 @@
 */
 
 
+use Illuminate\Http\Request;
+
 Route::group([ 'domain' => env('APP_DOMAIN')], function () {
 
     Auth::routes();
@@ -31,20 +33,21 @@ Route::group([ 'domain' => env('APP_DOMAIN')], function () {
         Route::get('/notfound/client',['as' =>'user.not_found.client', 'uses' => 'NotFoundController@client']);
         Route::group(['middleware' =>'UserClientDashboard'], function(){
             Route::get('/dashboard/{client}', ['as'=> 'user.client.dashboard', 'uses' => 'DashboardController@index']);
-            Route::get('/dashboard/{client}/officer/', ['as'=> 'user.client.dashboard.officers', 'uses' => 'DashboardOfficerController@index']);
-            Route::get('/dashboard/{client}/officer/{officer}', ['as'=> 'user.client.dashboard.officer', 'uses' => 'DashboardOfficerController@get']);
+            Route::get('/dashboard/{client}/officer', ['as'=> 'user.client.dashboard.officers', 'uses' => 'DashboardOfficerController@index']);
+            Route::get('/dashboard/{client}/officer/create', ['as'=> 'user.client.dashboard.officer.create', 'uses' => 'DashboardOfficerController@create']);
+            Route::get('/dashboard/{client}/officer/{id}', ['as'=> 'user.client.dashboard.officer', 'uses' => 'DashboardOfficerController@get'])
+                ->where('client', '[0-9]+', 'officer', '[0-9]+');;
             Route::get('/dashboard/{client}/officer/edit/{officer}', ['as'=> 'user.client.dashboard.officer.edit', 'uses' => 'DashboardOfficerController@edit']);
             Route::put('/dashboard/{client}/officer/{officer}', ['as'=> 'user.client.dashboard.officer.update', 'uses' => 'DashboardOfficerController@update']);
-            Route::get('/dashboard/{client}/officer/create', ['as'=> 'user.client.dashboard.officer.create', 'uses' => 'DashboardOfficerController@create']);
-            Route::post('/dashboard/{client}/officer/', ['as'=> 'user.client.dashboard.officer.store', 'uses' => 'DashboardOfficerController@store']);
-
+            Route::post('/dashboard/{client}/officer', ['as'=> 'user.client.dashboard.officer.store', 'uses' => 'DashboardOfficerController@store']);
+            Route::get('/dashboard/{client}/api/state/{id}/cities',['as' => 'user.client.dashboard.api.state.cities', 'uses' => 'ClientDashboardApiController@cities']);
 
             //Customers
             Route::get('/dashboard/{client}/customer/', ['as'=> 'user.client.dashboard.customers', 'uses' => 'DashboardCustomerController@index']);
-            Route::get('/dashboard/{client}/customer/{customer}', ['as'=> 'user.client.dashboard.customer', 'uses' => 'DashboardCustomerController@get']);
             Route::get('/dashboard/{client}/customer/create', ['as'=> 'user.client.dashboard.customer.create', 'uses' => 'DashboardCustomerController@create']);
+            Route::get('/dashboard/{client}/customer/{customer}', ['as'=> 'user.client.dashboard.customer', 'uses' => 'DashboardCustomerController@get']);
             Route::get('/dashboard/{client}/customer/edit/{customer}', ['as'=> 'user.client.dashboard.customer.edit', 'uses' => 'DashboardCustomerController@edit']);
-            Route::post('/dashboard/{client}/customer/{customer}', ['as'=> 'user.client.dashboard.customer.store', 'uses' => 'DashboardCustomerController@store']);
+            Route::post('/dashboard/{client}/customer/', ['as'=> 'user.client.dashboard.customer.store', 'uses' => 'DashboardCustomerController@store']);
             Route::put('/dashboard/{client}/customer/{customer}', ['as'=> 'user.client.dashboard.customer.update', 'uses' => 'DashboardCustomerController@update']);
 
             //Services
@@ -54,6 +57,7 @@ Route::group([ 'domain' => env('APP_DOMAIN')], function () {
             Route::get('/dashboard/{client}/service/{service}', ['as'=> 'user.client.dashboard.service', 'uses' => 'DashboardServiceController@get']);
             Route::get('/dashboard/{client}/service/edit/{service}', ['as'=> 'user.client.dashboard.service.edit', 'uses' => 'DashboardServiceController@edit']);
             Route::put('/dashboard/{client}/service/{service}', ['as'=> 'user.client.dashboard.service.update', 'uses' => 'DashboardServiceController@update']);
+            Route::delete('/dashboard/{client}/service/{service}', ['as'=> 'user.client.dashboard.service.delete', 'uses' => 'DashboardServiceController@destroy']);
 
             //Invoice
             Route::get('/dashboard/{client}/invoice/', ['as'=> 'user.client.dashboard.invoices', 'uses' => 'DashboardInvoiceController@index']);
@@ -63,13 +67,21 @@ Route::group([ 'domain' => env('APP_DOMAIN')], function () {
             Route::get('/dashboard/{client}/invoice/edit/{invoice}', ['as'=> 'user.client.dashboard.invoice.edit', 'uses' => 'DashboardInvoiceController@edit']);
             Route::put('/dashboard/{client}/invoice/{invoice}', ['as'=> 'user.client.dashboard.invoice.update', 'uses' => 'DashboardInvoiceController@update']);
 
-            //Invoice
+            //State
             Route::get('/dashboard/{client}/states', ['as'=> 'user.client.dashboard.states', 'uses' => 'DashboardLocationController@states']);
-           // Route::get('/dashboard/{client}/state/create', ['as'=> 'user.client.dashboard.state.create', 'uses' => 'DashboardLocationController@create']);
-            Route::post('/dashboard/{client}/state/', ['as'=> 'user.client.dashboard.state.store', 'uses' => 'DashboardLocationController@store']);
-          /*  Route::get('/dashboard/{client}/state/{state}', ['as'=> 'user.client.dashboard.state', 'uses' => 'DashboardLocationController@get']);
-            Route::get('/dashboard/{client}/state/edit/{state}', ['as'=> 'user.client.dashboard.state.edit', 'uses' => 'DashboardLocationController@edit']);
-            Route::put('/dashboard/{client}/state/{state}', ['as'=> 'user.client.dashboard.state.update', 'uses' => 'DashboardLocationController@update']);*/
+            Route::get('/dashboard/{client}/state/create', ['as'=> 'user.client.dashboard.state.create', 'uses' => 'DashboardLocationController@createState']);
+            Route::post('/dashboard/{client}/state/', ['as'=> 'user.client.dashboard.state.store', 'uses' => 'DashboardLocationController@storeState']);
+            Route::get('/dashboard/{client}/state/edit/{state}', ['as'=> 'user.client.dashboard.state.edit', 'uses' => 'DashboardLocationController@editState']);
+            Route::put('/dashboard/{client}/state/{state}', ['as'=> 'user.client.dashboard.state.update', 'uses' => 'DashboardLocationController@updateState']);
+            Route::delete('/dashboard/{client}/states/', ['as'=> 'user.client.dashboard.states.delete', 'uses' => 'DashboardLocationController@destroy']);
+
+            //Route::d()
+
+            Route::post('/dashboard/{client}/town', ['as'=> 'user.client.dashboard.town.store', 'uses' => 'DashboardLocationController@storeTown']);
+            Route::get('/dashboard/{client}/town/create{state}', ['as'=> 'user.client.dashboard.town.create', 'uses' => 'DashboardLocationController@createTown']);
+            Route::get('/dashboard/{client}/town/edit/{town}', ['as'=> 'user.client.dashboard.town.edit', 'uses' => 'DashboardLocationController@editTown']);
+            Route::put('/dashboard/{client}/town/{town}', ['as'=> 'user.client.dashboard.town.update', 'uses' => 'DashboardLocationController@updateTown']);
+
 
         });
 

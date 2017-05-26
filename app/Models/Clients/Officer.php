@@ -3,6 +3,7 @@
 namespace App\Models\Clients;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Officer extends Model
 {
@@ -11,9 +12,16 @@ class Officer extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'email'
+        'email',
+        'password'
     ];
     public function permissions(){
     	return $this->hasMany('App\Models\Clients\OfficersPermission');
     }
+
+    public function towns(){
+        return $this->hasManyThrough('App\Models\Clients\Town', 'App\Models\Clients\OfficersPermission', 'officer_id', 'id');
+    }
+
+
 }

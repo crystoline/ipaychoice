@@ -21,10 +21,16 @@ $(function(){
 
 
     var anchor_handler = function(e){
+
         e.preventDefault();
-        var obj = $(this);
-        var url = (obj.attr('href'))? obj.attr('href') : '';
-        var method =  'get';
+        var obj = $(this);//alert(obj);
+        var url =  '';
+        if(obj.attr('data-href')){
+            url = obj.attr('data-href');
+        }else if(obj.attr('href')){
+            url = obj.attr('href');
+        }
+            var method =  'get';
         var dst = (obj.attr('data-dst'))? obj.attr('data-dst'): '#content';
         var data = {}
 
@@ -38,7 +44,8 @@ $(function(){
 
         do_ajax(options)
         //alert(navigate_base_url + "#"+url);
-        history.pushState(options, title, '#'+get_url(url));
+        if(!obj.attr('data-temp'))
+            history.pushState(options, title, '#'+get_url(url));
 
 
     }
@@ -63,8 +70,8 @@ $(function(){
             cache: false
         }
         do_ajax(options)
-
-        history.pushState(options, title,"#"+get_url(url));
+        if(!obj.attr('data-temp'))
+            history.pushState(options, title,"#"+get_url(url));
     }
     window.addEventListener('popstate', function(e) {
         var options = e.state;
@@ -77,8 +84,10 @@ $(function(){
     });
     $(document).on('click', 'a[data-ajax=true]', anchor_handler);
     $(document).on('submit', 'form[data-ajax=true]', form_handler);
-    $(document).on('change', '#selectAll', function() {//select all check boxes
-        var checkboxes = $(this).closest('form').find(':checkbox');
+    $(document).on('change', '.selectAll', function(e) {//select all check boxes
+
+        var checkboxes = $(this).closest('table').find(':checkbox');
+        e.preventDefault
         if($(this).is(":checked:not([disabled])")) {
             checkboxes.prop('checked', true);
         } else {
@@ -102,21 +111,24 @@ $(function(e){
 })
 function do_ajax(options){
     var dest = $(options.dst);
-   // alert( options.url)
+
     options.url  = navigate_base_url + get_url(options.url)
     //alert( options.url)
     $.ajax({
         cache: false,
         url: options.url,
-        type: options.method,//type of posting the data
+        method: options.method,//type of posting the data
         data: options.data,
+
         success: function (data) {
+            //alert( dest.html())
             switch (options.attach){
                 case 'prepend': dest.prepend(data); break;
                 case 'append': dest.append(data); break;
                 case 'replace': dest.html(data); break;
                 default: dest.html(data);
             }
+            //alert( dest.html())
             //r();
         },
         error: function(xhr, ajaxOptions, thrownError){

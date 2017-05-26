@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->increments('id');
             $table->string('invoice_no',100);
             $table->decimal('amount',20,5);
-            $table->integer('status');
+            $table->integer('status')->length(1);
             $table->string('template', 100)->default('default');
             $table->integer('customer_id',false, true)->unsigned();
             $table->integer('officer_id',false, true)->unsigned();

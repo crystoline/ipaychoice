@@ -1,4 +1,5 @@
-<nav class="navbar navbar-primary navbar-trans navbar-fixed-top">
+
+<nav class="navbar  navbar-trans-dark navbar-fixed-top" style="background-color: #3b3b3b">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -10,6 +11,7 @@
 
             <!-- Logo -->
             <a class="navbar-brand" href="{{ url('')}}">
+                <img src="{{asset('img/UPPERLINK-LOGO.png')}}" width="60px" >
                 {{ env('APP_NAME') }}
                 {{--<img class="navbar-logo" src="assets/images/logo.png" alt="Logo">--}}
             </a>
