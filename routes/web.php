@@ -101,7 +101,7 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
     Route::get('/', function () {
         return '';
     });
-    Route::get('/{invoice_no}', ['uses'=>'Admin\InvoiceController@customer_view']);
+
     //All Client Admin route goes here
     Route::group(['middleware'=>'AllowClientAdmin', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){
 
@@ -137,5 +137,7 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
             Route::get('/get_service', ['as'=> 'client.admin.get_service', 'uses' => 'ServiceController@getService']);
         });
     });
+
+    Route::get('/invoice/{invoice_no}', ['uses'=>'Admin\InvoiceController@customer_view']);
 });
 

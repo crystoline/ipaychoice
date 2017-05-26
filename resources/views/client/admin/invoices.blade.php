@@ -35,7 +35,7 @@
                         <tr>
                             <td>{{$invoice->customer->name}}</td>
                             <td>{{$invoice->invoice_no}}</td>
-                            <td>₦{{round($invoice->amount,2)}}</td>
+                            <td>{{$invoice->currency->html.round($invoice->amount,2)}}</td>
                             <td>{{$invoice->officer->first_name.' '. $invoice->officer->last_name}}</td>
                             <td>{{$invoice->customer->town->name}}</td>
                             @php

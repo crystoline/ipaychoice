@@ -1,6 +1,10 @@
 @extends('client.admin.layouts.master')
 
 @section('content')
+    @php
+    $email = ($email == '')? $email : $email[0]['email'];
+    $phone = ($phone == '')? $phone : $phone[0]['telephone'];
+    @endphp
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -36,7 +40,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
                             <div class="col-sm-6">
-                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')? old('secondary_email'):''}}" class="form-control">
+                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')? old('secondary_email'): $email}}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,16 +52,19 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Secondary Phone Number')</label>
                             <div class="col-sm-6">
-                                <input type="text" placeholder="Customer Secondary Phone Number" value="{{old('secondary_phone_number')? old('secondary_phone_number'):''}}" name="secondary_phone_number" class="form-control">
+                                <input type="text" placeholder="Customer Secondary Phone Number" value="{{old('secondary_phone_number')? old('secondary_phone_number'):$phone}}" name="secondary_phone_number" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Town')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
+                                @php
+                                $selected_town = (old("town"))? old("town"):$customer->town_id;
+                                @endphp
                                 <select class="form-control" name="town" required>
                                     <option value="">@lang('Select Town')</option>
                                     @foreach ($towns as $t)
-                                        <option value="{{$t->id}}" {{ (old("town") == $t->id ? "selected":"") }} >{{$t->name}}</option>
+                                        <option value="{{$t->id}}" {{ ($selected_town == $t->id ? "selected":"") }} >{{$t->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

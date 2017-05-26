@@ -345,7 +345,8 @@
         }
 
         function populate() {
-            var customer = document.getElementById("customer").value
+            var customer = document.getElementById("customer").value;
+            var currency = document.getElementById("currency").value;
 
             if (customer != '') {
                 $.ajax({
@@ -366,8 +367,8 @@
             }
 
             document.getElementById("no_cont").innerHTML = document.getElementById("note").value;
-            document.getElementById("am_cont").innerHTML = getTotal();
-            document.getElementById("tot_cont").innerHTML = getTotal();
+            document.getElementById("am_cont").innerHTML = currency+getTotal();
+            document.getElementById("tot_cont").innerHTML = currency+getTotal();
 
             items = document.getElementsByClassName('item');
             prices = document.getElementsByClassName('price');
@@ -397,7 +398,7 @@
                 cell1.innerHTML = items[i].value;
                 cell2.innerHTML = prices[i].value;
                 cell3.innerHTML = quantities[i].value;
-                cell4.innerHTML = (prices[i].value*quantities[i].value);
+                cell4.innerHTML = currency+(prices[i].value*quantities[i].value);
             }
         }
 

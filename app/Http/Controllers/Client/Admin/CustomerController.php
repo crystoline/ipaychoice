@@ -126,19 +126,19 @@ class CustomerController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $service = Service::find($id);
-
-        $this->validate($request, [
-            'name' => 'required|string|max:100',
-            'price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
-            'description' => 'required|string',
-        ]);
-
-        $service->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-        ]);
-        return redirect()->action('Client\Admin\ServiceController@index')->with('status', 'Service updated successfully!');
+//        $service = Service::find($id);
+//
+//        $this->validate($request, [
+//            'name' => 'required|string|max:100',
+//            'price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
+//            'description' => 'required|string',
+//        ]);
+//
+//        $service->update([
+//            'name' => $request->name,
+//            'price' => $request->price,
+//            'description' => $request->description,
+//        ]);
+        return redirect()->action('Client\Admin\CustomerController@index')->with('status', 'Customer updated successfully!');
     }
 }
