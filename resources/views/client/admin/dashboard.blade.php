@@ -34,7 +34,7 @@
                                 <div data-toggle="counter" data-end="18.6" data-decimals="1" data-suffix="%" class="value">0%</div>
                                 <div class="desc">Amount Due</div>
                             </div>
-                            <div class="icon"><span class="s7-cloud-download"></span></div>
+                            <div class="icon"><span class="s7-cash"></span></div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -43,7 +43,7 @@
                                 <div data-toggle="counter" data-end="33" data-suffix="%" class="value">0%</div>
                                 <div class="desc">Amount Received</div>
                             </div>
-                            <div class="icon"><span class="s7-timer"></span></div>
+                            <div class="icon"><span class="s7-cash"></span></div>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                                 <div data-toggle="counter" data-end="156" class="value">0</div>
                                 <div class="desc">Total Customers</div>
                             </div>
-                            <div class="icon"><span class="s7-graph1"></span></div>
+                            <div class="icon"><span class="s7-users"></span></div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -63,7 +63,7 @@
                                 <div data-toggle="counter" data-decimals="1" data-end="7.5" data-suffix="K" class="value">0</div>
                                 <div class="desc">Total Services</div>
                             </div>
-                            <div class="icon"><span class="s7-like2"></span></div>
+                            <div class="icon"><span class="s7-tools"></span></div>
                         </div>
                     </div>
                 </div>
@@ -71,10 +71,10 @@
                     <div class="col-md-12">
                         <div class="widget widget-tile widget-tile-wide">
                             <div class="tile-info">
-                                <div class="icon"><span class="s7-like"></span></div>
+                                <div class="icon"><span class="s7-cash"></span></div>
                                 <div class="data-info">
-                                    <div class="title">Total Purchases</div>
-                                    <div class="desc">Monthly sales number</div>
+                                    <div class="title">Total Invoiced</div>
+                                    <div class="desc">Since Inception</div>
                                 </div>
                             </div>
                             <div class="tile-value"><span data-toggle="counter" data-decimals="2" data-end="28458" data-prefix="$">$0</span></div>

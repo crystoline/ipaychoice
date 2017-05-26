@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client\Admin;
 
 use App\Http\Requests\Client\Admin\InvoiceRequest;
+use App\Models\Clients\Currency;
 use App\Models\Clients\InvoiceItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,6 +12,7 @@ use App\Models\Clients\Officer;
 use App\Models\Clients\Customer;
 use App\Models\Clients\Service;
 use App\Models\Clients\Town;
+use Illuminate\Support\Facades\Mail;
 use Session;
 
 class InvoiceController extends Controller
@@ -40,9 +42,10 @@ class InvoiceController extends Controller
     	$customers = Customer::whereIn('town_id',$towns_array)->get();
         $towns = Town::whereIn('id',$towns_array)->get();
     	$services = Service::all();
+    	$currencies = Currency::all();
 
     	$invoice_no = '30'.time().rand(100,999);
-        return view('client.admin.new_invoice',['customers' => $customers,'services' => $services,'towns'=>$towns,'invoice_no'=>$invoice_no]);
+        return view('client.admin.new_invoice',['customers' => $customers,'services' => $services,'towns'=>$towns,'invoice_no'=>$invoice_no,'currencies'=>$currencies]);
     }
 
     public function store(InvoiceRequest $request) {
@@ -74,7 +77,8 @@ class InvoiceController extends Controller
             'status' => 0,
             'note' => $request->note,
             'customer_id' => $request->customer,
-            'officer_id' => Session::get('client_admin_officer')->id
+            'officer_id' => Session::get('client_admin_officer')->id,
+            'currency_id' => $request->currency
         ]);
 
         $invoice_id = $invoice->id;
@@ -87,6 +91,15 @@ class InvoiceController extends Controller
                 'invoice_id' =>$invoice_id
             ]);
         }
+
+        $invoice_view = Invoice::with('customer.town.state','invoice_items.service')->find($invoice_id)->toArray();;
+        $customer = Customer::find($request->customer);
+
+        Mail::send('client.emails.invoice', ['invoice' => $invoice_view], function ($m) use ($invoice_id) {
+            $m->from('ashprivy@gmail.com','BAP');
+            $m->to($customer->primary_email,$customer->name)->subject('Innovexi sent you an Invoice'.);
+        });
+
         return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created and sent successfully!');
     }
 }

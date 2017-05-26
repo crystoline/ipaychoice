@@ -36,7 +36,9 @@
                             <td>₦{{round($invoice->amount,2)}}</td>
                             <td>{{$invoice->officer->first_name.' '. $invoice->officer->last_name}}</td>
                             <td>{{$invoice->customer->town->name}}</td>
-                            <td>{{($invoice->status == 0)? "Not Paid":"Paid"}}</td>
+                            @php
+                                echo ($invoice->status == 0)? "<td><span class='label label-danger'>Pending</span></td>":"<span class='label label-success'>Paid</span></td>";
+                            @endphp
                             <td>{{$invoice->created_at}}</td>
                             <td>
                                 <a href="{{ URL::to('admin/invoices/'.$invoice->id)}}"><i class="icon s7-next-2"></i></a>

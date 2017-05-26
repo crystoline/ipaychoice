@@ -22,9 +22,11 @@ class CreateInvoicesTable extends Migration
             $table->string('note',255)->nullable();
             $table->integer('customer_id',false, true)->unsigned();
             $table->integer('officer_id',false, true)->unsigned();
+            $table->integer('currency_id',false, true)->unsigned();
 
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('officer_id')->references('id')->on('officers');
+            $table->foreign('currency_id')->references('id')->on('currencies');
             $table->timestamps();
         });
     }

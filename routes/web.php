@@ -87,7 +87,7 @@ Route::group([ 'domain' => env('APP_DOMAIN')], function () {
 Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namespace' => 'Client'], function () {
 
     Route::get('/', function () {
-        return 'I am client';
+        return '';
     });
     //All Client Admin route goes here
     Route::group(['middleware'=>'AllowClientAdmin', 'prefix' => 'admin', 'namespace' => 'Admin'], function(){

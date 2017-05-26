@@ -32,7 +32,7 @@
                             <label class="col-sm-3 control-label">@lang('Customer')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <select class="form-control" name="customer" required id="customer">
-                                    <option value="">Select Customer</option>
+                                    <option value="">@lang('Select Customer')</option>
                                     @foreach ($customers as $c)
                                         <option value="{{$c->id}}" {{ (old("customer") == $c->id ? "selected":"") }} >{{$c->name}}</option>
                                     @endforeach
@@ -47,7 +47,7 @@
                             <div class="panel-heading">
                                 <h4>All Invoice Items</h4>
                             </div>
-
+                            <div id="all_items"></div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">@lang('Add new Item')<span class='text-danger'>*</span></label>
                                 <div class="col-sm-6">
@@ -63,11 +63,19 @@
                                     </datalist>
                                 </div>
                             </div>
-
-                            <div id="all_items"></div>
                         </div>
 
-
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Currency')<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <select class="form-control" name="currency" required id="currency">
+                                    <option value="">@lang('Select Currency')</option>
+                                    @foreach ($currencies as $c)
+                                        <option value="{{$c->id}}" {{ (old("currency") == $c->id ? "selected":"") }} >{{$c->name}} ({{$c->code}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Additional Notes</label>
@@ -75,8 +83,6 @@
                                 <textarea class="form-control" id="note" placeholder="Additional Notes for the Customer" name="note" maxlength="355">{{  old('note') }}</textarea>
                             </div>
                         </div>
-
-                        <input type="hidden" name="total" value="">
 
                         <br>
                         <div class="spacer text-center">
