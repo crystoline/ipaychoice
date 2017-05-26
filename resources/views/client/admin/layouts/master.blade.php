@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/datetimepicker/css/bootstrap-datetimepicker.min.css')}}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('client_assets/admin/lib/jquery.niftymodals/css/component.css')}}"/>
+    <script src="{{ asset('client_assets/admin/lib/morrisjs/morris.min.js')}}" type="text/javascript"></script>
     <link type="text/css" href="{{ asset('client_assets/admin/css/style.css')}}" rel="stylesheet">
     @yield('stylesheets')
     <link type="text/css" href="{{ asset('client_assets/admin/css/themes/theme-google.css')}}" rel="stylesheet">

@@ -8,6 +8,7 @@
     <title>Grids Master Template</title>
 
     <style type="text/css">
+        a {text-decoration: none}
         .btn-rounded {
             border-radius: 3px;
         }
@@ -111,9 +112,9 @@
 
 <div class=" text-center">
                 <br><br><h3>Innovexi Group sent you an invoice for {{$invoice['currency']['html'].round($invoice['amount'],2)}}</h3><br><br>
-                <a class=" text-center btn btn-space btn-primary btn-rounded" href="{{env('APP_DOMAIN')}}/{{$invoice['invoice_no']}}">View Your Invoice</a>
+                <a class=" text-center btn-rounded btn btn-space btn-primary" href="{{$subdomain}}.{{env('APP_DOMAIN')}}/invoice/{{$invoice['invoice_no']}}">View Your Invoice</a>
                 </div>
-
+<br><br><br>
                 <table style="color:#fff" width="640" cellpadding="0" cellspacing="0" border="0" class="wrapper footer" bgcolor="#1c3061">
                     <tr>
                         <td height="10" style="border: none;font-size:10px; line-height:10px;">&nbsp;</td>

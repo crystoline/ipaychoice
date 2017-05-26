@@ -24,12 +24,12 @@ class InvoiceController extends Controller
     }
 
     public function show($id) {
-        $invoice = Invoice::with('customer.town.state','invoice_items.service')->find($id)->toArray();
+        $invoice = Invoice::with('customer.town.state','invoice_items.service','currency')->find($id)->toArray();
         return view('client.admin.show_invoice',['invoice' => $invoice]);
     }
 
     public function customer_view($invoice_no) {
-        $invoice = Invoice::with('customer.town.state','invoice_items.service')->whereInvoiceNo($invoice_no)->first()->toArray();
+        $invoice = Invoice::with('customer.town.state','invoice_items.service','currency')->whereInvoiceNo($invoice_no)->first()->toArray();
         return view('client.admin.customer_invoice',['invoice' => $invoice]);
     }
 
@@ -100,7 +100,10 @@ class InvoiceController extends Controller
         $invoice_view = Invoice::with('currency')->find($invoice_id)->toArray();
         $customer = Customer::find($request->customer);
 
-        Mail::send('client.emails.invoice', ['invoice' => $invoice_view], function ($m) use ($customer) {
+        $config = Session::get('client.configuration')->toArray();
+        $subdomain = $config['subdomain'];
+
+        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain], function ($m) use ($customer) {
             $m->from('aisha.alimi@upperlink.ng','Innovexi');
             $m->to($customer->primary_email,$customer->name)->subject('Innovexi sent you an Invoice');
         });

@@ -35,11 +35,11 @@
                         <tr>
                             <td>{{$invoice->customer->name}}</td>
                             <td>{{$invoice->invoice_no}}</td>
-                            <td>₦{{round($invoice->amount,2)}}</td>
+                            <td>{{$invoice->currency->html.round($invoice->amount,2)}}</td>
                             <td>{{$invoice->officer->first_name.' '. $invoice->officer->last_name}}</td>
                             <td>{{$invoice->customer->town->name}}</td>
                             @php
-                                echo ($invoice->status == 0)? "<td><span class='label label-danger'>Pending</span></td>":"<span class='label label-success'>Paid</span></td>";
+                                echo ($invoice->status == 0)? "<td><span class='label label-danger'>Pending</span></td>":"<td><span class='label label-success'>Paid</span></td>";
                             @endphp
                             <td>{{$invoice->created_at}}</td>
                             <td>

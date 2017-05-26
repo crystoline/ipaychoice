@@ -48,5 +48,7 @@ class Clients extends Seeder
             });
         factory(App\Models\Clients\Service::class,3)->create();
 
+        DB::table('currencies')->insert(['name'=>'Naira','code'=>'NGN','html'=>'&#8358;']);
+        DB::table('currencies')->insert(['name'=>'US Dollar','code'=>'USD','html'=>'&#36;']);
     }
 }

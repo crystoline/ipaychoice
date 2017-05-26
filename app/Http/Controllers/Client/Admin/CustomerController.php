@@ -126,19 +126,45 @@ class CustomerController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $service = Service::find($id);
+        $customer = Customer::find($id);
 
         $this->validate($request, [
-            'name' => 'required|string|max:100',
-            'price' => 'required|regex:/^\d*(\.\d{1,2})?$/',
-            'description' => 'required|string',
+            'name' => 'required|string|max:255',
+            'primary_email' => 'required|email|max:255',
+            'secondary_email' => 'sometimes|nullable|email|max:255',
+            'primary_phone' => 'required|max:15',
+            'secondary_phone_number' => 'sometimes|nullable|max:15',
+            'town' => 'required|string|max:20|exists:mysql_client.towns,id',
         ]);
 
-        $service->update([
+        if ($request->email_type == 'new') {
+            $customer->email()->create([
+                'email' => $request->secondary_email
+            ]);
+        } else {
+            $customer->email()->update([
+                'email' => $request->secondary_email
+            ]);
+        }
+
+        if ($request->phone_type == 'new') {
+            $customer->telephone()->create([
+                'telephone' => $request->secondary_phone_number
+            ]);
+        } else {
+            $customer->telephone()->update([
+                'telephone' => $request->secondary_phone_number
+            ]);
+        }
+
+        $customer->update([
             'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
+            'primary_email' => $request->primary_email,
+            'primary_phone' => $request->primary_phone,
+            'town_id' => $request->town,
         ]);
-        return redirect()->action('Client\Admin\ServiceController@index')->with('status', 'Service updated successfully!');
+
+
+        return redirect()->action('Client\Admin\CustomerController@index')->with('status', 'Customer updated successfully!');
     }
 }
