@@ -137,7 +137,7 @@ class CustomerController extends Controller
             'town' => 'required|string|max:20|exists:mysql_client.towns,id',
         ]);
 
-        if ($request->email_type == 'new') {
+        if (($request->email_type == 'new') && ($request->secondary_email)) {
             $customer->email()->create([
                 'email' => $request->secondary_email
             ]);
@@ -147,7 +147,7 @@ class CustomerController extends Controller
             ]);
         }
 
-        if ($request->phone_type == 'new') {
+        if (($request->phone_type == 'new') && ($request->secondary_phone_number)) {
             $customer->telephone()->create([
                 'telephone' => $request->secondary_phone_number
             ]);
