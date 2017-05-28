@@ -104,8 +104,8 @@ class InvoiceController extends Controller
         $subdomain = $config['subdomain'];
 
         Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain], function ($m) use ($customer) {
-            $m->from('aisha.alimi@upperlink.ng','Innovexi');
-            $m->to($customer->primary_email,$customer->name)->subject('Innovexi sent you an Invoice');
+            $m->from('support@ipaychoice.com',Session::get('client.configuration')->client->name);
+            $m->to($customer->primary_email,$customer->name)->subject(Session::get('client.configuration')->client->name.' sent you an Invoice');
         });
 
         return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created and sent successfully!');

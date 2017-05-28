@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="invoice-title">
-                            <h2>Invoice</h2><h1 class="pull-right"><b>INNOVEXI</b></h1>
+                            <h2>Invoice</h2><h2 class="pull-right"><b>{{Session::get('client.configuration')->client->name}}</b></h2>
                         </div>
                         <hr>
                         <div class="row">

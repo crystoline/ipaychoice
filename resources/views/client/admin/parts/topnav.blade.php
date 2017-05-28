@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="navbar-header">
-        <div class="page-title"><span>Dashboard</span></div><a href="#" class="am-toggle-left-sidebar navbar-toggle collapsed"><span class="icon-bar"><span></span><span></span><span></span></span></a><a href="index-2.html" class="navbar-brand"></a>
+        <div class="page-title"><span>Dashboard</span></div><a href="#" class="am-toggle-left-sidebar navbar-toggle collapsed"><span class="icon-bar"><span></span><span></span><span></span></span></a><a href="#" class="navbar-brand"></a>
     </div>
 
     <!-- <a href="#" class="am-toggle-right-sidebar"><span class="icon s7-menu2"></span></a><a href="#" data-toggle="collapse" data-target="#am-navbar-collapse" class="am-toggle-top-header-menu collapsed"><span class="icon s7-angle-down"></span></a> -->
@@ -15,7 +15,9 @@
                 </ul>
             </li>
         </ul>
-
+        <ul class="nav navbar-nav am-nav-right">
+            <li style="margin-top: 10px"><a><h2>{{Session::get('client.configuration')->client->name}}</h2></a></li>
+        </ul>
 
     </div>
     
