@@ -24,6 +24,7 @@
         .am-wrapper {
             min-height: 100%;
             padding-top: 30px;
+            margin: 0px 100px;
         }
         .invoice-title h2, .invoice-title h1 {
             display: inline-block;
@@ -49,7 +50,7 @@
 <body>
 <div class=" text-center">
 <button type="button" class=" text-center btn btn-space btn-primary btn-rounded" onclick="window.print()"><i class="icon icon-left s7-print"></i> Print</button>
-    <button type="button" class=" text-center btn btn-space btn-primary btn-rounded" id="download"><i class="icon icon-left s7-cloud-download"></i>Download PDF</button>
+    {{--<button type="button" class=" text-center btn btn-space btn-primary btn-rounded" id="download"><i class="icon icon-left s7-cloud-download"></i>Download PDF</button>--}}
 </div>
 <div class="am-wrapper">
 
@@ -59,7 +60,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="invoice-title">
-                            <h2>Invoice</h2><h1 class="pull-right"><b>INNOVEXI</b></h1>
+                            <h2>Invoice</h2><h2 class="pull-right"><b>{{$client}}</b></h2>
                         </div>
                         <hr>
                         <div class="row">

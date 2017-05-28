@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client\Admin;
 
 use App\Http\Requests\Client\Admin\InvoiceRequest;
+use App\Models\Client;
 use App\Models\Clients\Currency;
 use App\Models\Clients\InvoiceItem;
 use Illuminate\Http\Request;
@@ -28,9 +29,10 @@ class InvoiceController extends Controller
         return view('client.admin.show_invoice',['invoice' => $invoice]);
     }
 
-    public function customer_view($invoice_no) {
+    public function customer_view($id,$invoice_no) {
+        $client = Client::find($id)->name;
         $invoice = Invoice::with('customer.town.state','invoice_items.service','currency')->whereInvoiceNo($invoice_no)->first()->toArray();
-        return view('client.admin.customer_invoice',['invoice' => $invoice]);
+        return view('client.admin.customer_invoice',['invoice' => $invoice,'client'=>$client]);
     }
 
     public function create()
@@ -100,10 +102,11 @@ class InvoiceController extends Controller
         $invoice_view = Invoice::with('currency')->find($invoice_id)->toArray();
         $customer = Customer::find($request->customer);
 
-        $config = Session::get('client.configuration')->toArray();
-        $subdomain = $config['subdomain'];
+        $config = Session::get('client.configuration');
+        $subdomain = $config->subdomain;
+        $client = $config->client->id;
 
-        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain], function ($m) use ($customer) {
+        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain, 'client' => $client], function ($m) use ($customer) {
             $m->from('support@ipaychoice.com',Session::get('client.configuration')->client->name);
             $m->to($customer->primary_email,$customer->name)->subject(Session::get('client.configuration')->client->name.' sent you an Invoice');
         });
