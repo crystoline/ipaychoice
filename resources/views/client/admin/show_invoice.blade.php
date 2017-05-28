@@ -56,7 +56,7 @@
                                     <table class="table table-responsive table-condensed">
                                         <tr><td> <strong>Invoice No:</strong></td><td class="text-left">{{$invoice['invoice_no']}}</td></tr>
                                         <tr><td><strong>Invoice Date</strong></td><td class="text-left">{{$date}}</td></tr>
-                                        <tr><td><strong>Amount Due</strong></td><td class="text-left">{{$invoice['currency']['html'].round($invoice['amount'],2)}}</td></tr>
+                                        <tr><td><strong>Amount Due</strong></td><td class="text-left">{{$invoice['currency']['html'].number_format($invoice['amount'],2)}}</td></tr>
                                     </table>
                                     <br>    <br>   <br><br>
                                 </div>
@@ -86,16 +86,16 @@
                                         @foreach($invoice['invoice_items'] as $i)
                                             <tr>
                                                 <td>{{$i['service']['name']}}</td>
-                                                <td class="text-right">{{$invoice['currency']['html'].round($i['amount'],2)}}</td>
+                                                <td class="text-right">{{$invoice['currency']['html'].number_format($i['amount'],2)}}</td>
                                                 <td class="text-right">{{$i['quantity']}}</td>
-                                                <td class="text-right">{{$invoice['currency']['html'].round(($i['amount'] * $i['quantity']),2)}}</td>
+                                                <td class="text-right">{{$invoice['currency']['html'].number_format(($i['amount'] * $i['quantity']),2)}}</td>
                                             </tr>
                                         @endforeach
                                         <tr>
                                             <td class="thick-line"></td>
                                             <td class="thick-line"></td>
                                             <td class="thick-line text-right"><strong>Subtotal</strong></td>
-                                            <td class="thick-line text-right">{{$invoice['currency']['html'].round($invoice['amount'],2)}}</td>
+                                            <td class="thick-line text-right">{{$invoice['currency']['html'].number_format($invoice['amount'],2)}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

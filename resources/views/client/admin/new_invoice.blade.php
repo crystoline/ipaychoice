@@ -71,7 +71,7 @@
                                 <select class="form-control" name="currency" required id="currency">
                                     <option value="">@lang('Select Currency')</option>
                                     @foreach ($currencies as $c)
-                                        <option value="{{$c->id}}" {{ (old("currency") == $c->id ? "selected":"") }} >{{$c->name}} ({{$c->code}})</option>
+                                        <option value="{{$c->id}}" {{ (old("currency") == $c->id ? "selected":"") }} >{{$c->name}} ({{$c->html}})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -346,7 +346,17 @@
 
         function populate() {
             var customer = document.getElementById("customer").value;
-            var currency = document.getElementById("currency").value;
+            var currency = document.getElementById('currency').options[document.getElementById('currency').selectedIndex].text;
+
+            if (currency != 'Select Currency'){
+                currency = currency.split("(");
+                currency = currency[1];
+                currency = currency.split(")");
+                currency = currency[0];
+            } else {
+                currency = '';
+            }
+
 
             if (customer != '') {
                 $.ajax({
@@ -367,8 +377,8 @@
             }
 
             document.getElementById("no_cont").innerHTML = document.getElementById("note").value;
-            document.getElementById("am_cont").innerHTML = currency+getTotal();
-            document.getElementById("tot_cont").innerHTML = currency+getTotal();
+            document.getElementById("am_cont").innerHTML = currency+getTotal().toLocaleString();
+            document.getElementById("tot_cont").innerHTML = currency+getTotal().toLocaleString();
 
             items = document.getElementsByClassName('item');
             prices = document.getElementsByClassName('price');
@@ -396,9 +406,9 @@
                 cell4.style.textAlign = 'right';
 
                 cell1.innerHTML = items[i].value;
-                cell2.innerHTML = prices[i].value;
+                cell2.innerHTML = currency+(prices[i].value).toLocaleString();
                 cell3.innerHTML = quantities[i].value;
-                cell4.innerHTML = currency+(prices[i].value*quantities[i].value);
+                cell4.innerHTML = currency+(prices[i].value*quantities[i].value).toLocaleString();
             }
         }
 
