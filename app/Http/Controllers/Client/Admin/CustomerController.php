@@ -43,9 +43,9 @@ class CustomerController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:255',
-            'primary_email' => 'required|unique:mysql_client.customers|email|max:255',
+            'primary_email' => 'required|email|max:255',
             'secondary_email' => 'sometimes|nullable|email|max:255',
-            'primary_phone' => 'required|max:15|unique:mysql_client.customers',
+            'primary_phone' => 'required|max:15',
             'secondary_phone_number' => 'sometimes|nullable|max:15',
             'town' => 'required|string|max:20|exists:mysql_client.towns,id',
         ]);
@@ -72,9 +72,9 @@ class CustomerController extends Controller
     public function customer_ajax(Request $request) {
         $validator = Validator::make($request->toArray(), [
             'name' => 'required|string|max:255',
-            'primary_email' => 'required|unique:mysql_client.customers|email|max:255',
+            'primary_email' => 'required|email|max:255',
             'secondary_email' => 'sometimes|nullable|email|max:255',
-            'primary_phone' => 'required|max:15|unique:mysql_client.customers',
+            'primary_phone' => 'required|max:15',
             'secondary_phone_number' => 'sometimes|nullable|max:15',
             'town' => 'required|string|max:20|exists:mysql_client.towns,id',
         ]);
@@ -88,13 +88,17 @@ class CustomerController extends Controller
             'town_id' => $request->town,
         ]);
 
-        $customer->email()->create([
-            'email' => $request->secondary_email
-        ]);
+        if ($request->secondary_email) {
+            $customer->email()->create([
+                'email' => $request->secondary_email
+            ]);
+        }
 
-        $customer->telephone()->create([
-            'telephone' => $request->secondary_phone_number
-        ]);
+        if ($request->secondary_phone_number) {
+            $customer->telephone()->create([
+                'telephone' => $request->secondary_phone_number
+            ]);
+        }
 
         $customer_id = $customer->id;
         $customer_name = $customer->name;

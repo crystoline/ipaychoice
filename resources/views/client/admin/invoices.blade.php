@@ -17,6 +17,11 @@
                         <br><br><p>You've not added any invoice yet.</p>
                     @else
                 </div>
+                <div role="alert" class="alert alert-success alert-dismissible" id="alert" style="display: none">
+                    <button type="button" data-dismiss="alert" aria-label="Close" class="close">
+                        <span aria-hidden="true" class="s7-close"></span></button>
+
+                </div>
                 <table id="invoices" class="table table-striped table-hover table-fw-widget">
                     <thead>
                     <tr class="success">
@@ -27,7 +32,7 @@
                         <th>@lang('Location')</th>
                         <th>@lang('Status')</th>
                         <th>@lang('Date Created')</th>
-                        <th>@lang('Action')</th>
+                        <th>@lang('Actions')</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,7 +48,8 @@
                             @endphp
                             <td>{{$invoice->created_at}}</td>
                             <td>
-                                <a href="{{ URL::to('admin/invoices/'.$invoice->id)}}"><i class="icon s7-next-2"></i></a>
+                                <a href="{{ URL::to('admin/invoices/'.$invoice->id)}}" class="badge badge-warning">View</a>
+                                <a href="javascript:void(0);" id="send" class="badge badge-info" onclick="send_invoice({{$invoice->id}})">Send</a>
                             </td>
                         </tr>
                     @endforeach
@@ -52,7 +58,8 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div><div id="loader" style="display: none"><img src="{{ asset('client_assets/admin/img/loading.gif')}}"></div>
+
 @endsection
 @section('javascript')
     <script>
@@ -63,5 +70,24 @@
                 lengthMenu:[[10,25,50,100,-1],[10,25,50,100,"All"]],
                 dom:"<'row am-datatable-header'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4 text-right'frt>><'row am-datatable-body'<'col-sm-12'tr>><'row am-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
             });
+
+        function send_invoice(id) {
+            document.getElementById("alert").innerHTML = document.getElementById("loader").innerHTML+' Sending';
+            document.getElementById("alert").style.display = 'block';
+            $.ajax({
+            method: 'GET',
+                url: '/admin/ajax_send_invoice',
+                data: {'id': id},
+                success: function (response) {
+                    document.getElementById("alert").innerHTML = 'Invoice successfully sent to customer';
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+            })
+        }
     </script>
+
+
 @endsection

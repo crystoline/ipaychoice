@@ -62,6 +62,7 @@
                                         @endforeach
                                     </datalist>
                                 </div>
+                                <div style="margin-top:10px;" class="col-sm-1" id="item_loader"></div>
                             </div>
                         </div>
 
@@ -106,6 +107,7 @@
                     </div>
 
                     <div class="modal-body form">
+                        <div id="cus_loader" class="text-center"></div>
                         <div id="errors" class="text-danger"></div>
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -195,12 +197,14 @@
                                 <div class="col-xs-12">
                                     <div class="col-xs-6">
                                         <table class="table table-responsive table-condensed">
-                                            <tr><td><strong>Billed to:</strong></td></tr>
+                                            <tr><td><strong>Billed to: </strong><span id="biller_loader"></span></td></tr>
+
                                             <tr><td id="name_cont"></td></tr>
                                             <tr><td id="em_cont"></td></tr>
                                             <tr><td id="ph_cont"></td></tr>
                                             <tr><td id="to_cont"></td></tr>
                                         </table>
+
                                     </div>
                                     <div class="col-xs-2 text-right"></div>
                                     <div class="col-xs-4 text-right">
@@ -253,7 +257,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div><div id="loader" style="display: none"><img src="{{ asset('client_assets/admin/img/loading.gif')}}"></div>
 @endsection
 @section('javascript')
     <script>
@@ -263,6 +267,7 @@
         nextDocument = 1;
         allDocuments = 0;
         function addItem(){
+            document.getElementById("item_loader").innerHTML = document.getElementById("loader").innerHTML;
             var item = document.getElementById("item_select").value;
 
             if (item == '') {
@@ -311,6 +316,7 @@
                             console.log(e);
                             console.log("An error occurred while trying to add a new specimen.");
                         }
+                        document.getElementById("item_loader").innerHTML = '';
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
@@ -359,6 +365,7 @@
 
 
             if (customer != '') {
+                document.getElementById("biller_loader").innerHTML = document.getElementById("loader").innerHTML;
                 $.ajax({
                     method: 'GET',
                     url: '/admin/ajax_get_customer',
@@ -368,6 +375,7 @@
                         document.getElementById("em_cont").innerHTML = response['primary_email'];
                         document.getElementById("ph_cont").innerHTML = response['primary_phone'];
                         document.getElementById("to_cont").innerHTML = response['town']['name']+', '+response['town']['state']['name']+'.';
+                        document.getElementById("biller_loader").innerHTML = '';
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
@@ -413,6 +421,7 @@
         }
 
         function new_customer() {
+            document.getElementById("cus_loader").innerHTML = document.getElementById("loader").innerHTML;
             var request = $('#customer_form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
@@ -441,6 +450,7 @@
                         $("#close").click();
                         document.getElementById("customer_form").reset();
                         document.getElementById("errors").innerHTML = '';
+                        document.getElementById("cus_loader").innerHTML = '';
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {

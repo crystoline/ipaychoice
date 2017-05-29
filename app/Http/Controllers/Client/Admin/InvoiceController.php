@@ -51,7 +51,9 @@ class InvoiceController extends Controller
     	$services = Service::all();
     	$currencies = Currency::all();
 
-    	$invoice_no = '30'.time().rand(100,999);
+    	$now = date('Y-m-d-H-i-s');
+    	$now = explode('-',$now);
+    	$invoice_no = implode('',$now).rand(10,99);
         return view('client.admin.new_invoice',['customers' => $customers,'services' => $services,'towns'=>$towns,'invoice_no'=>$invoice_no,'currencies'=>$currencies]);
     }
 
@@ -98,9 +100,11 @@ class InvoiceController extends Controller
                 'invoice_id' =>$invoice_id
             ]);
         }
-
-        $invoice_view = Invoice::with('currency')->find($invoice_id)->toArray();
-        $customer = Customer::find($request->customer);
+        return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created successfully!');
+    }
+    public function send_invoice(Request $request) {
+        $invoice_view = Invoice::with('currency')->find($request->id)->toArray();
+        $customer = Customer::find($invoice_view['customer_id']);
 
         $config = Session::get('client.configuration');
         $subdomain = $config->subdomain;
@@ -110,7 +114,5 @@ class InvoiceController extends Controller
             $m->from('support@ipaychoice.com',Session::get('client.configuration')->client->name);
             $m->to($customer->primary_email,$customer->name)->subject(Session::get('client.configuration')->client->name.' sent you an Invoice');
         });
-
-        return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created and sent successfully!');
     }
 }
