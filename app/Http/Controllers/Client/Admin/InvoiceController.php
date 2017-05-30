@@ -87,7 +87,8 @@ class InvoiceController extends Controller
             'note' => $request->note,
             'customer_id' => $request->customer,
             'officer_id' => Session::get('client_admin_officer')->id,
-            'currency_id' => $request->currency
+            'currency_id' => $request->currency,
+            'invoice_due_date' =>$request->invoice_due_date
         ]);
 
         $invoice_id = $invoice->id;
@@ -110,9 +111,13 @@ class InvoiceController extends Controller
         $subdomain = $config->subdomain;
         $client = $config->client->id;
 
-        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain, 'client' => $client], function ($m) use ($customer) {
-            $m->from('support@ipaychoice.com',Session::get('client.configuration')->client->name);
-            $m->to($customer->primary_email,$customer->name)->subject(Session::get('client.configuration')->client->name.' sent you an Invoice');
+        $emails = [];
+        $emails[] = $customer->primary_email;
+        if ($customer->secondary_email) {$emails[] = $customer->secondary_email;}
+
+        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain, 'client' => $client], function ($m) use ($emails) {
+            $m->from(env('MAIL_USERNAME','support@ipaychoice.com'),Session::get('client.configuration')->client->name);
+            $m->to($emails)->subject(Session::get('client.configuration')->client->name.' sent you an Invoice');
         });
     }
 }

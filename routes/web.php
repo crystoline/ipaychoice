@@ -143,7 +143,7 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
 
     Route::group(['prefix' => 'api'], function(){
         Route::get('/invoice/{invoice_no}', ['uses'=>'ApiController@get_invoice']);
-        Route::put('/invoice/{invoice_no}/update', ['uses'=>'ApiController@update_invoice']);
+        Route::post('/invoice/{invoice_no}/update', ['uses'=>'ApiController@update_invoice']);
     });
 });
 

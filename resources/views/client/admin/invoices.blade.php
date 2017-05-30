@@ -22,6 +22,20 @@
                         <span aria-hidden="true" class="s7-close"></span></button>
 
                 </div>
+                <form style="border-radius: 0px;" class="form-horizontal group-border-dashed">
+                    <div class="form-group">
+                        <div class="col-sm-7"></div>
+                        <label class="col-sm-2 control-label">@lang('Filter by Status')</label>
+                        <div class="col-sm-3">
+                            <select class="form-control input-sm" id="status" style="margin-top: 5px;">
+                                <option value="" selected>--All Invoice Status--</option>
+                                <option value='Pending'>Pending</option>
+                                <option value='Paid'>Paid</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
                 <table id="invoices" class="table table-striped table-hover table-fw-widget">
                     <thead>
                     <tr class="success">
@@ -63,7 +77,7 @@
 @endsection
 @section('javascript')
     <script>
-        $("#invoices").dataTable(
+        var table = $("#invoices").dataTable(
             {
                 "order": [[ 6, "desc" ]],
                 buttons:["copy","excel","pdf","print"],
@@ -87,6 +101,14 @@
                 }
             })
         }
+
+        $("#status").on('change', function(){
+            var v = $(this).val();
+            table
+                .api().columns(5)
+                .search(v)
+                .draw();
+        });
     </script>
 
 

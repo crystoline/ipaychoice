@@ -27,6 +27,7 @@ class InvoiceRequest extends FormRequest
             'item.*' => 'required',
             'desc.*' => 'required',
             'customer' => 'required',
+            'invoice_due_date' => 'required'
         ];
     }
 

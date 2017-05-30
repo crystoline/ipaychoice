@@ -12,7 +12,9 @@ class Customer extends Model
         'name',
         'primary_email',
         'primary_phone',
-        'town_id'
+        'town_id',
+        'primary_contact_name',
+        'secondary_contact_name'
     ];
 
     public function telephone() {

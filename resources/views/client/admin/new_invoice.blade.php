@@ -29,6 +29,15 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Invoice Due Date<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <div data-min-view="2" data-date-format="yyyy-mm-dd" class="input-group date datetimepicker1 col-md-5 col-xs-7">
+                                    <input id="due" name="invoice_due_date" size="16" type="text" value="{{old('invoice_due_date')}}" class="form-control"><span class="input-group-addon btn btn-primary"><i class="icon-th s7-date"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Customer')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <select class="form-control" name="customer" required id="customer">
@@ -117,21 +126,33 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Primary Contact Name')<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Primary Contact Name" value="{{old('primary_contact_name')}}" name="primary_contact_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Email')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="email" placeholder="Customer Primary Email" value="{{old('primary_email')}}" name="primary_email" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
-                            <div class="col-sm-6">
-                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Phone Number')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="text" placeholder="Customer Primary Phone Number" value="{{old('primary_phone')}}" name="primary_phone" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Contact Name')</label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Secondary Contact Name" value="{{old('secondary_contact_name')}}" name="secondary_contact_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
+                            <div class="col-sm-6">
+                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -210,8 +231,9 @@
                                     <div class="col-xs-4 text-right">
                                         <table class="table table-responsive table-condensed">
                                             <tr><td> <strong>Invoice No:</strong></td><td class="text-left">{{$invoice_no}}</td></tr>
-                                            <tr><td><strong>Invoice Date</strong></td><td class="text-left">{{date('d-m-Y')}} </td></tr>
-                                            <tr><td><strong>Amount Due</strong></td><td class="text-left" id="am_cont"> </td></tr>
+                                            <tr><td><strong>Invoice Date:</strong></td><td class="text-left">{{date('Y-m-d')}} </td></tr>
+                                            <tr><td><strong>Due Date:</strong></td><td class="text-left" id="du_cont"></td></tr>
+                                            <tr><td><strong>Amount Due:</strong></td><td class="text-left" id="am_cont"> </td></tr>
                                         </table>
                                         <br>    <br>   <br><br>
                                     </div>
@@ -385,6 +407,8 @@
             }
 
             document.getElementById("no_cont").innerHTML = document.getElementById("note").value;
+            document.getElementById("du_cont").innerHTML = document.getElementById("due").value;
+
             document.getElementById("am_cont").innerHTML = currency+getTotal().toLocaleString();
             document.getElementById("tot_cont").innerHTML = currency+getTotal().toLocaleString();
 
@@ -459,5 +483,8 @@
                 }
             })
         }
+
+        $(".datetimepicker1").datetimepicker(
+            {startDate: new Date(),autoclose:!0,componentIcon:".s7-date",navIcons:{rightIcon:"s7-angle-right",leftIcon:"s7-angle-left"}})
     </script>
 @endsection

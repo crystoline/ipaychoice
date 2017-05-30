@@ -42,21 +42,28 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255|unique:mysql_client.customers',
-            'primary_email' => 'required|email|max:255',
-            'secondary_email' => 'sometimes|nullable|email|max:255',
+            'name' => 'required|string|max:100|unique:mysql_client.customers',
+            'primary_email' => 'required|email|max:100',
+            'secondary_email' => 'sometimes|nullable|email|max:100',
             'primary_phone' => 'required|max:15',
             'secondary_phone_number' => 'sometimes|nullable|max:15',
-            'town' => 'required|string|max:20|exists:mysql_client.towns,id',
+            'town' => 'required|exists:mysql_client.towns,id',
+            'primary_contact_name' => 'required|string|max:100',
+            'secondary_contact_name' => 'sometimes|nullable|string|max:100',
         ]);
 
-
-        $customer = Customer::create([
+        $create_array = [
             'name' => $request->name,
             'primary_email' => $request->primary_email,
             'primary_phone' => $request->primary_phone,
             'town_id' => $request->town,
-        ]);
+            'primary_contact_name' => $request->primary_contact_name,
+        ];
+        if ($request->secondary_contact_name) {
+            $create_array['secondary_contact_name'] = $request->secondary_contact_name;
+        }
+
+        $customer = Customer::create($create_array);
 
         if ($request->secondary_email) {
             $customer->email()->create([
@@ -81,16 +88,24 @@ class CustomerController extends Controller
             'primary_phone' => 'required|max:15',
             'secondary_phone_number' => 'sometimes|nullable|max:15',
             'town' => 'required|string|max:20|exists:mysql_client.towns,id',
+            'primary_contact_name' => 'required|string|max:100',
+            'secondary_contact_name' => 'sometimes|nullable|string|max:100',
         ]);
 
         if ($validator->fails()) return ['fail',$validator->errors()];
 
-        $customer = Customer::create([
+        $create_array = [
             'name' => $request->name,
             'primary_email' => $request->primary_email,
             'primary_phone' => $request->primary_phone,
             'town_id' => $request->town,
-        ]);
+            'primary_contact_name' => $request->primary_contact_name,
+        ];
+        if ($request->secondary_contact_name) {
+            $create_array['secondary_contact_name'] = $request->secondary_contact_name;
+        }
+
+        $customer = Customer::create($create_array);
 
         if ($request->secondary_email) {
             $customer->email()->create([
@@ -124,25 +139,28 @@ class CustomerController extends Controller
         $towns = Town::whereIn('id',$towns_array)->get();
 
         $customer = Customer::find($id);
+        $sec_name = $customer->secondary_contact_name;
         $email = $customer->email->toArray();
         $phone = $customer->telephone->toArray();
 
+        $sec_name = ($sec_name)? $sec_name: '';
         $email = ($email)? $email: '';
-
         $phone =  ($phone)? $phone : '';
-        return view('client.admin.edit_customer',['customer' => $customer, 'towns' => $towns,'email'=>$email,'phone'=>$phone]);
+        return view('client.admin.edit_customer',['customer' => $customer, 'towns' => $towns,'email'=>$email,'phone'=>$phone,'sec_name'=>$sec_name]);
     }
 
     public function update(Request $request, $id) {
         $customer = Customer::find($id);
 
         $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'primary_email' => 'required|email|max:255',
-            'secondary_email' => 'sometimes|nullable|email|max:255',
+            'name' => 'required|string|max:100',
+            'primary_email' => 'required|email|max:100',
+            'secondary_email' => 'sometimes|nullable|email|max:100',
             'primary_phone' => 'required|max:15',
             'secondary_phone_number' => 'sometimes|nullable|max:15',
             'town' => 'required|string|max:20|exists:mysql_client.towns,id',
+            'primary_contact_name' => 'required|string|max:100',
+            'secondary_contact_name' => 'sometimes|nullable|string|max:100',
         ]);
 
         if (($request->email_type == 'new') && ($request->secondary_email)) {
@@ -170,6 +188,8 @@ class CustomerController extends Controller
             'primary_email' => $request->primary_email,
             'primary_phone' => $request->primary_phone,
             'town_id' => $request->town,
+            'primary_contact_name' => $request->primary_contact_name,
+            'secondary_contact_name' => $request->secondary_contact_name,
         ]);
 
 

@@ -28,21 +28,33 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Primary Contact Name')<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Primary Contact Name" value="{{old('primary_contact_name')}}" name="primary_contact_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Email')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="email" placeholder="Customer Primary Email" value="{{old('primary_email')}}" name="primary_email" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
-                            <div class="col-sm-6">
-                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Phone Number')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="text" placeholder="Customer Primary Phone Number" value="{{old('primary_phone')}}" name="primary_phone" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Contact Name')</label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Secondary Contact Name" value="{{old('secondary_contact_name')}}" name="secondary_contact_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
+                            <div class="col-sm-6">
+                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">

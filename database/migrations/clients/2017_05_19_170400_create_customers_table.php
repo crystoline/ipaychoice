@@ -18,6 +18,8 @@ class CreateCustomersTable extends Migration
             $table->string('name',100)->unique();
             $table->string('primary_email',100);
             $table->string('primary_phone',15);
+            $table->string('primary_contact_name',100);
+            $table->string('secondary_contact_name',100)->nullable();
             $table->integer('town_id',false, true)->unsigned();
 
             $table->foreign('town_id')->references('id')->on('towns');

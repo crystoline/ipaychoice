@@ -18,6 +18,7 @@ class CreateInvoicesTable extends Migration
             $table->string('invoice_no',100);
             $table->decimal('amount',20,5);
             $table->integer('status')->length(1);
+            $table->datetime('invoice_due_date')->nullable();
             $table->string('template', 100)->default('default');
             $table->string('note',255)->nullable();
             $table->integer('customer_id',false, true)->unsigned();
