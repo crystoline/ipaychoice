@@ -43,7 +43,7 @@ class InvoiceController extends Controller
 
     	$towns_array=[];
     	foreach ($permissions as $p) {
-    		$towns_array[] = $p->id;
+    		$towns_array[] = $p->town_id;
     	}
 
     	$customers = Customer::whereIn('town_id',$towns_array)->get();

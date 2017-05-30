@@ -19,10 +19,10 @@ class CustomerController extends Controller
         $permissions = Officer::find($officer->id)->permissions;
         $towns_array=[];
         foreach ($permissions as $p) {
-            $towns_array[] = $p->id;
+            $towns_array[] = $p->town_id;
         }
 
-    	$customers = Customer::with('town')->whereIn('town_id',$towns_array)->get();
+        $customers = Customer::with('town')->whereIn('town_id',$towns_array)->get();
         return view('client.admin.customers',['customers' => $customers]);
     }
 
@@ -32,17 +32,17 @@ class CustomerController extends Controller
         $permissions = Officer::find($officer->id)->permissions;
         $towns_array=[];
         foreach ($permissions as $p) {
-            $towns_array[] = $p->id;
+            $towns_array[] = $p->town_id;
         }
 
-    	$towns = Town::whereIn('id',$towns_array)->get();
+        $towns = Town::whereIn('id',$towns_array)->get();
         return view('client.admin.new_customer',['towns'=>$towns]);
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:mysql_client.customers',
             'primary_email' => 'required|email|max:255',
             'secondary_email' => 'sometimes|nullable|email|max:255',
             'primary_phone' => 'required|max:15',
@@ -52,26 +52,30 @@ class CustomerController extends Controller
 
 
         $customer = Customer::create([
-        	'name' => $request->name,
+            'name' => $request->name,
             'primary_email' => $request->primary_email,
             'primary_phone' => $request->primary_phone,
             'town_id' => $request->town,
         ]);
 
-        $customer->email()->create([
-            'email' => $request->secondary_email
-        ]);
+        if ($request->secondary_email) {
+            $customer->email()->create([
+                'email' => $request->secondary_email
+            ]);
+        }
 
-        $customer->telephone()->create([
-            'telephone' => $request->secondary_phone_number
-        ]);
+        if ($request->secondary_phone_number) {
+            $customer->telephone()->create([
+                'telephone' => $request->secondary_phone_number
+            ]);
+        }
 
         return redirect()->action('Client\Admin\CustomerController@index')->with('status', 'Customer created successfully!');
     }
 
     public function customer_ajax(Request $request) {
         $validator = Validator::make($request->toArray(), [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:mysql_client.customers',
             'primary_email' => 'required|email|max:255',
             'secondary_email' => 'sometimes|nullable|email|max:255',
             'primary_phone' => 'required|max:15',
@@ -115,7 +119,7 @@ class CustomerController extends Controller
         $permissions = Officer::find($officer->id)->permissions;
         $towns_array=[];
         foreach ($permissions as $p) {
-            $towns_array[] = $p->id;
+            $towns_array[] = $p->town_id;
         }
         $towns = Town::whereIn('id',$towns_array)->get();
 

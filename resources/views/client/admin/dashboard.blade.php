@@ -8,12 +8,31 @@
 @endphp
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="widget widget-pie">
                 <div class="widget-head"><span class="title">Invoices</span></div>
                 <div class="row chart-container">
                     <div class="col-md-6">
                         <div id="inv_chart" class="chart"></div><div id="test"></div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="legend"></div>
+                    </div>
+                </div>
+                <div class="row chart-info">
+                    <div class="col-xs-4"><span class="title">Total Paid Invoices</span><span data-toggle="counter" data-end="{{$data['total_paid']}}" class="number">0</span></div>
+                    <div class="col-xs-4"><span class="title">Total Pending Invoices</span><span data-toggle="counter" data-end="{{$data['total_pend']}}" class="number">0</span></div>
+                    <div class="col-xs-4"><span class="title">Total Invoices Created</span><span data-toggle="counter" data-end="{{$data['total_inv']}}" class="number">0</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="widget widget-pie">
+                <div class="widget-head"><span class="title">Invoices</span></div>
+                <div class="row chart-container">
+                    <div class="col-md-6">
+                        <div id="inv_chart2" class="chart2"></div>
 
                     </div>
                     <div class="col-md-6">
