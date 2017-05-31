@@ -98,7 +98,7 @@
                             <table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
                                 <tr>
                                     <td align="center" valign="top">
-                                        <h1>INNOVEXI GROUP</h1>
+                                        <h1>{{Session::get('client.configuration')->client->name}}</h1>
                                     </td>
                                 </tr>
                             </table>
@@ -111,8 +111,8 @@
                 </table>
 
 <div class=" text-center">
-                <br><br><h3>Innovexi Group sent you an invoice for {{$invoice['currency']['html'].round($invoice['amount'],2)}}</h3><br><br>
-                <a class=" text-center btn-rounded btn btn-space btn-primary" href="{{$subdomain}}.{{env('APP_DOMAIN')}}/invoice/{{$invoice['invoice_no']}}">View Your Invoice</a>
+                <br><br><h3>{{Session::get('client.configuration')->client->name}} sent you an invoice for {{$invoice['currency']['html'].number_format($invoice['amount'],2)}}</h3><br><br>
+                <a class=" text-center btn-rounded btn btn-space btn-primary" href="{{$subdomain}}.{{env('APP_DOMAIN')}}/invoice/{{$client}}/{{$invoice['invoice_no']}}">View Your Invoice</a>
                 </div>
 <br><br><br>
                 <table style="color:#fff" width="640" cellpadding="0" cellspacing="0" border="0" class="wrapper footer" bgcolor="#1c3061">

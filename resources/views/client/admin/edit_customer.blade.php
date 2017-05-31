@@ -6,6 +6,8 @@
     $email_type = ($email == '')? 'new' : 'exists';
     $phone = ($phone == '')? $phone : $phone[0]['telephone'];
     $phone_type = ($phone == '')? 'new' : 'exists';
+
+    $sec_name_type = ($sec_name == '')? 'new' : 'exists';
     @endphp
     <div class="row">
         <div class="col-md-12">
@@ -34,21 +36,33 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Primary Contact Name')<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Primary Contact Name" value="{{old('primary_contact_name')? old('primary_contact_name'):$customer->primary_contact_name}}" name="primary_contact_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Email')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="email" placeholder="Customer Primary Email" value="{{old('primary_email')? old('primary_email'):$customer->primary_email}}" name="primary_email" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
-                            <div class="col-sm-6">
-                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')? old('secondary_email'): $email}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Phone Number')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="text" placeholder="Customer Primary Phone Number" value="{{old('primary_phone')? old('primary_phone'):$customer->primary_phone}}" name="primary_phone" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Contact Name')</label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Secondary Contact Name" value="{{old('secondary_contact_name')? old('secondary_contact_name'):$customer->secondary_contact_name}}" name="secondary_contact_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
+                            <div class="col-sm-6">
+                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')? old('secondary_email'): $email}}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -73,6 +87,7 @@
                         </div>
                         <input type="hidden" name="email_type" value="{{$email_type}}">
                         <input type="hidden" name="phone_type" value="{{$phone_type}}">
+                        <input type="hidden" name="sec_name_type" value="{{$sec_name_type}}">
                         <br><br>
                         <div class="spacer text-center">
                             <button type="submit" class="btn btn-space btn-primary">@lang('Submit')</button>

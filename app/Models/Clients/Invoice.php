@@ -15,7 +15,8 @@ class Invoice extends Model
         'customer_id',
         'note',
         'officer_id',
-        'currency_id'
+        'currency_id',
+        'invoice_due_date'
     ];
     public function customer(){
         return $this->belongsTo('App\Models\Clients\Customer');

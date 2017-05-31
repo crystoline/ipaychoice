@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client\Admin;
 
 use App\Http\Requests\Client\Admin\InvoiceRequest;
+use App\Models\Client;
 use App\Models\Clients\Currency;
 use App\Models\Clients\InvoiceItem;
 use Illuminate\Http\Request;
@@ -28,9 +29,10 @@ class InvoiceController extends Controller
         return view('client.admin.show_invoice',['invoice' => $invoice]);
     }
 
-    public function customer_view($invoice_no) {
+    public function customer_view($id,$invoice_no) {
+        $client = Client::find($id)->name;
         $invoice = Invoice::with('customer.town.state','invoice_items.service','currency')->whereInvoiceNo($invoice_no)->first()->toArray();
-        return view('client.admin.customer_invoice',['invoice' => $invoice]);
+        return view('client.admin.customer_invoice',['invoice' => $invoice,'client'=>$client]);
     }
 
     public function create()
@@ -41,7 +43,7 @@ class InvoiceController extends Controller
 
     	$towns_array=[];
     	foreach ($permissions as $p) {
-    		$towns_array[] = $p->id;
+    		$towns_array[] = $p->town_id;
     	}
 
     	$customers = Customer::whereIn('town_id',$towns_array)->get();
@@ -49,7 +51,9 @@ class InvoiceController extends Controller
     	$services = Service::all();
     	$currencies = Currency::all();
 
-    	$invoice_no = '30'.time().rand(100,999);
+    	$now = date('Y-m-d-H-i-s');
+    	$now = explode('-',$now);
+    	$invoice_no = implode('',$now).rand(10,99);
         return view('client.admin.new_invoice',['customers' => $customers,'services' => $services,'towns'=>$towns,'invoice_no'=>$invoice_no,'currencies'=>$currencies]);
     }
 
@@ -83,7 +87,8 @@ class InvoiceController extends Controller
             'note' => $request->note,
             'customer_id' => $request->customer,
             'officer_id' => Session::get('client_admin_officer')->id,
-            'currency_id' => $request->currency
+            'currency_id' => $request->currency,
+            'invoice_due_date' =>$request->invoice_due_date
         ]);
 
         $invoice_id = $invoice->id;
@@ -96,18 +101,23 @@ class InvoiceController extends Controller
                 'invoice_id' =>$invoice_id
             ]);
         }
+        return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created successfully!');
+    }
+    public function send_invoice(Request $request) {
+        $invoice_view = Invoice::with('currency')->find($request->id)->toArray();
+        $customer = Customer::find($invoice_view['customer_id']);
 
-        $invoice_view = Invoice::with('currency')->find($invoice_id)->toArray();
-        $customer = Customer::find($request->customer);
+        $config = Session::get('client.configuration');
+        $subdomain = $config->subdomain;
+        $client = $config->client->id;
 
-        $config = Session::get('client.configuration')->toArray();
-        $subdomain = $config['subdomain'];
+        $emails = [];
+        $emails[] = $customer->primary_email;
+        if ($customer->secondary_email) {$emails[] = $customer->secondary_email;}
 
-        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain], function ($m) use ($customer) {
-            $m->from('aisha.alimi@upperlink.ng','Innovexi');
-            $m->to($customer->primary_email,$customer->name)->subject('Innovexi sent you an Invoice');
+        Mail::send('client.emails.invoice', ['invoice' => $invoice_view, 'subdomain' => $subdomain, 'client' => $client], function ($m) use ($emails) {
+            $m->from(env('MAIL_USERNAME','support@ipaychoice.com'),Session::get('client.configuration')->client->name);
+            $m->to($emails)->subject(Session::get('client.configuration')->client->name.' sent you an Invoice');
         });
-
-        return redirect()->action('Client\Admin\InvoiceController@index')->with('status', 'Invoice created and sent successfully!');
     }
 }

@@ -21,10 +21,10 @@ class AllowClient{
         if($pos = strpos($domain, env('APP_DOMAIN')) and $subdomain = substr($domain, 0, $pos -1)){
 
 
-            $conf = Configuration::where(['subdomain'=>$subdomain])->get()->first();
+            $conf = Configuration::with('client')->where(['subdomain'=>$subdomain])->get()->first();
 
         }else{
-            $conf = Configuration::where(['domain'=>$domain])->get()->first();
+            $conf = Configuration::with('client')->where(['domain'=>$domain])->get()->first();
         }
         //check by full domain name
         if(!$conf){

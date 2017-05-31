@@ -29,6 +29,15 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Invoice Due Date<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <div data-min-view="2" data-date-format="yyyy-mm-dd" class="input-group date datetimepicker1 col-md-5 col-xs-7">
+                                    <input id="due" name="invoice_due_date" size="16" type="text" value="{{old('invoice_due_date')}}" class="form-control"><span class="input-group-addon btn btn-primary"><i class="icon-th s7-date"></i></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Customer')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <select class="form-control" name="customer" required id="customer">
@@ -62,6 +71,7 @@
                                         @endforeach
                                     </datalist>
                                 </div>
+                                <div style="margin-top:10px;" class="col-sm-1" id="item_loader"></div>
                             </div>
                         </div>
 
@@ -71,7 +81,7 @@
                                 <select class="form-control" name="currency" required id="currency">
                                     <option value="">@lang('Select Currency')</option>
                                     @foreach ($currencies as $c)
-                                        <option value="{{$c->id}}" {{ (old("currency") == $c->id ? "selected":"") }} >{{$c->name}} ({{$c->code}})</option>
+                                        <option value="{{$c->id}}" {{ (old("currency") == $c->id ? "selected":"") }} >{{$c->name}} ({{$c->html}})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -106,6 +116,7 @@
                     </div>
 
                     <div class="modal-body form">
+                        <div id="cus_loader" class="text-center"></div>
                         <div id="errors" class="text-danger"></div>
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -115,21 +126,33 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Primary Contact Name')<span class='text-danger'>*</span></label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Primary Contact Name" value="{{old('primary_contact_name')}}" name="primary_contact_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Email')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="email" placeholder="Customer Primary Email" value="{{old('primary_email')}}" name="primary_email" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
-                            <div class="col-sm-6">
-                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Primary Phone Number')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <input type="text" placeholder="Customer Primary Phone Number" value="{{old('primary_phone')}}" name="primary_phone" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Contact Name')</label>
+                            <div class="col-sm-6">
+                                <input type="text" placeholder="Secondary Contact Name" value="{{old('secondary_contact_name')}}" name="secondary_contact_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">@lang('Secondary Email')</label>
+                            <div class="col-sm-6">
+                                <input type="email" placeholder="Customer Secondary Email" name="secondary_email" value="{{old('secondary_email')}}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -195,19 +218,22 @@
                                 <div class="col-xs-12">
                                     <div class="col-xs-6">
                                         <table class="table table-responsive table-condensed">
-                                            <tr><td><strong>Billed to:</strong></td></tr>
+                                            <tr><td><strong>Billed to: </strong><span id="biller_loader"></span></td></tr>
+
                                             <tr><td id="name_cont"></td></tr>
                                             <tr><td id="em_cont"></td></tr>
                                             <tr><td id="ph_cont"></td></tr>
                                             <tr><td id="to_cont"></td></tr>
                                         </table>
+
                                     </div>
                                     <div class="col-xs-2 text-right"></div>
                                     <div class="col-xs-4 text-right">
                                         <table class="table table-responsive table-condensed">
                                             <tr><td> <strong>Invoice No:</strong></td><td class="text-left">{{$invoice_no}}</td></tr>
-                                            <tr><td><strong>Invoice Date</strong></td><td class="text-left">{{date('d-m-Y')}} </td></tr>
-                                            <tr><td><strong>Amount Due</strong></td><td class="text-left" id="am_cont"> </td></tr>
+                                            <tr><td><strong>Invoice Date:</strong></td><td class="text-left">{{date('Y-m-d')}} </td></tr>
+                                            <tr><td><strong>Due Date:</strong></td><td class="text-left" id="du_cont"></td></tr>
+                                            <tr><td><strong>Amount Due:</strong></td><td class="text-left" id="am_cont"> </td></tr>
                                         </table>
                                         <br>    <br>   <br><br>
                                     </div>
@@ -253,7 +279,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div><div id="loader" style="display: none"><img src="{{ asset('client_assets/admin/img/loading.gif')}}"></div>
 @endsection
 @section('javascript')
     <script>
@@ -263,6 +289,7 @@
         nextDocument = 1;
         allDocuments = 0;
         function addItem(){
+            document.getElementById("item_loader").innerHTML = document.getElementById("loader").innerHTML;
             var item = document.getElementById("item_select").value;
 
             if (item == '') {
@@ -311,6 +338,7 @@
                             console.log(e);
                             console.log("An error occurred while trying to add a new specimen.");
                         }
+                        document.getElementById("item_loader").innerHTML = '';
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
@@ -346,9 +374,20 @@
 
         function populate() {
             var customer = document.getElementById("customer").value;
-            var currency = document.getElementById("currency").value;
+            var currency = document.getElementById('currency').options[document.getElementById('currency').selectedIndex].text;
+
+            if (currency != 'Select Currency'){
+                currency = currency.split("(");
+                currency = currency[1];
+                currency = currency.split(")");
+                currency = currency[0];
+            } else {
+                currency = '';
+            }
+
 
             if (customer != '') {
+                document.getElementById("biller_loader").innerHTML = document.getElementById("loader").innerHTML;
                 $.ajax({
                     method: 'GET',
                     url: '/admin/ajax_get_customer',
@@ -358,6 +397,7 @@
                         document.getElementById("em_cont").innerHTML = response['primary_email'];
                         document.getElementById("ph_cont").innerHTML = response['primary_phone'];
                         document.getElementById("to_cont").innerHTML = response['town']['name']+', '+response['town']['state']['name']+'.';
+                        document.getElementById("biller_loader").innerHTML = '';
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(JSON.stringify(jqXHR));
@@ -367,8 +407,10 @@
             }
 
             document.getElementById("no_cont").innerHTML = document.getElementById("note").value;
-            document.getElementById("am_cont").innerHTML = currency+getTotal();
-            document.getElementById("tot_cont").innerHTML = currency+getTotal();
+            document.getElementById("du_cont").innerHTML = document.getElementById("due").value;
+
+            document.getElementById("am_cont").innerHTML = currency+getTotal().toLocaleString();
+            document.getElementById("tot_cont").innerHTML = currency+getTotal().toLocaleString();
 
             items = document.getElementsByClassName('item');
             prices = document.getElementsByClassName('price');
@@ -396,13 +438,14 @@
                 cell4.style.textAlign = 'right';
 
                 cell1.innerHTML = items[i].value;
-                cell2.innerHTML = prices[i].value;
+                cell2.innerHTML = currency+(prices[i].value).toLocaleString();
                 cell3.innerHTML = quantities[i].value;
-                cell4.innerHTML = currency+(prices[i].value*quantities[i].value);
+                cell4.innerHTML = currency+(prices[i].value*quantities[i].value).toLocaleString();
             }
         }
 
         function new_customer() {
+            document.getElementById("cus_loader").innerHTML = document.getElementById("loader").innerHTML;
             var request = $('#customer_form').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 return obj;
@@ -431,6 +474,7 @@
                         $("#close").click();
                         document.getElementById("customer_form").reset();
                         document.getElementById("errors").innerHTML = '';
+                        document.getElementById("cus_loader").innerHTML = '';
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -439,5 +483,8 @@
                 }
             })
         }
+
+        $(".datetimepicker1").datetimepicker(
+            {startDate: new Date(),autoclose:!0,componentIcon:".s7-date",navIcons:{rightIcon:"s7-angle-right",leftIcon:"s7-angle-left"}})
     </script>
 @endsection
