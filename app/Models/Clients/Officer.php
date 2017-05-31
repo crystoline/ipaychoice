@@ -20,7 +20,19 @@ class Officer extends Model
     }
 
     public function towns(){
-        return $this->hasManyThrough('App\Models\Clients\Town', 'App\Models\Clients\OfficersPermission', 'officer_id', 'id');
+        return $this->hasManyThrough('App\Models\Clients\Town', 'App\Models\Clients\OfficersPermission', 'id', 'officer_id', 'town_id');
+    }
+
+    public function getTownsArrayAttribute(){
+
+        $permissions = $this->permissions;
+
+        $town =  [];
+        foreach($permissions as $permissions){
+            $town[] = $permissions->town_id;
+        }
+        //dd($town);
+        return $town;
     }
 
 

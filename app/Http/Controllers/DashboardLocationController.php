@@ -48,7 +48,7 @@ class DashboardLocationController extends Controller
             <script>
                 swal({
                     title: "Success",
-                    text:"'.__(":n State(s) were added", [$x]).'",
+                    text:"'._t(":n State(s) were added", ['n' => $x]).'",
                     type: "success"
                  },
                  function(){
@@ -60,7 +60,7 @@ class DashboardLocationController extends Controller
             <script>
                 swal({
                     title: "An Error Occurred",
-                    text:"'.__("States were  not added").'",
+                    text:"'._t("Provinces were  not added").'",
                     type: "error"
                  },
                  function(){
@@ -96,8 +96,8 @@ class DashboardLocationController extends Controller
         return ($x > 0)? '
             <script>
              swal({
-                    title: "Success",
-                    text:"'.__(":n Town(s) were added", [$x]).'",
+                    title: _t("Success"),
+                    text:"'._t(":n Town(s) were added", ['n' => $x]).'",
                     type: "success"
                  },
                  function(){
@@ -109,8 +109,8 @@ class DashboardLocationController extends Controller
             '
             <script>
                 swal({
-                    title: "An Error Occurred",
-                    text:"'.__("Towns were  not added").'",
+                    title: _t("An Error Occurred"),
+                    text:"'._t("Towns were  not added").'",
                     type: "error"
                  },
                  function(){
@@ -130,8 +130,8 @@ class DashboardLocationController extends Controller
             return  '
             <script>
                 swal({
-                    title: "An Error Occurred",
-                    text:"'.__("The state was  not found").'",
+                    title: _t("An Error Occurred"),
+                    text:"'._t("The Province was  not found").'",
                     type: "error"
                  },
                  function(){
@@ -154,7 +154,7 @@ class DashboardLocationController extends Controller
         $state->save();
         return '
             <script>
-                //swal("'.__("State was renamed").'");
+                //swal("'._t("Province name changed").'");
                 window.location.reload();
             </script>
         ';
@@ -172,8 +172,8 @@ class DashboardLocationController extends Controller
             return  '
             <script>
                 swal({
-                    title: "An Error Occurred",
-                    text:"'.__("The Town was  not found").'",
+                    title: _t("An Error Occurred"),
+                    text:"'._t("The Town was  not found").'",
                     type: "error"
                  },
                  function(){
@@ -196,7 +196,7 @@ class DashboardLocationController extends Controller
         $town->save();
         return '
             <script>
-                //swal("'.__("Town was renamed").'");
+                //swal("'._t("Town was renamed").'");
                 window.location.reload();
             </script>
         ';

@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{{env('APP_NAME')}}</title>
-    <meta name="description" content="">
+    <title>{{env('APP_NAME')}} | {{_t('Best Online Invoicing and billing software for African countries')}}</title>
+    <meta name="description" content="Send invoices online and get paid faster,ideal for SaaS companies, businesses & enterprises in DRC ,Nigeria and other African countries">
+    <meta name="keyword" content="invoice software,billing software,online invoicing software, DRC,Nigeria,Africa, invoicing software,online billing software,best invoice software,email software,automatic reminders,online payments,banks payments">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="{{asset('favicon.ico')}}">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{asset('assets/styles/vendor/bootstrap.min.css')}}">
     <!-- Fonts -->
@@ -43,7 +44,7 @@
 <body id="page-top">
 
 <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<p class="browserupgrade">{{_t('You are using an')}} <strong>{{_t('outdated')}}</strong> {{_t('browser')}}. {{_t('Please')}} <a href="http://browsehappy.com/">{{_t('upgrade your browser</a> to improve your experience')}}.</p>
 <![endif]-->
 
 

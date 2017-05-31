@@ -90,7 +90,7 @@
                     </li>
                     <li class="hidden-xs">
                         <form role="search" class="app-search">
-                            <input type="text" placeholder="Search..."
+                            <input type="text" placeholder="{{_t('Search')}}..."
                                    class="form-control">
                             <a href=""><i class="fa fa-search"></i></a>
                         </form>
@@ -99,122 +99,20 @@
                         <a href="#" class="menu-item waves-effect waves-light">New</a>
                     </li>--}}
                     <li class="dropdown hidden-xs">
-                        <a data-toggle="dropdown" class="dropdown-toggle menu-item waves-effect waves-light" href="#" aria-expanded="false">English
-                            <span class="caret"></span></a>
+                        <a data-toggle="dropdown" class="dropdown-toggle menu-item waves-effect waves-light" href="#" aria-expanded="false">
+                            <span class="caret"></span>{{ _t('Language') }}</a>
                         <ul role="menu" class="dropdown-menu">
-                            <li><a href="#">German</a></li>
-                            <li><a href="#">French</a></li>
-                            <li><a href="#">Italian</a></li>
-                            <li><a href="#">Spanish</a></li>
+                            <li><a href="{{url('/en/dashboard/'. $client->id)}}">{{_t('English',[], 'en')}}</a></li>
+                            <li><a href="{{url('/de/dashboard/'. $client->id)}}">{{_t('German',[], 'de')}}</a></li>
+                            <li><a href="{{url('/fr/dashboard/'. $client->id)}}">{{_t('French',[], 'fr')}}</a></li>
+                            <li><a href="{{url('/it/dashboard/'. $client->id)}}">{{_t('Italian',[], 'it')}}</a></li>
+                            <li><a href="{{url('/es/dashboard/'. $client->id)}}">{{_t('Spanish',[], 'es')}}</a></li>
                         </ul>
                     </li>
                 </ul>
 
                 <!-- Right(Notification) -->
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="#" class="right-menu-item dropdown-toggle" data-toggle="dropdown">
-                            <i class="mdi mdi-bell"></i>
-                            <span class="badge up bg-primary">4</span>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right dropdown-lg user-list notify-list">
-                            <li>
-                                <h5>Notifications</h5>
-                            </li>
-                            <li>
-                                <a href="#" class="user-list-item">
-                                    <div class="icon bg-info">
-                                        <i class="mdi mdi-account"></i>
-                                    </div>
-                                    <div class="user-desc">
-                                        <span class="name">New Signup</span>
-                                        <span class="time">5 hours ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="user-list-item">
-                                    <div class="icon bg-danger">
-                                        <i class="mdi mdi-comment"></i>
-                                    </div>
-                                    <div class="user-desc">
-                                        <span class="name">New Message received</span>
-                                        <span class="time">1 day ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="user-list-item">
-                                    <div class="icon bg-warning">
-                                        <i class="mdi mdi-settings"></i>
-                                    </div>
-                                    <div class="user-desc">
-                                        <span class="name">Settings</span>
-                                        <span class="time">1 day ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="all-msgs text-center">
-                                <p class="m-0"><a href="#">See all Notification</a></p>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#" class="right-menu-item dropdown-toggle" data-toggle="dropdown">
-                            <i class="mdi mdi-email"></i>
-                            <span class="badge up bg-danger">8</span>
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right dropdown-lg user-list notify-list">
-                            <li>
-                                <h5>Messages</h5>
-                            </li>
-                            <li>
-                                <a href="#" class="user-list-item">
-                                    <div class="avatar">
-                                        <img src="assets/images/users/avatar-2.jpg" alt="">
-                                    </div>
-                                    <div class="user-desc">
-                                        <span class="name">Patricia Beach</span>
-                                        <span class="desc">There are new settings available</span>
-                                        <span class="time">2 hours ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="user-list-item">
-                                    <div class="avatar">
-                                        <img src="assets/images/users/avatar-3.jpg" alt="">
-                                    </div>
-                                    <div class="user-desc">
-                                        <span class="name">Connie Lucas</span>
-                                        <span class="desc">There are new settings available</span>
-                                        <span class="time">2 hours ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="user-list-item">
-                                    <div class="avatar">
-                                        <img src="assets/images/users/avatar-4.jpg" alt="">
-                                    </div>
-                                    <div class="user-desc">
-                                        <span class="name">Margaret Becker</span>
-                                        <span class="desc">There are new settings available</span>
-                                        <span class="time">2 hours ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="all-msgs text-center">
-                                <p class="m-0"><a href="#">See all Messages</a></p>
-                            </li>
-                        </ul>
-                    </li>
-
-
-
                     <li class="dropdown user-box">
                         <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
                             <img src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
@@ -224,10 +122,10 @@
                             <li>
                                 <h5>Hi, John</h5>
                             </li>
-                            <li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
+                            {{--<li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
                             <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
-                            <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>
-                            <li><a href="javascript:void(0)"><i class="ti-power-off m-r-5"></i> Logout</a></li>
+                            <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>--}}
+                            <li><a href="{{url('home')}}"><i class="ti-power-off m-r-5"></i> @tlang('Exit')</a></li>
                         </ul>
                     </li>
 
@@ -250,23 +148,23 @@
                     <li class="menu-title">Business: <br>{{$client->name}}</li>
                     <li><a href="" class="waves-effect"><span class="fa fa-home"></span>  Dashboard</a> </li>
                     <li class="divider"></li>
-                    <li><a href="{{route('user.client.dashboard.officers', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-user-secret" style=""></i>  Cash Officers</a> </li>
+                    <li><a href="{{route('user.client.dashboard.officers', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-user-secret" style=""></i>  @tlang('Cash Officers')</a> </li>
                     <li class="divider" ></li>
-                    <li><a href="{{route('user.client.dashboard.customers', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-users"></i>  Customers</a> </li>
+                    <li><a href="{{route('user.client.dashboard.customers', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-users"></i>  @tlang('Customers')</a> </li>
                     <li class="divider"></li>
-                    <li><a href="{{route('user.client.dashboard.services', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-cogs"></i>  Services</a> </li>
+                    <li><a href="{{route('user.client.dashboard.services', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-cogs"></i>  @tlang('Services')</a> </li>
                     <li class="divider"></li>
-                    <li><a href="{{route('user.client.dashboard.invoices', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-list"></i>  Invoices</a> </li>
+                    <li><a href="{{route('user.client.dashboard.invoices', ['client'=>$client->id])}}" data-ajax="true" class="waves-effect"><i class="fa fa-list"></i>  @tlang('Invoices')</a> </li>
                     <li class="divider"></li>
                     <li class="has_sub">
-                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-wrench"></i><span> Setting </span> <span class="menu-arrow"></span></a>
+                        <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-wrench"></i><span> @tlang('Setting') </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
-                            <li><a href="{{route('user.client.dashboard.states', ['client'=>$client->id])}}" data-ajax="true">@lang('States/Cities')</a></li>
-                            <li><a href="email-read.html"> Read Mail</a></li>
-                            <li><a href="email-compose.html"> Compose Mail</a></li>
+                            <li><a href="{{route('user.client.dashboard.states', ['client'=>$client->id])}}" data-ajax="true">@tlang('Provinces/Cities')</a></li>
+
                         </ul>
                     </li>
-
+                    <li class="divider"></li>
+                    <li><a href="{{url('home')}}" class="waves-effect"><i class="fa fa-arrow-left"></i>  @tlang('My Busunesses')</a> </li>
                 </ul>
             </div>
             <!-- Sidebar -->
@@ -298,7 +196,7 @@
         </div> <!-- content -->
 
         <footer class="footer text-right">
-            2016 © Zircos.
+            {{ date('Y') }} &copy; {{env('APP_NAME')}}.
         </footer>
 
     </div>

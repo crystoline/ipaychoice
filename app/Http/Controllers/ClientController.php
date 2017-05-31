@@ -38,7 +38,7 @@ class ClientController extends Controller
         $config->client_id = $client->id;
         $config->subdomain = $request->input('sub_domain');
         $config->domain = $request->input('sub_domain').'.'.env('APP_DOMAIN');
-        $config->database = 'client'.$client->id;
+        $config->database = 'clients_'.$client->id;
         $config->save();
 
         $config = self::setupDb($config) ;
@@ -139,10 +139,11 @@ class ClientController extends Controller
             '--path' => 'database/migrations/clients',
             '--force' => true
         ]);
-        /* Artisan::call('db:seed', [
-             '--database' => 'mysql-portal',
-             '--force' => true
-         ]);*/
+         Artisan::call('db:seed', [
+             '--database' => 'mysql_client',
+             '--force' => true,
+             '--class' => 'Clients'
+         ]);
 
     }
     public static function setDb($db_name)

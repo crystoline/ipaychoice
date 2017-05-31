@@ -12,7 +12,7 @@ class State extends Model
     //
 
     public function towns() {
-    	return $this->hasMany('App\Models\Clients\Town','state_id', 'id');
+    	return $this->hasMany('App\Models\Clients\Town');
     }
 
     public function officers(){

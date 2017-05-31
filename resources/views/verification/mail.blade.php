@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>{{env('APP_NAME')}} - {{$client->name}}</title>
+    <title>{{env('APP_NAME')}}</title>
 
     <style type="text/css">
         .text-center{
@@ -168,7 +168,7 @@
                         <table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
                             <tr>
                                 <td align="center" valign="top">
-                                    <h1>{{$client->name }} @ {{env('APP_NAME')}} </h1>
+                                    <h1>{{env('APP_NAME')}} </h1>
                                 </td>
                             </tr>
                         </table>
@@ -183,49 +183,51 @@
             <div style="text-align: left; padding:10px">
                 <br><br>
 
-                <p>@tlang('Dear ') {{ $officer->first_name }},</p>
+                <p>@tlang('Dear ') {{ $user->first_name }},</p>
 
-                <p>@tlang('Your account has just been set up on  :domain', ['domain'=> $client->name.'@'. env('APP_NAME')]),</p>
-
-                <p>@tlang('Log on to :link with the following credential', ['link' => '<a href="'.$client->configuration->domain.'/admin">http://'.$client->configuration->domain.'/admin</a>'])
+                <p>@tlang('You account has just been created on ', ['name' => {{ env('APP_NAME') }}]) ,@tlang('with the following credential')
                 </p>
                 <p>
-                    @tlang('Username') : {{ $officer->email }} <br>
-                    @tlang('Password') : {{ $password }}
-                </p>
+                    @tlang('Username') : {{ $user->email }} <br>
+                    @tlang('Password') : **********<br> <br>
+                    @tlang('Please click :link to verify your account', ['link' => '<a href="'.route('user.unverified.verify', ['email'=>$user->email, 'code'=>$user->verification_code]).'">here</a>'])<br>
+                    @tlang('Or copy and paste the link on your address bar to verify your account')
+{{route('user.unverified.verify', ['email'=>$user->email, 'code'=>$user->verification_code])}}
 
-                <p>&nbsp;</p>
+</p>
 
-                @tlang('From') {{env('APP_NAME')}}
-                <p>&nbsp;</p>
-            </div>
+<p>&nbsp;</p>
 
-            <table style="color:#fff" width="100%" cellpadding="0" cellspacing="0" border="0" class="wrapper footer text-center"
-                   bgcolor="#1c3061" style="text-align: center">
-                <tr>
-                    <td height="10" style="border: none;font-size:10px; line-height:10px;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td align="center" valign="top">
+@tlang('From') {{env('APP_NAME')}}
+<p>&nbsp;</p>
+</div>
 
-                        <table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
-                            <tr>
-                                <td width="300" class="mobile" align="center" valign="top">
-                                    <span>@tlang('Copyright') &copy {!! date('Y') !!} {{env('APP_NAME')}}</span>
-                                </td>
-                            </tr>
-                        </table>
+<table style="color:#fff" width="100%" cellpadding="0" cellspacing="0" border="0" class="wrapper footer text-center"
+bgcolor="#1c3061" style="text-align: center">
+<tr>
+<td height="10" style="border: none;font-size:10px; line-height:10px;">&nbsp;</td>
+</tr>
+<tr>
+<td align="center" valign="top">
 
-                    </td>
-                </tr>
-                <tr>
-                    <td height="10" style="font-size:10px; line-height:10px;">&nbsp;</td>
-                </tr>
-            </table>
+<table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
+<tr>
+<td width="300" class="mobile" align="center" valign="top">
+<span> @tlang('Copyright') &copy {!! date('Y') !!} {{env('APP_NAME')}}</span>
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+<tr>
+<td height="10" style="font-size:10px; line-height:10px;">&nbsp;</td>
+</tr>
+</table>
 
 
-        </td>
-    </tr>
+</td>
+</tr>
 </table>
 </body>
 </html>

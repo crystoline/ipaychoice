@@ -176,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        'Stevebauman\Translation\TranslationServiceProvider',
 
     ],
 
@@ -230,7 +231,8 @@ return [
         'ClientAdminAuthorize' => App\Http\Middleware\Client\Admin\ClientAdminAuthorize::class,
         'ClientAdminAuthorized' => App\Http\Middleware\Client\Admin\ClientAdminAuthorized::class,
         'AllowUpperlink' => App\Http\Middleware\Client\AllowUpperlink::class,
-        'UserClientDashboard' => App\Http\Middleware\ClientDashboard::class
+        'UserClientDashboard' => App\Http\Middleware\ClientDashboard::class,
+        'Translation' => 'Stevebauman\Translation\Facades\Translation',
     ],
 
 ];

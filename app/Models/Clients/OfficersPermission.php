@@ -10,4 +10,7 @@ class OfficersPermission extends Model
     //
     protected $fillable = ['officer_id','town_id'];
 
+    public function towns(){
+        return $this->hasMany('App\Models\Clients\Town');
+    }
 }

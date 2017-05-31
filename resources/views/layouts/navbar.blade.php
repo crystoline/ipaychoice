@@ -3,7 +3,7 @@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">{{_t('Toggle navigation')}}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -20,12 +20,12 @@
         <!-- Navbar Links -->
         <div id="navbar" class="navbar-collapse collapse" >
             <ul class="nav navbar-nav" id="mainnav" >
-                <li><a href="{{url('')}}#" >Home</a></li><!-- / Home -->
+                <li><a href="{{url('')}}#" >{{_t('Home')}}</a></li><!-- / Home -->
                 @if (Auth::check())
                 <!-- Home -->
-                <li><a href="{{url('home')}}">Businesses</a> </li>
+                <li><a href="{{url('home')}}">{{_t('Businesses')}}</a> </li>
                 @else
-                    <li><a href="{{url('')}}#features" >Feature</a></li><!-- / Home -->
+                    <li><a href="{{url('')}}#features" >{{_t('Features')}}</a></li><!-- / Home -->
                 @endif
 
 
@@ -40,7 +40,7 @@
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            Logout
+                            {{_t('Logout')}}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -48,8 +48,8 @@
                         </form>
                     </li>
                 @else
-                    <li> <a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+                    <li> <a href="{{ url('/login') }}">{{_t('Login')}}</a></li>
+                    <li><a href="{{ url('/register') }}">{{_t('Register')}}</a></li>
                 @endif
             </ul><!-- / .nav .navbar-nav .navbar-right -->
 
