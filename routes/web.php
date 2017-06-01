@@ -125,6 +125,8 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
             Route::get('/ajax_get_customer', ['as'=> 'client.admin.ajax_get_customer', 'uses' => 'CustomerController@customer_get_ajax']);
 
             Route::get('/invoices', ['as'=> 'client.admin.invoices', 'uses' => 'InvoiceController@index']);
+            Route::get('/invoices/edit/{id}', ['as'=> 'client.admin.edit_invoice', 'uses' => 'InvoiceController@edit']);
+            Route::put('/invoices/edit/{id}', ['as'=> 'client.admin.update_invoice', 'uses' => 'InvoiceController@update']);
             Route::get('/invoices/{id}', ['as'=> 'client.admin.show_invoice', 'uses' => 'InvoiceController@show']);
             Route::get('/new_invoice', ['as'=> 'client.admin.new_invoice', 'uses' => 'InvoiceController@create']);
             Route::post('/new_invoice', ['as'=> 'client.admin.store_invoice', 'uses' => 'InvoiceController@store']);
@@ -136,6 +138,12 @@ Route::group(['middleware' => 'AllowClient', 'subdomain' => '{domain}',  'namesp
             Route::get('/new_service', ['as'=> 'client.admin.new_service', 'uses' => 'ServiceController@create']);
             Route::post('/new_service', ['as'=> 'client.admin.store_service', 'uses' => 'ServiceController@store']);
             Route::get('/get_service', ['as'=> 'client.admin.get_service', 'uses' => 'ServiceController@getService']);
+
+            Route::get('/officers', ['as'=> 'client.admin.officers', 'uses' => 'OfficerController@index']);
+            Route::get('/officers/{id}', ['as'=> 'client.admin.edit_officer', 'uses' => 'OfficerController@edit']);
+            Route::put('/officers/{id}', ['as'=> 'client.admin.update_officer', 'uses' => 'OfficerController@update']);
+            Route::get('/new_officer', ['as'=> 'client.admin.new_officer', 'uses' => 'OfficerController@create']);
+            Route::post('/new_officer', ['as'=> 'client.admin.store_officer', 'uses' => 'OfficerController@store']);
         });
     });
 

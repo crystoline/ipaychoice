@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3><b>Add New Invoice</b></h3>
+                    <h3><b>Edit Invoice</b></h3>
                 </div>
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
@@ -21,17 +21,18 @@
                 <div class="panel-body">
                     <form style="border-radius: 0px;" method="post" action="" class="form-horizontal group-border-dashed">
                         {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="put">
 
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">@lang('Invoice No')<span class='text-danger'>*</span></label>
-                            <label style="text-align: left" class="col-sm-6 text-left control-label">{{$invoice_no}}<span class='text-danger'>*</span></label>
-                            <input id="invoice_no" type="hidden" name="invoice_no" value="{{$invoice_no}}">
-                        </div>
+                        @php
+                            $date_due = $invoice['invoice_due_date'];
+                            $date_due = explode(' ',$date_due);
+                            $date_due = $date_due[0];
+                        @endphp
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Invoice Due Date<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
                                 <div data-min-view="2" data-date-format="yyyy-mm-dd" class="input-group date datetimepicker1 col-md-5 col-xs-7">
-                                    <input id="due" name="invoice_due_date" size="16" type="text" value="{{old('invoice_due_date')}}" class="form-control"><span class="input-group-addon btn btn-primary"><i class="icon-th s7-date"></i></span>
+                                    <input id="due" name="invoice_due_date" size="16" type="text" value="{{old('invoice_due_date')? old('invoice_due_date'):$date_due}}" class="form-control"><span class="input-group-addon btn btn-primary"><i class="icon-th s7-date"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -39,10 +40,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Customer')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
+                                @php
+                                    $selected = (old("customer"))? old("customer"):$invoice->customer_id;
+                                @endphp
                                 <select class="form-control" name="customer" required id="customer">
                                     <option value="">@lang('Select Customer')</option>
                                     @foreach ($customers as $c)
-                                        <option value="{{$c->id}}" {{ (old("customer") == $c->id ? "selected":"") }} >{{$c->name}}</option>
+                                        <option value="{{$c->id}}" {{ ($selected == $c->id ? "selected":"") }} >{{$c->name}}</option>
                                     @endforeach
                                 </select>
                                 <div class="spacer text-right">
@@ -55,6 +59,35 @@
                             <div class="panel-heading">
                                 <h4>All Invoice Items</h4>
                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-3 text-center"><b>Item Name</b></div>
+                                <div class="col-sm-3 text-center"><b>Description</b></div>
+                                <div class="col-sm-1 text-center"><b>Quantity</b></div>
+                                <div class="col-sm-2 text-center"><b>Price</b></div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                            @php
+                            $no = 1;
+                            foreach($invoice->invoice_items as $i) {
+                             echo '<div id="itemdiv'.$no.'" class="itemDivs">
+
+                            <div class="form-group">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-3"><input class="form-control item" name="item[]" value="'.$i->service->name.'" placeholder="Enter Item Name" required readonly></div>
+                                <div class="col-sm-3"><input class="form-control desc" name="desc[]" value="'.$i->service->description.'" placeholder="Enter Item Description" required></div>
+                                <div class="col-sm-1"><input class="form-control quantity" name="quantity[]" placeholder="Quantity" value="'.$i->quantity.'" type="number" min="1" required></div>
+                                <div class="col-sm-2"><input class="form-control price" name="price[]" value="'.$i->amount.'" placeholder="Price" type="number" step="0.01" min="1" required></div>
+                                <div class="col-sm-1"><a style="cursor: pointer" onclick="removeItem('.$no.');">Remove</a></div>
+                                <input value="old" type="hidden" name="type[]">
+                                <input value="'.$i->id.'" type="hidden" name="item_ids[]">
+                                <input value="'.$i->service->id.'" type="hidden" name="s_ids[]">
+                            </div>
+                            </div>';
+                            $no++;
+                             }
+                            echo '<input value="'.$no.'" type="hidden" id="nextDoc">';
+                             @endphp
                             <div id="all_items"></div>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">@lang('Add new Item')<span class='text-danger'>*</span></label>
@@ -77,10 +110,13 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">@lang('Currency')<span class='text-danger'>*</span></label>
                             <div class="col-sm-6">
+                                @php
+                                    $selected_cur = (old("currency"))? old("currency"):$invoice->currency_id;
+                                @endphp
                                 <select class="form-control" name="currency" required id="currency">
                                     <option value="">@lang('Select Currency')</option>
                                     @foreach ($currencies as $c)
-                                        <option value="{{$c->id}}" {{ (old("currency") == $c->id ? "selected":"") }} >{{$c->name}} ({{$c->html}})</option>
+                                        <option value="{{$c->id}}" {{ ($selected_cur == $c->id ? "selected":"") }}>{{$c->name}} ({{$c->html}})</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -89,7 +125,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Additional Notes</label>
                             <div class="col-sm-6">
-                                <textarea class="form-control" id="note" placeholder="Additional Notes for the Customer" name="note" maxlength="255">{{  old('note') }}</textarea>
+                                <textarea class="form-control" id="note" placeholder="Additional Notes for the Customer" name="note" maxlength="255">{{  old('note')? old('note'):$invoice->note}}</textarea>
                             </div>
                         </div>
 
@@ -229,7 +265,7 @@
                                     <div class="col-xs-2 text-right"></div>
                                     <div class="col-xs-4 text-right">
                                         <table class="table table-responsive table-condensed">
-                                            <tr><td> <strong>Invoice No:</strong></td><td class="text-left">{{$invoice_no}}</td></tr>
+                                            <tr><td> <strong>Invoice No:</strong></td><td class="text-left">{{$invoice->invoice_no}}</td></tr>
                                             <tr><td><strong>Invoice Date:</strong></td><td class="text-left">{{date('Y-m-d')}} </td></tr>
                                             <tr><td><strong>Due Date:</strong></td><td class="text-left" id="du_cont"></td></tr>
                                             <tr><td><strong>Amount Due:</strong></td><td class="text-left" id="am_cont"> </td></tr>
@@ -285,8 +321,8 @@
         $(".datetimepicker").datetimepicker({autoclose:!0,componentIcon:".s7-date",navIcons:{rightIcon:"s7-angle-right",leftIcon:"s7-angle-left"}});
 
 
-        nextDocument = 1;
-        allDocuments = 0;
+        nextDocument = document.getElementById("nextDoc").value;
+        allDocuments = nextDocument - 1;
         function addItem(){
             document.getElementById("item_loader").innerHTML = document.getElementById("loader").innerHTML;
             var item = document.getElementById("item_select").value;
@@ -303,32 +339,19 @@
                         if (response == 'new') {
                             var desc = '';
                             var price = 1;
+                            var id = '';
                             var type = 'new';
                             var readonly = '';
                         } else {
                             var desc = response['description'];
                             var price = response['price'];
+                            var id = response['id'];
                             var type = 'not_new';
                             var readonly = 'readonly';
                         }
 
                         try {
                             cont = document.getElementById("all_items");
-
-                            if (nextDocument == 1) {
-                                newDoc = '<div class="form-group">';
-                                newDoc = newDoc + '<div class="col-sm-1"></div>';
-                                newDoc = newDoc + '<div class="col-sm-3 text-center"><b>Item Name</b></div>';
-                                newDoc = newDoc + '<div class="col-sm-3 text-center"><b>Description</b></div>';
-                                newDoc = newDoc + '<div class="col-sm-1 text-center"><b>Quantity</b></div>';
-                                newDoc = newDoc + '<div class="col-sm-2 text-center"><b>Price</b></div>';
-                                newDoc = newDoc + '<div class="col-sm-1"></div>';
-                                newDoc = newDoc + "</div>";
-
-                                newDiv = document.createElement("div");
-                                newDiv.innerHTML = newDoc;
-                                cont.appendChild(newDiv);
-                            }
 
                             newDoc = '<div class="form-group">';
                             newDoc = newDoc + '<div class="col-sm-1"></div>';
@@ -338,6 +361,7 @@
                             newDoc = newDoc + '<div class="col-sm-2"><input class="form-control price" name="price[]" value="'+price+'" placeholder="Price" type="number" step="0.01" min="1" required></div>';
                             newDoc = newDoc + '<div class="col-sm-1"><a style="cursor: pointer" onclick="removeItem(' + nextDocument + ');">Remove</a></div>';
                             newDoc = newDoc + '<input value="'+type+'" type="hidden" name="type[]">';
+                            newDoc = newDoc + '<input value="'+id+'" type="hidden" name="s_ids[]">';
                             newDoc = newDoc + "</div>";
 
                             newDiv = document.createElement("div");
@@ -369,7 +393,7 @@
                 c.parentNode.removeChild(c);
                 allDocuments--;
             } catch (e) {
-                console.log("An error occurred while trying to add a new item.");
+                console.log("An error occurred while trying to add a new item."+e);
             }
         }
 

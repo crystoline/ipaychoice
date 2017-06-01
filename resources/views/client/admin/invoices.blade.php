@@ -64,6 +64,9 @@
                             <td>
                                 <a href="{{ URL::to('admin/invoices/'.$invoice->id)}}" class="badge badge-warning">View</a>
                                 <a href="javascript:void(0);" id="send" class="badge badge-info" onclick="send_invoice({{$invoice->id}})">Send</a>
+                                @if (($invoice->status == 0) && ($invoice->sent == 0))
+                                    <br><a href="{{ URL::to('admin/invoices/edit/'.$invoice->id)}}" class="badge badge-warning">Edit</a>
+                                 @endif
                             </td>
                         </tr>
                     @endforeach
