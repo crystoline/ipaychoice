@@ -27,6 +27,14 @@
             </li>
         </ul>
     </li>
+    <li class="parent"><a href="#"><i class="icon s7-id"></i><span>Cash Officers</span></a>
+        <ul class="sub-menu">
+            <li><a href="{{ URL::to('admin/officers')}}">All Cash Officers</a>
+            </li>
+            <li><a href="{{ URL::to('admin/new_officer')}}">New Cash Officer</a>
+            </li>
+        </ul>
+    </li>
     {{--<li class="parent"><a href="#"><i class="icon s7-news-paper"></i><span>Reports</span></a>--}}
         {{--<ul class="sub-menu">--}}
             {{--<li><a href="{{ URL::to('admin/services')}}">All Services</a>--}}

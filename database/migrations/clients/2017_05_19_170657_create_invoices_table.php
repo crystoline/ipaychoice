@@ -24,6 +24,7 @@ class CreateInvoicesTable extends Migration
             $table->integer('customer_id',false, true)->unsigned();
             $table->integer('officer_id',false, true)->unsigned();
             $table->integer('currency_id',false, true)->unsigned();
+            $table->integer('sent')->length(1);
 
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('officer_id')->references('id')->on('officers');
