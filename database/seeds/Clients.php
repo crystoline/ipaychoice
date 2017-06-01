@@ -8,6 +8,7 @@ use App\Models\Clients\Telephone;
 use App\Models\Clients\Town;
 use App\Models\Clients\OfficersPermission;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class Clients extends Seeder
 {
@@ -18,7 +19,7 @@ class Clients extends Seeder
      */
     public function run()
     {
-        $states =  factory(State::class,2)
+        /*$states =  factory(State::class,2)
             ->create()
             ->each(function($state){
                 factory(Town::class,3)->create(['state_id' => $state->id])
@@ -45,10 +46,10 @@ class Clients extends Seeder
                         $customer->save();
                     });
                 });
-            });
+            });*/
         factory(App\Models\Clients\Service::class,3)->create();
 
-        DB::table('currencies')->insert(['name'=>'Naira','code'=>'NGN','html'=>'&#8358;']);
-        DB::table('currencies')->insert(['name'=>'US Dollar','code'=>'USD','html'=>'&#36;']);
+        DB::connection('mysql_client')->table('currencies')->insert(['name'=>'Naira','code'=>'NGN','html'=>'&#8358;']);
+        DB::connection('mysql_client')->table('currencies')->insert(['name'=>'US Dollar','code'=>'USD','html'=>'&#36;']);
     }
 }

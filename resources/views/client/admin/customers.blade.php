@@ -11,20 +11,20 @@
                             <p>{{ Session::get('status') }}</p>
                         </div>
                     @endif
-                    <div class="title"><b>@t('All Customers')</b></div>
-                    <a href="{{ URL::to('admin/new_customer')}}">@t('Add New Customer')</a>
+                    <div class="title"><b>@tlang('All Customers')</b></div>
+                    <a href="{{ URL::to('admin/new_customer')}}">@tlang('Add New Customer')</a>
                     @if (count($customers) == 0)
-                        <br><br><p>@t("You've not added any customers yet.")</p>
+                        <br><br><p>@tlang("You've not added any customers yet.")</p>
                     @else
                 </div>
                 <table id="customers" class="table table-striped table-hover table-fw-widget">
                     <thead>
                     <tr class="success">
-                        <th>@t('Name')</th>
-                        <th>@t('Email')</th>
-                        <th>@t('Phone Number')</th>
-                        <th>@t('Town/Province')</th>
-                        <th>@t('Actions')</th>
+                        <th>@tlang('Name')</th>
+                        <th>@tlang('Email')</th>
+                        <th>@tlang('Phone Number')</th>
+                        <th>@tlang('Town/Province')</th>
+                        <th>@tlang('Actions')</th>
                     </tr>
                     </thead>
                     <tbody>

@@ -2,13 +2,13 @@
      <form data-ajax="true" method="post" action="{{route('user.client.dashboard.service.store', ['id'=>$client->id])}}" data-dst="#form_content">
         {{csrf_field()}}
         <fieldset>
-            <legend>Add Service</legend>
+            <legend>@tlang('Add Service')</legend>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group{{ $errors->has('service') ? ' has-error' : '' }}">
-                        <label for="service">@lang('Service')</label>
+                        <label for="service">@tlang('Service')</label>
                         <input class="form-control" id="service" name="service" value="{{old('service')}}" required
-                               type="text" placeholder="@lang('Service')">
+                               type="text" placeholder="@tlang('Service')">
                         @if ($errors->has('service'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('service') }}</strong>
@@ -16,9 +16,9 @@
                         @endif
                     </div>
                     <div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
-                        <label for="price">@lang('Unit price')</label>
+                        <label for="price">@tlang('Unit price')</label>
                         <input class="form-control" id="price" name="price" value="{{old('price')}}" required
-                               type="text" placeholder="@lang('price')" >
+                               type="text" placeholder="@tlang('price')" >
                         @if ($errors->has('price'))
                             <span class="help-block">
                             <strong>{{ $errors->first('price') }}</strong>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> @tlang('Add')</button>
         </fieldset>
     </form>
 </div>

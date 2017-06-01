@@ -4,9 +4,9 @@
 
     <input type="hidden" name="state_id" value="{{$state_id}}">
     <fieldset>
-        <legend>@lang('Add Towns')</legend>
+        <legend>@tlang('Add Towns')</legend>
         <div class="form-group{{ $errors->has('towns') ? ' has-error' : '' }}">
-            <label for="towns">Towns</label>
+            <label for="towns">@tlang('Towns')</label>
             <textarea name="towns" id="towns" class="form-control" urequired>{{old('towns')}}</textarea>
             @if ($errors->has('towns'))
                 <span class="help-block">
@@ -17,5 +17,5 @@
     </fieldset>
 
 
-    <button class="btn btn-primary"><i class="fa fa-plus"></i> @lang('Add')</button>
+    <button class="btn btn-primary"><i class="fa fa-plus"></i> @tlang('Add')</button>
 </form>

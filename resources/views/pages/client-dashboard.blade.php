@@ -5,7 +5,45 @@
     <div class="container-fluid">
         <div class="row ws-m">
             <div class="col-md-12" id="content" style="min-height: 400px">
-                <h5>My Dashboard here</h5>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card-box widget-box-one">
+                            <div class="wigdet-one-content">
+
+                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow">@tlang("Customers")</p>
+                                <h2 class="text-success"><span data-plugin="counterup">{{count(\App\Models\Clients\Customer::get())}}</span></h2>
+                                <p class="text-muted m-0"><b>@tlang("Today"): </b>{{count(\App\Models\Clients\Customer::whereDate('created_at', '>=', \Carbon\Carbon::today()->toDateString() )->get())}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card-box widget-box-one">
+                            <div class="wigdet-one-content">
+                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow">@tlang("Cash Officers")</p>
+                                <h2 class="text-info"><span data-plugin="counterup">{{count(\App\Models\Clients\Officer::get())}}</span></h2>
+                                <p class="text-muted m-0"><b>@tlang("Today"):</b> {{count(\App\Models\Clients\Officer::whereDate('created_at', '>=', \Carbon\Carbon::today()->toDateString() )->get())}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card-box widget-box-one">
+                            <div class="wigdet-one-content">
+                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow">@tlang("Total Invoices")</p>
+                                <h2 class="text-warning"><span data-plugin="counterup">{{count(\App\Models\Clients\Invoice::get())}}</span></h2>
+                                <p class="text-muted m-0"><b>@tlang("Today"):</b> {{count(\App\Models\Clients\Invoice::whereDate('created_at', '>=', \Carbon\Carbon::today()->toDateString() )->get())}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card-box widget-box-one">
+                            <div class="wigdet-one-content">
+                                <p class="m-0 text-uppercase font-600 font-secondary text-overflow">@tlang("Total Paid")</p>
+                                <h2 class="text-primary"><span data-plugin="counterup">{{count(\App\Models\Clients\Invoice::where(['status' => '1'])->get())}}</span></h2>
+                                <p class="text-muted m-0"><b>@tlang("Today"):</b> {{count(\App\Models\Clients\Invoice::where(['status' => '1'])->whereDate('created_at', '>=', \Carbon\Carbon::today()->toDateString() )->get())}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

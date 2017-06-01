@@ -1,15 +1,15 @@
-<h3>@lang('Service')</h3>
+<h3>@tlang('Service')</h3>
 <div style="text-align: right">
     <a data-ajax="true" data-temp="true" data-dst="#form_content" href="{{route('user.client.dashboard.service.create', ['client'=> $client->id])}}"
        class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i
-                class="fa fa-plus"></i> @lang('Create Service')</a>
+                class="fa fa-plus"></i> @tlang('Create Service')</a>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-header" style="background: white">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">@lang('Create Service')</h4>
+            <h4 class="modal-title">@tlang('Create Service')</h4>
         </div>
         <div class="modal-content cl" id="form_content">
 
@@ -32,11 +32,11 @@
 <table class="table table-strip table-hovered dataTable">
     <thead>
     <tr>
-        <th>@lang('Service')</th>
-        <th>@lang('Price')</th>
-        <th>@lang('Date Created')</th>
-        <th>@lang('Date Modified')</th>
-        <th>@lang('Action')</th>
+        <th>@tlang('Service')</th>
+        <th>@tlang('Price')</th>
+        <th>@tlang('Date Created')</th>
+        <th>@tlang('Date Modified')</th>
+        <th>@tlang('Action')</th>
     </tr>
     </thead>
     <tbody>
@@ -70,8 +70,8 @@
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "@lang('Yes, delete it')!",
-                    cancelButtonText: "@lang('No, cancel')!",
+                    confirmButtonText: "@tlang('Yes, delete it')!",
+                    cancelButtonText: "@tlang('No, cancel')!",
                     closeOnConfirm: true,
                     closeOnCancel: true
                 },
@@ -85,7 +85,7 @@
                                 //'_token': '{{csrf_token()}}'
                             },
                             success: function(){
-                                swal("Deleted!", name+ " was deleted!", "info");
+                                swal("@tlang('Deleted')!", name+ " "+ "@tlang('was deleted!')", "info");
                                 location.reload();
                             }
                         });

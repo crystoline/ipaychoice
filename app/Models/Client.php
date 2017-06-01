@@ -11,7 +11,7 @@ class Client extends Model
 
     public  function configuration()
     {
-       return $this->hasOne('App\Models\Configuration','client_id', 'id');
+       return $this->hasOne('App\Models\Configuration');
     }
 }
 

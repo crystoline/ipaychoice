@@ -145,7 +145,7 @@ function do_ajax(options){
             }
             //what to do in error
         },
-        timeout : 15000//timeout of the ajax call
+        timeout : 300000//timeout of the ajax call
     });
    // alert(get_url('http://myinvoice.org/dashboard/1/officer'));
 }

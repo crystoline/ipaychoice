@@ -1,15 +1,16 @@
 <div class="container">
     <p></p>
 
-    <form data-ajax="true" method="post" action="{{route('user.client.dashboard.customer.store', ['id'=>$client->id])}}" class=" col-md-8">
+    <form data-ajax="true" method="post" action="{{route('user.client.dashboard.customer.update', ['id'=>$client->id, 'customer'=> $customer->id])}}" class=" col-md-8">
         {{csrf_field()}}
+        <input type="hidden" name="_method" value="put" >
         <fieldset>
-            <legend>@tlang('Register Customer')</legend>
+            <legend>@tlang('Edit customer\'s detail')</legend>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                         <label for="name">@tlang('Customer\'s name')</label>
-                        <input class="form-control" id="name" name="name" value="{{old('name')}}"
+                        <input class="form-control" id="name" name="name" value="{{$client->name}}"
                                type="text" placeholder="@tlang('name')" required>
                         @if ($errors->has('name'))
                             <span class="help-block">
@@ -20,7 +21,7 @@
 
                     <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                         <label for="email">@tlang('Primary Email')</label>
-                        <input class="form-control" id="email" type="email" name="email" value="{{old('email')}}"
+                        <input class="form-control" id="email" type="email" name="email" value="{{$client->email}}"
                                placeholder="@tlang('primary Email')" required>
                         @if ($errors->has('email'))
                             <span class="help-block">
@@ -29,8 +30,8 @@
                         @endif
                     </div>
                     <div class="form-group{{ $errors->has('secondary_email') ? ' has-error' : '' }}">
-                        <label for="email">Email</label>
-                        <input class="form-control" id="email" type="email" name="secondary_email" value="{{old('secondary_email')}}"
+                        <label for="secondary_email">Email</label>
+                        <input class="form-control" id="secondary_email" type="email" name="secondary_email" value="{{$client->secondary_email}}"
                                placeholder="@tlang('Secondary Email')">
                         @if ($errors->has('secondary_email'))
                             <span class="help-block">
@@ -40,7 +41,7 @@
                     </div>
                     <div class="form-group{{ $errors->has('telephone') ? ' has-error' : '' }}">
                         <label for="telephone">@tlang('Primary Telephone')</label>
-                        <input class="form-control" id="telephone" type="telephone" name="telephone" value="{{old('telephone')}}"
+                        <input class="form-control" id="telephone" type="telephone" name="telephone" value="{{$client->telephone}}"
                                placeholder="@tlang('primary telephone')" required>
                         @if ($errors->has('telephone'))
                             <span class="help-block">
@@ -52,7 +53,7 @@
                 <div class="col-md-6">
                     <div class="form-group{{ $errors->has('secondary_telephone') ? ' has-error' : '' }}">
                         <label for="secondary_telephone">@tlang('Secondary Telephone')</label>
-                        <input class="form-control" id="secondary_telephone" type="telephone" name="secondary_email" value="{{old('secondary_telephone')}}"
+                        <input class="form-control" id="secondary_telephone" type="telephone" name="secondary_email" value="{{$client->secondary_telephone}}"
                                placeholder="@tlang('Secondary Telephone')">
                         @if ($errors->has('secondary_telephone'))
                             <span class="help-block">
@@ -62,12 +63,12 @@
                     </div>
                     <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                         <label for="state">@tlang('Province')</label>
-                        <select multiple class="form-control" id="states" type="text" name="state" value="{{old('state')}}"
+                        <select multiple class="form-control" id="state" type="text" name="state"
                                 placeholder="@tlang('Choose a province')" required onchange="getTowns('{{('/dashboard/'.$client->id.'/api/state')}}', this, '#town_options' )">
                             <option disabled selected style="color: grey"></option>
                             <optgroup label="@tlang('Province')">
-                                @foreach($states as $state)
-                                    <option value="{{$state->id}}">{{$state->name}}</option>
+                                @foreach(\App\Models\Clients\State::get() as $state)
+                                    <option value="{{$state->id}}" @if($customer->town->state_id == $state->id) selected @endif>{{$state->name}}</option>
                                 @endforeach
                             </optgroup>
                         </select>
@@ -79,10 +80,9 @@
                     </div>
                     <div class="form-group{{ $errors->has('town') ? ' has-error' : '' }}">
                         <label for="town">@tlang('City')</label>
-                        <select class="form-control" id="town" multiple type="text" name="town" value="{{old('town')}}"
-                                placeholder="@tlang('Town')" required placeholder="@tlang('Choose a city')">
-                            <optgroup label="@tlang('town')" id="town_options">
-
+                        <select class="form-control" id="town" multiple type="text" name="town" required placeholder="@tlang('Choose a city')">
+                            <optgroup label="@tlang('towns')" id="town_options">
+                                <option value="{{$customer->town->id}}" selected>{{$customer->town->name}}</option>
                             </optgroup>
                         </select>
                         @if ($errors->has('town'))
@@ -99,6 +99,7 @@
                             tokensAllowCustom: true
                         });
                         $('#state').tokenize2({
+                            tokensMaxItems: 1,
                             tokensAllowCustom: true,
                             'z-index ': 'auto',
                         });
@@ -106,7 +107,7 @@
                     <p>&nbsp;
                     </p>
 
-                    <button type="submit" class="btn btn-primary" onclick="$('#town').trigger('tokenize:paste')">@tlang('Create')</button>
+                    <button type="submit" class="btn btn-primary" onclick="$('#town').trigger('tokenize:paste')">@tlang('Update')</button>
 
                 </div>
             </div>
@@ -119,9 +120,9 @@
             getTowns('{{('/dashboard/'.$client->id.'/api/state')}}',$(this).val(), '#town_options' )
         });
     })
-    function getTowns(url, val, target){
+    function getTowns(url, obj, target){
         //alert(url+obj.value);
-        $.get( url+ '/'+val +'/cities', function( data ) {
+        $.get( url+ '/'+$(obj).val() +'/cities', function( data ) {
             if(data.length == 0){
                 $(target ).html( '<option disabled style="color: black">@tlang('No cities available')</option>' );
             }else {

@@ -6,25 +6,25 @@
 <table class="table table-strip table-hovered dataTable">
     <thead>
         <tr>
-            <th>@lang('Name')</th>
-            <th>@lang('Emails')</th>
-            <th>@lang('Telephons')</th>
-            <th>@lang('State/City')</th>
-            <th>@lang('Date Created')</th>
-            <th>@lang('Action')</th>
+            <th>@tlang('Name')</th>
+            <th>@tlang('Emails')</th>
+            <th>@tlang('Telephons')</th>
+            <th>@tlang('Province/City')</th>
+            <th>@tlang('Date Created')</th>
+            <th>@tlang('Actions')</th>
         </tr>
     </thead>
     <tbody>
         @foreach($customers as $customer)
         <tr>
-            <td><a href="">{{$customer->name}}</a></td>
-            <td>Primary: {{$customer->primary_email}}<br></td>
-            <td>Primary: {{$customer->primary_phone}}<br></td>
+            <td><a data-ajax="true" href="{{route('user.client.dashboard.customer', ['client' => $client->id, 'customer'=>$customer->id])}}">{{$customer->name}}</a></td>
+            <td>@tlang('Primary'): {{$customer->primary_email}}<br></td>
+            <td>@tlang('Primary'): {{$customer->primary_phone}}<br></td>
             <td>{{$customer->town->name}} / {{$customer->town->state->name}}</td>
             <td>{{$customer->created_at}}</td>
             <td>
-                <a href="" @lang('Edit')><i class="fa fa-edit"></i></a>
-                <a href="" @lang('Open')><i class="fa fa-folder-open"></i></a>
+                <a data-ajax="true" href="{{route('user.client.dashboard.customer.edit', ['client' => $client->id, 'customer'=>$customer->id])}}"  title="@tlang('Edit')"><i class="fa fa-edit"></i></a>
+                <a data-ajax="true" href="{{route('user.client.dashboard.customer', ['client' => $client->id, 'customer'=>$customer->id])}}" title="@tlang('Open')"><i class="fa fa-folder-open"></i></a>
             </td>
         </tr>
         @endforeach

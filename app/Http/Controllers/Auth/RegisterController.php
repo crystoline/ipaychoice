@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\VerificationController;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -63,11 +65,25 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $code = rand(1000000000, 9999999999);
+        $user =  User::create([
+                 'first_name' => $data['first_name'],
+                 'last_name' => $data['last_name'],
+                 'email' => $data['email'],
+                 'verified' => 0,
+                 'verification_code' => $code,
+                 'password' => bcrypt($data['password']),
+             ]);
+        //send Email
+        //VerificationController::sendCode($user);
+
+        return $user;
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        if($user->verified != 1){
+            return redirect()->route('user.unverified.resend', ['email'=> $user->email]);
+        }
     }
 }

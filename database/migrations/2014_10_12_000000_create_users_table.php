@@ -19,6 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email',100)->unique();
             $table->string('password');
+            $table->integer('verified')->length(1)->default(0);
+            $table->string('verification_code', 40)->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });

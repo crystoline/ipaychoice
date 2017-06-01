@@ -3,15 +3,15 @@
     {{csrf_field()}}
     <input type="hidden" name="_method" value="put">
     <fieldset>
-        <legend>@lang('Edit State')</legend>
+        <legend>@tlang('Update Province')</legend>
         <div class="form-group{{ $errors->has('states') ? ' has-error' : '' }}">
             <input name="state" id="state" class="form-control" value="{{$state->name}}" required>
-            @if ($errors->has('state'))
+            @if ($errors->has('Province'))
                 <span class="help-block">
                     <strong>{{ $errors->first('states') }}</strong>
                 </span>
             @endif
         </div>
     </fieldset>
-    <button class="btn btn-primary"><i class="fa fa-plus"></i> @lang('Edit')</button>
+    <button class="btn btn-primary"><i class="fa fa-plus"></i> @tlang('Update')</button>
 </form>
