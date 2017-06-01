@@ -57,7 +57,9 @@ $(function(){
         var method = (obj.attr('method'))? obj.attr('method'): 'get';
         var dst = (obj.attr('data-dst'))? obj.attr('data-dst'): '#content';
         var attach = (obj.attr('data-attach'))? obj.attr('data-attach'): 'replace';
-        var data = obj.serializeArray();
+        //var data = obj.serializeArray();
+
+        var data = new FormData($(this)[0]);
 
 
         var title = (obj.attr('title'))? obj.attr('title'): url;
@@ -119,6 +121,11 @@ function do_ajax(options){
         url: options.url,
         method: options.method,//type of posting the data
         data: options.data,
+
+        cache: false,
+        contentType: false,
+        processData: false,
+        async: (options.method == 'post') ? false: true,
 
         success: function (data) {
             //alert( dest.html())

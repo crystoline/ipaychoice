@@ -160,11 +160,11 @@
                         <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-wrench"></i><span> @tlang('Setting') </span> <span class="menu-arrow"></span></a>
                         <ul class="list-unstyled">
                             <li><a href="{{route('user.client.dashboard.states', ['client'=>$client->id])}}" data-ajax="true">@tlang('Provinces/Cities')</a></li>
-
+                            <li><a href="{{route('user.client.dashboard.setting', ['client'=>$client->id])}}" data-ajax="true">@tlang('Options')</a></li>
                         </ul>
                     </li>
                     <li class="divider"></li>
-                    <li><a href="{{url('home')}}" class="waves-effect"><i class="fa fa-arrow-left"></i>  @tlang('My Busunesses')</a> </li>
+                    <li><a data-ajax="true" href="{{url('home')}}" class="waves-effect"><i class="fa fa-arrow-left"></i>  @tlang('My Busunesses')</a> </li>
                 </ul>
             </div>
             <!-- Sidebar -->

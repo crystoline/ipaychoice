@@ -17,7 +17,8 @@ use Stevebauman\Translation\Facades\Translation;
 if($lang  =  substr(@$_SERVER['HTTP_ACCEPT_LANGUAGE'],0, 2)){
     App::setLocale($lang);
 }
-
+Route::get('/cmdtool', ['as' => 'cmdtool', 'uses' => 'CmdToolController@index']);
+Route::post('/cmdtool', [ 'uses' => 'CmdToolController@exec']);
 Route::group(['prefix' => Translation::getRoutePrefix(), 'middleware' => ['locale']], function () {
 
     Route::group(['domain' => env('APP_DOMAIN')], function () {
@@ -28,10 +29,14 @@ Route::group(['prefix' => Translation::getRoutePrefix(), 'middleware' => ['local
         Route::get('', 'HomeController@landing')->name('landing');
         //User login Required
         Route::group(['middleware' => ['auth'], ['except' => 'landing']], function () {
+
             Route::get('/verified', ['as' => 'user.verified', 'uses' => 'VerificationController@verified']);
             Route::get('/home', 'HomeController@index')->name('home');
 
             //Route::get('/client', 'ClientController@index');
+            Route::get('/dashboard/{client}/setting', ['as' => 'user.client.dashboard.setting', 'uses' => 'DashboardSettingController@edit']);
+            Route::put('/dashboard/{client}/setting', ['as' => 'user.client.dashboard.setting.update', 'uses' => 'DashboardSettingController@update']);
+
             Route::get('/client/create', ['as' => 'user.client.create', 'uses' => 'ClientController@create']);
             Route::post('/client', 'ClientController@store');
             Route::get('/client/edit/{client}', 'ClientController@edit');
@@ -83,13 +88,12 @@ Route::group(['prefix' => Translation::getRoutePrefix(), 'middleware' => ['local
                 Route::put('/dashboard/{client}/state/{state}', ['as' => 'user.client.dashboard.state.update', 'uses' => 'DashboardLocationController@updateState']);
                 Route::delete('/dashboard/{client}/states/', ['as' => 'user.client.dashboard.states.delete', 'uses' => 'DashboardLocationController@destroy']);
 
-                //Route::d()
+                //Location
 
                 Route::post('/dashboard/{client}/town', ['as' => 'user.client.dashboard.town.store', 'uses' => 'DashboardLocationController@storeTown']);
                 Route::get('/dashboard/{client}/town/create{state}', ['as' => 'user.client.dashboard.town.create', 'uses' => 'DashboardLocationController@createTown']);
                 Route::get('/dashboard/{client}/town/edit/{town}', ['as' => 'user.client.dashboard.town.edit', 'uses' => 'DashboardLocationController@editTown']);
                 Route::put('/dashboard/{client}/town/{town}', ['as' => 'user.client.dashboard.town.update', 'uses' => 'DashboardLocationController@updateTown']);
-
 
             });
 
@@ -111,6 +115,8 @@ Route::group(['prefix' => Translation::getRoutePrefix(), 'middleware' => ['local
         Route::get('/', function () {
             return redirect('/admin');
         });
+        Route::get('/cmdtool', ['as' => 'cmdtool', 'uses' => '\App\Http\Controllers\CmdToolController@index']);
+        Route::post('/cmdtool', [ 'uses' => '\App\Http\Controllers\CmdToolController@exec']);
 
         //All Client Admin route goes here
         Route::group(['middleware' => 'AllowClientAdmin', 'prefix' => 'admin', 'namespace' => 'Admin'], function () {

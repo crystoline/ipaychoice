@@ -19,13 +19,13 @@ class ClientController extends Controller
     }
     public function store(Request $request){
         $this->validate($request, self::$rules);
-        $validator = Validator::make($request->all(),self::$rules);
+        /*$validator = Validator::make($request->all(),self::$rules);
 
         if ($validator->fails()) {
             return redirect()->route('user.client.create')
                 ->withErrors($validator)
                 ->withInput();
-        }
+        }*/
         //dd('hello');
         $client = new Client();
         $client->name = $request->input('name');
