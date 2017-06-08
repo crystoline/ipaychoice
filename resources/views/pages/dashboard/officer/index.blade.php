@@ -8,6 +8,7 @@
         <tr>
             <th>@tlang('Name')</th>
             <th>@tlang('Email')</th>
+            <th>@tlang('Accoun Type')</th>
             <th>@tlang('Date Created')</th>
             <th>@tlang('Action')</th>
         </tr>
@@ -18,6 +19,7 @@
             <td>
                 <a data-ajax="true" href="{{route('user.client.dashboard.officer', ['client' => $client->id, 'id'=>$officer->id])}}">{{$officer->first_name}} {{$officer->last_name}}</a></td>
             <td>{{$officer->email}}</td>
+            <td>{{$officer->type}}</td>
             <td>{{$officer->created_at}}</td>
             <td>
                 <a data-ajax="true" href="{{route('user.client.dashboard.officer.edit', ['client' => $client->id, 'officer' =>$officer->id])}}"><i class="fa fa-edit"></i> @tlang('Edit')</a>

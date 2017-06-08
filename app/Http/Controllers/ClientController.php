@@ -67,7 +67,13 @@ class ClientController extends Controller
     }
 
     public function update(Request $request, Client $client){
-        $this->validate($request, self::$rules);
+        $validator = Validator::make($request->all(),['name' => 'required']);
+
+        if ($validator->fails()) {
+            return redirect()->route('user.client.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $client->name = $request->input('name');
         $client->address = $request->input('address');
@@ -78,7 +84,7 @@ class ClientController extends Controller
     protected static $rules = [
         'name' => 'required',
         'sub_domain' => 'required|unique:configurations,subdomain',
-        //'eamil' => 'required'
+        //'email' => 'required'
     ];
 
     private static function setupDb(Configuration $configuration){

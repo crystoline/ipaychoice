@@ -4,6 +4,7 @@ namespace App\Http\Middleware\Client;
 
 use App\Models\Configuration;
 use Closure;
+use Illuminate\Support\Facades\Artisan;
 
 class AllowClient{
     /**
@@ -38,7 +39,16 @@ class AllowClient{
             }
         }
         config(['database.connections.mysql_client.database' =>$conf->database]);
+        $this->checkForMigration();
 
         return $next($request);
+    }
+
+    private function checkForMigration(){
+        //check status
+        Artisan::call('migrate:status', ['--database' => 'mysql_client', '--path' => 'database/migrations/clients']);
+        if(strpos(Artisan::output(),'| N' )){ //migration exist
+            Artisan::call('migrate', ['--database' => 'mysql_client', '--path' => 'database/migrations/clients']);
+        }
     }
 }

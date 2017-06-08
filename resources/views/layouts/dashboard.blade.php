@@ -37,7 +37,19 @@
 
     <link href="{{asset('zirco/plugins/datatables/dataTables.bootstrap.min.css')}}" rel="stylesheet">
     @yield('stylesheets')
+    @if(!empty($client->options['color']))
+    <style>
+         .panel-primary,.panel-info .panel-heading, .topbar-left, .navbar-default {
+            background-color: {{$client->options['color']}} !important;
+        }
+         .btn-primary, .btn-info,.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open > .dropdown-toggle.btn-primary,
+        .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .btn-info.focus, .btn-info:active, .btn-info:focus, .btn-info:hover, .open > .dropdown-toggle.btn-info {
+            background-color: {{$client->options['color']}}  !important;
+            border: 1px solid {{$client->options['color']}}  !important;
+        }
 
+    </style>
+    @endif
 </head>
 
 
@@ -64,7 +76,7 @@
     <div class="topbar">
 
         <!-- LOGO -->
-        <div class="topbar-left">
+        <div class="topbar-left" style="@if(!empty($client->options['color'])) background-color: {{$client->options['color']}}; @endif">
             <a href="{{url('home')}}" class="logo"><span>{{env('APP_NAME')}}</span><i class="mdi mdi-cube"></i></a>
             <!-- Image logo -->
             <!--<a href="index.html" class="logo">-->
@@ -78,7 +90,7 @@
         </div>
 
         <!-- Button mobile view to collapse sidebar menu -->
-        <div class="navbar navbar-default" role="navigation">
+        <div class="navbar navbar-default" role="navigation" >
             <div class="container">
 
                 <!-- Navbar-left -->
@@ -115,13 +127,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown user-box">
                         <a href="" class="dropdown-toggle waves-effect waves-light user-link" data-toggle="dropdown" aria-expanded="true">
-                            <img src="assets/images/users/avatar-1.jpg" alt="user-img" class="img-circle user-img">
+                            <img src="{{$client->logoSrc}}" style="height:40px" alt="user-img" class="img-circle user-img">
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
-                            <li>
-                                <h5>Hi, John</h5>
-                            </li>
+
                             {{--<li><a href="javascript:void(0)"><i class="ti-user m-r-5"></i> Profile</a></li>
                             <li><a href="javascript:void(0)"><i class="ti-settings m-r-5"></i> Settings</a></li>
                             <li><a href="javascript:void(0)"><i class="ti-lock m-r-5"></i> Lock screen</a></li>--}}

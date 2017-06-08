@@ -25,15 +25,25 @@ class CmdToolController extends Controller
                 }
             }
             Artisan::call($request->input('cmd'), $params);
-            return nl2br(Artisan::output());
+            return '<div style="font-family: monospace;">'.preg_replace('#( ){1}#', '&nbsp;', str_replace("\r\n", '<br>',Artisan::output()) ).'</div>';
         }
     }
 
     private function view(){
 
         return '
-        <iframe name="output" style="width: 100%"></iframe>
-<form method="post" target="output" style="max-width: 385px">
+<style>
+iframe {
+  height: 300px;
+  width: 300px;
+  resize: both;
+  overflow: auto;
+}
+</style>
+        <iframe name="output" style=""></iframe>
+
+
+<form method="post" target="output" style="max-width: 600px">
 '.csrf_field().'
     <fieldset>
         <legend>Run Commands</legend>
@@ -41,24 +51,10 @@ class CmdToolController extends Controller
             <input name="cmd" value="'.old('cmd').'">
         </label><br>
         <label>Parameters</label><br>
-        <label>
-            <input name="param[]" value="">
-        </label>
-        <label>
-            <input name="paramValue[]" value="">
-        </label><hr>
-        <label>
-            <input name="param[]" value="">
-        </label>
-        <label>
-            <input name="paramValue[]" value="">
-        </label><hr>
-        <label>
-            <input name="param[]" value="">
-        </label>
-        <label>
-            <input name="paramValue[]" value="">
-        </label>
+        <input name="param[]" value="" size="7"><input name="paramValue[]" value="" size="7">&nbsp;
+        <input name="param[]" value="" size="7"><input name="paramValue[]" value="" size="7">&nbsp;
+        <input name="param[]" value="" size="7"><input name="paramValue[]" value="" size="7">
+
     </fieldset>
     <button type="submit">Run</button>
 </form>

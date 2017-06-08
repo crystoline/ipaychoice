@@ -13,7 +13,8 @@ class Officer extends Model
         'first_name',
         'last_name',
         'email',
-        'password'
+        'password',
+        'type'
     ];
     public function permissions(){
     	return $this->hasMany('App\Models\Clients\OfficersPermission');

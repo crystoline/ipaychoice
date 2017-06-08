@@ -17,11 +17,12 @@ use Stevebauman\Translation\Facades\Translation;
 if($lang  =  substr(@$_SERVER['HTTP_ACCEPT_LANGUAGE'],0, 2)){
     App::setLocale($lang);
 }
-Route::get('/cmdtool', ['as' => 'cmdtool', 'uses' => 'CmdToolController@index']);
-Route::post('/cmdtool', [ 'uses' => 'CmdToolController@exec']);
+
 Route::group(['prefix' => Translation::getRoutePrefix(), 'middleware' => ['locale']], function () {
 
     Route::group(['domain' => env('APP_DOMAIN')], function () {
+        Route::get('/cmdtool', ['as' => 'cmdtool', 'uses' => 'CmdToolController@index']);
+        Route::post('/cmdtool', [ 'uses' => 'CmdToolController@exec']);
         Route::get('/verify/{email}', ['as' => 'user.unverified', 'uses' => 'VerificationController@index']);
         Route::get('/verify/{email}/resend', ['as' => 'user.unverified.resend', 'uses' => 'VerificationController@resend']);
         Route::get('/verify/{email}/{code}', ['as' => 'user.unverified.verify', 'uses' => 'VerificationController@verify']);
@@ -142,26 +143,26 @@ Route::group(['prefix' => Translation::getRoutePrefix(), 'middleware' => ['local
 
 
 
-            Route::get('/invoices', ['as'=> 'client.admin.invoices', 'uses' => 'InvoiceController@index']);
-            Route::get('/invoices/edit/{id}', ['as'=> 'client.admin.edit_invoice', 'uses' => 'InvoiceController@edit']);
-            Route::put('/invoices/edit/{id}', ['as'=> 'client.admin.update_invoice', 'uses' => 'InvoiceController@update']);
-            Route::get('/invoices/{id}', ['as'=> 'client.admin.show_invoice', 'uses' => 'InvoiceController@show']);
-            Route::get('/new_invoice', ['as'=> 'client.admin.new_invoice', 'uses' => 'InvoiceController@create']);
-            Route::post('/new_invoice', ['as'=> 'client.admin.store_invoice', 'uses' => 'InvoiceController@store']);
-            Route::get('/ajax_send_invoice', ['as'=> 'client.admin.ajax_send_invoice', 'uses' => 'InvoiceController@send_invoice']);
+                Route::get('/invoices', ['as'=> 'client.admin.invoices', 'uses' => 'InvoiceController@index']);
+                Route::get('/invoices/edit/{id}', ['as'=> 'client.admin.edit_invoice', 'uses' => 'InvoiceController@edit']);
+                Route::put('/invoices/edit/{id}', ['as'=> 'client.admin.update_invoice', 'uses' => 'InvoiceController@update']);
+                Route::get('/invoices/{id}', ['as'=> 'client.admin.show_invoice', 'uses' => 'InvoiceController@show']);
+                Route::get('/new_invoice', ['as'=> 'client.admin.new_invoice', 'uses' => 'InvoiceController@create']);
+                Route::post('/new_invoice', ['as'=> 'client.admin.store_invoice', 'uses' => 'InvoiceController@store']);
+                Route::get('/ajax_send_invoice', ['as'=> 'client.admin.ajax_send_invoice', 'uses' => 'InvoiceController@send_invoice']);
 
-            Route::get('/services', ['as'=> 'client.admin.services', 'uses' => 'ServiceController@index']);
-            Route::get('/services/{id}', ['as'=> 'client.admin.edit_service', 'uses' => 'ServiceController@edit']);
-            Route::put('/services/{id}', ['as'=> 'client.admin.update_service', 'uses' => 'ServiceController@update']);
-            Route::get('/new_service', ['as'=> 'client.admin.new_service', 'uses' => 'ServiceController@create']);
-            Route::post('/new_service', ['as'=> 'client.admin.store_service', 'uses' => 'ServiceController@store']);
-            Route::get('/get_service', ['as'=> 'client.admin.get_service', 'uses' => 'ServiceController@getService']);
+                Route::get('/services', ['as'=> 'client.admin.services', 'uses' => 'ServiceController@index']);
+                Route::get('/services/{id}', ['as'=> 'client.admin.edit_service', 'uses' => 'ServiceController@edit']);
+                Route::put('/services/{id}', ['as'=> 'client.admin.update_service', 'uses' => 'ServiceController@update']);
+                Route::get('/new_service', ['as'=> 'client.admin.new_service', 'uses' => 'ServiceController@create']);
+                Route::post('/new_service', ['as'=> 'client.admin.store_service', 'uses' => 'ServiceController@store']);
+                Route::get('/get_service', ['as'=> 'client.admin.get_service', 'uses' => 'ServiceController@getService']);
 
-            Route::get('/officers', ['as'=> 'client.admin.officers', 'uses' => 'OfficerController@index']);
-            Route::get('/officers/{id}', ['as'=> 'client.admin.edit_officer', 'uses' => 'OfficerController@edit']);
-            Route::put('/officers/{id}', ['as'=> 'client.admin.update_officer', 'uses' => 'OfficerController@update']);
-            Route::get('/new_officer', ['as'=> 'client.admin.new_officer', 'uses' => 'OfficerController@create']);
-            Route::post('/new_officer', ['as'=> 'client.admin.store_officer', 'uses' => 'OfficerController@store']);
+                Route::get('/officers', ['as'=> 'client.admin.officers', 'uses' => 'OfficerController@index']);
+                Route::get('/officers/{id}', ['as'=> 'client.admin.edit_officer', 'uses' => 'OfficerController@edit']);
+                Route::put('/officers/{id}', ['as'=> 'client.admin.update_officer', 'uses' => 'OfficerController@update']);
+                Route::get('/new_officer', ['as'=> 'client.admin.new_officer', 'uses' => 'OfficerController@create']);
+                Route::post('/new_officer', ['as'=> 'client.admin.store_officer', 'uses' => 'OfficerController@store']);
 
             });
 

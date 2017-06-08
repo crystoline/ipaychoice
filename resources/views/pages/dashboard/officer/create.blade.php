@@ -39,14 +39,28 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
+                        <label for="type">@tlang('Type')</label>
+                        <select class="form-control" id="type" type="text" name="type" value="{{old('type')}}">
+                            <option disabled selected style="color: grey">@tlang('Choose officer type')</option>
+                            <option value="default" @if(old('type') != 'admin') selected @endif>@tlang('Default')</option>
+                            <option value="admin" @if(old('type') == 'admin') selected @endif>@tlang('Administrator')</option>
+
+                        </select>
+                        @if ($errors->has('type'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('type') }}</strong>
+                            </span>
+                        @endif
+                    </div>
                     <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}">
                         <label for="state">@tlang('Province')</label>
                         <select class="form-control" id="state" type="text" name="state" value="{{old('state')}}"
                                 placeholder="@tlang('State')" required onchange="getTowns('{{('/dashboard/'.$client->id.'/api/state')}}', this, '#town_options' )">
                             <option disabled selected style="color: grey">@tlang('Choose a state')</option>
-                            <optgroup label="@tlang('town')">
+                            <optgroup label="@tlang('state')">
                                 @foreach($states as $state)
-                                    <option value="{{$state->id}}">{{$state->name}}</option>
+                                    <option value="{{$state->id}}" {{--@if($state->id == old('state')) selected @endif--}}>{{$state->name}}</option>
                                 @endforeach
                             </optgroup>
                         </select>
@@ -58,10 +72,14 @@
                     </div>
                     <div class="form-group{{ $errors->has('town') ? ' has-error' : '' }}">
                         <label for="town">@tlang('City')</label>
-                        <select class="form-control" id="town" multiple type="text" name="town[]" value="{{old('town')}}"
+                        <select class="form-control" id="town" multiple type="text" name="town[]"
                                 placeholder="@tlang('Town')" required placeholder="@tlang('Choose a city')">
                             <optgroup label="@tlang('town')" id="town_options">
-
+                                {{--@if(old('town'))
+                                    @foreach(old('town') as $town)
+                                        <option selected>{{$town}}</option>
+                                    @endforeach
+                                @endif--}}
                             </optgroup>
                         </select>
                         @if ($errors->has('town'))

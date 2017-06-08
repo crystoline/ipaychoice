@@ -38,7 +38,22 @@
                             </span>
                         @endif
                     </div>
+                    <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
+                        <label for="type">@tlang('Type')</label>
+                        <select class="form-control" id="type" type="text" name="type">
+                            <option disabled selected style="color: grey">@tlang('Choose officer type')</option>
+                            <option value="default" @if($officer->type != 'admin') selected @endif>@tlang('Default')</option>
+                            <option value="admin" @if($officer->type == 'admin') selected @endif>@tlang('Administrator')</option>
+
+                        </select>
+                        @if ($errors->has('type'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('type') }}</strong>
+                            </span>
+                        @endif
+                    </div>
                 </div>
+
             </div>
             <button type="submit" class="btn btn-primary">Edit</button>
         </fieldset>

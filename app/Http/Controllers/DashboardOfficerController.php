@@ -35,7 +35,7 @@ class DashboardOfficerController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:mysql_client.officers,email',
             'state' => 'required',
             'town.*' => 'required|exists:mysql_client.towns,id',
         ]);
@@ -53,6 +53,10 @@ class DashboardOfficerController extends Controller
             'email' => $request->input('email'),
             'password' => bcrypt($password)
         ]);
+        if($type =  $request->input('type')){
+            $officer->type = $type;
+            $officer->save();
+        }
         foreach ($request->input('town') as $town_id) {
 
             if (!Town::find($town_id)) {//$town_id = name (string)
@@ -101,6 +105,7 @@ class DashboardOfficerController extends Controller
                     'first_name' => 'required',
                     'last_name' => 'required',
                     'email' => 'required',
+
                 ]);
 
                 if ($validator->fails()) {
@@ -112,6 +117,9 @@ class DashboardOfficerController extends Controller
 
                 $officer->first_name = $request->input('first_name');
                 $officer->last_name = $request->input('last_name');
+                if($type =  $request->input('type')){
+                    $officer->type = $type;
+                }
 
                 if ($officer->email == $request->input('email')) {
                     $officer->email = $request->input('email');

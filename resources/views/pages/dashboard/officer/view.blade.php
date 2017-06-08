@@ -20,6 +20,10 @@
                     <td>{{$officer->email}}</td>
                 </tr>
                 <tr>
+                    <td>@tlang('Account Type'):</td>
+                    <td>{{$officer->type}}</td>
+                </tr>
+                <tr>
                     <td>@tlang('Date Registered')</td>
                     <td>{{$officer->created_at}}</td>
                 </tr>

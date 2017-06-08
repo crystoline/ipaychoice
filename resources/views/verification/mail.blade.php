@@ -185,49 +185,48 @@
 
                 <p>@tlang('Dear ') {{ $user->first_name }},</p>
 
-                <p>@tlang('You account has just been created on ', ['name' => {{ env('APP_NAME') }}]) ,@tlang('with the following credential')
-                </p>
+                <p>@tlang('You account has just been created on :name, with the following credential', ['name' => env('APP_NAME')])</p>
                 <p>
                     @tlang('Username') : {{ $user->email }} <br>
                     @tlang('Password') : **********<br> <br>
                     @tlang('Please click :link to verify your account', ['link' => '<a href="'.route('user.unverified.verify', ['email'=>$user->email, 'code'=>$user->verification_code]).'">here</a>'])<br>
                     @tlang('Or copy and paste the link on your address bar to verify your account')
-{{route('user.unverified.verify', ['email'=>$user->email, 'code'=>$user->verification_code])}}
+                    {{route('user.unverified.verify', ['email'=>$user->email, 'code'=>$user->verification_code])}}
 
-</p>
+                </p>
 
-<p>&nbsp;</p>
+                <p>&nbsp;</p>
 
-@tlang('From') {{env('APP_NAME')}}
-<p>&nbsp;</p>
-</div>
+                @tlang('From') {{env('APP_NAME')}}
+                <p>&nbsp;</p>
+            </div>
 
-<table style="color:#fff" width="100%" cellpadding="0" cellspacing="0" border="0" class="wrapper footer text-center"
-bgcolor="#1c3061" style="text-align: center">
-<tr>
-<td height="10" style="border: none;font-size:10px; line-height:10px;">&nbsp;</td>
-</tr>
-<tr>
-<td align="center" valign="top">
+            <table style="color:#fff" width="100%" cellpadding="0" cellspacing="0" border="0" class="wrapper footer text-center"
+                   bgcolor="#1c3061" style="text-align: center">
+                <tr>
+                    <td height="10" style="border: none;font-size:10px; line-height:10px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top">
 
-<table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
-<tr>
-<td width="300" class="mobile" align="center" valign="top">
-<span> @tlang('Copyright') &copy {!! date('Y') !!} {{env('APP_NAME')}}</span>
-</td>
-</tr>
-</table>
+                        <table width="600" cellpadding="0" cellspacing="0" border="0" class="container">
+                            <tr>
+                                <td width="300" class="mobile" align="center" valign="top">
+                                    <span> @tlang('Copyright') &copy {!! date('Y') !!} {{env('APP_NAME')}}</span>
+                                </td>
+                            </tr>
+                        </table>
 
-</td>
-</tr>
-<tr>
-<td height="10" style="font-size:10px; line-height:10px;">&nbsp;</td>
-</tr>
-</table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="10" style="font-size:10px; line-height:10px;">&nbsp;</td>
+                </tr>
+            </table>
 
 
-</td>
-</tr>
+        </td>
+    </tr>
 </table>
 </body>
 </html>
